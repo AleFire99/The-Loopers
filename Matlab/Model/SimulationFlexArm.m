@@ -116,10 +116,10 @@ eig(Ac)
 disp(['  Rank of Controllability = ' num2str(rank(ctrb(Ac,B))) ]) %needs to be full rank to say that is controllable
 
 
+%%
 
 
-
-
+simulateArm(y2(:,1), y2(:,2), 0.001)
 
 
 
