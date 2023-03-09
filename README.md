@@ -1,5 +1,5 @@
 # The-Loopers
-Control project of a 2-DOF CNC machine.
+Control project of a Flexible Joint machine.
 
 ♦ First time
  - Clone the repo into a local folder on your PC

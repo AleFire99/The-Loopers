@@ -1,5 +1,6 @@
+load('./Sweep_Data');
 x = data_03_Mar_2023_09_40_29(2,:);
-dt = data_03_Mar_2023_09_40_29(1,2) -data_03_Mar_2023_09_40_29(1,1);
+dt = data_03_Mar_2023_09_40_29(1,2) - data_03_Mar_2023_09_40_29(1,1);
 
 N = length(x);
 NFFT = 2^nextpow2(N);
