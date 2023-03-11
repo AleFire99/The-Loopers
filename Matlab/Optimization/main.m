@@ -7,7 +7,7 @@ m1 = 0.064;
 m2 = 0.03;
 L1 = 29.8/100;
 L2 = 15.6/100;
-d = 21.5/100; %we have 3 d12 ??????
+d = 23.5/100; %we have 3 d12 ??????
 
 Kt = 0.00768;
 Kg = 70; %high gear
@@ -23,16 +23,23 @@ Beq = 0.015;
 f=3.846;
 wn = 2*pi*f;
 Ks = JL*wn*wn; %invented  
-
+Ks = 300;
 %% god
 %TaoCons = ng*nm*Kt/Rm;
 TaoCons = ng*nm*Kt*Kg/Rm;
  A = [0 1 0 0;
-     0 (-TaoCons*Km*Kg-Beq)/Jeq Ks/Jeq BL/Jeq;
+     0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
      0 0 0 1;
      0 (TaoCons*Km*Kg+Beq)/Jeq -Ks*((Jeq+JL)/(JL*Jeq)) -BL*((Jeq+JL)/(JL*Jeq))];
  B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
 C =[1 0 0 0; 0 0 1 0];
+
+sys_c = ss(A,B,C,[]);
+sys_c = c2d(sys_c,0.002);
+Adt = sys_c.A;
+Bdt = sys_c.B;
+Cdt = sys_c.C;
+%Adt= expm(A*0.002);
 %% 
 % ng and nm are efficiency we may need to estimate
 % Jeq for the base and its fixed
@@ -42,11 +49,12 @@ C =[1 0 0 0; 0 0 1 0];
 % JL in future it can be a disturbance and it can be calculated
 
 %% Load data
-load data_train.mat
-%data=data(:,500*8:1:500*10) ;
-data = data(:,1:500*1);
+load Chirp01_in_theta_alpha.mat
+data = data_06_Mar_2023_16_20_51;
+data=data(:,500*8:end) ;
+%data = data(:,1:500*0.5);
 Ts_002 = 0.002;
-downsample_factor   =   10;
+downsample_factor   =   1;
 Ts                  =   Ts_002*downsample_factor;
 Uvec                =   data(2,1:downsample_factor:end);
 Time_vec            =   data(1,1:downsample_factor:end);
@@ -99,25 +107,22 @@ cvx_begin
 variable theta_cvx(20,1)
 minimize norm(Y-PHI*theta_cvx)
 subject to
-theta_cvx(1,1) == 0; theta_cvx(2,1) == 1; theta_cvx(3,1) == 0; theta_cvx(4,1) == 0;
-theta_cvx(5,1) == 0;
-theta_cvx(9,1) == 0; theta_cvx(10,1) == 0; theta_cvx(11,1) == 0; theta_cvx(12,1) == 1;
-
-theta_cvx(6,1) == -theta_cvx(14,1); 
-theta_cvx(7,1) == Ks/Jeq; 
-theta_cvx(7,1) * Jeq == -theta_cvx(15,1)/((Jeq+JL)/(JL*Jeq)); % 
-theta_cvx(8,1) * Jeq == -theta_cvx(16,1)/((Jeq+JL)/(JL*Jeq)); % 
-
+theta_cvx(1,1) == 1; theta_cvx(2,1) == 0.002 ; theta_cvx(3,1) == 0; theta_cvx(4,1) == 0;
+theta_cvx(5,1) == 0;theta_cvx(8,1) == 0;
+theta_cvx(9,1) == 0; theta_cvx(10,1) == 0;% theta_cvx(11,1) == 1; 
+theta_cvx(12,1) == 0.002;
 theta_cvx(13,1) == 0;
 
-%theta_cvx(0,1) == -Beq / Jeq;
+%theta_cvx(8,1) * Jeq == -(theta_cvx(16,1)-1)/((Jeq+JL)/(JL*Jeq)); % 
+theta_cvx(6,1) + theta_cvx(14,1) == 1;
+theta_cvx(7,1) * Jeq == -theta_cvx(15,1)/((Jeq+JL)/(JL*Jeq)); % 
+theta_cvx(8,1) + theta_cvx(16,1) == 1;
+theta_cvx(18,1) == -(theta_cvx(14,1) -Beq*Rm)/(Km *Kg );
 
-theta_cvx(17,1) == 0;
 theta_cvx(18,1) == -theta_cvx(20,1);
-theta_cvx(18,1) >= 0.5;
-theta_cvx(18,1) <=2;
+theta_cvx(17,1) == 0;
 theta_cvx(19,1) == 0;
-%A_cvx(2,3)*Jeq
+
 cvx_end
 toc
 % Retrieve model matrices in continuous time (Forward Finite Difference)
@@ -130,6 +135,8 @@ B_cvx           =   [theta_cvx(17,1) theta_cvx(18,1) theta_cvx(19,1) theta_cvx(2
 Atc_cvx         =   (A_cvx-eye(nz))/Ts;
 Btc_cvx         =   B_cvx/Ts;
 
+dtsys = ss(A_cvx,B_cvx,C,[], 0.002);
+sysestc = d2c(dtsys);
 % Beq may be estimated
 % Ks jesus measured
 % Bl we dont know
@@ -137,20 +144,26 @@ Btc_cvx         =   B_cvx/Ts;
 %Retrieve physical parameters
 %(-ng*nm*Kt/Rm*Km/Kt-Beq)/Jeq 
 % Ks/Jeq
-nm_est           =   -(A_cvx(2,2)*Jeq + Beq)/(ng*Kt*Km*Kg*Kg)*Rm;
-Beq_est          =   A_cvx(2,2)*Jeq;
-Ks_est           =   A_cvx(2,3)*Jeq;
-Bl_est           =   A_cvx(2,4)*Jeq;
+nm_est           =   (-sysestc.A(2,2)*Jeq - Beq)/(ng*Kt*Km*Kg*Kg)*Rm;
+%Beq_est          =   A_cvx(2,2)*Jeq;
+Ks_est           =   sysestc.A(2,3)*Jeq;
+Bl_est           =   sysestc.A(2,4)*Jeq;
 
 %Compare estimates
 display("Compare estimates")
-[nm nm_est]
+display("A Adt Acvx Adtcvx")
+[A(2,2) Adt(2,2) sysestc.A(2,2) A_cvx(2,2)]
+
+[B(2) Bdt(2) sysestc.B(2) B_cvx(2)]
+
+
+%[nm nm_est]
 %[Beq Beq_est]
 %[Ks Ks_est]
-[0 Bl_est]
+%[0 Bl_est]
 %%
-sys_est = ss(A_cvx,B_cvx, C ,[])
+%sys_est = ss(A_cvx,B_cvx, C ,[])
 
 %% Plot results
-figure(1),plot(Time_vec(2:end),Y(1:2:end)),grid on, hold on
-plot(Time_vec(2:end),PHI(1:2:end,:)*theta_cvx)
+%figure(1),plot(Time_vec(2:end),Y(1:2:end)),grid on, hold on
+%plot(Time_vec(2:end),PHI(1:2:end,:)*theta_cvx)
