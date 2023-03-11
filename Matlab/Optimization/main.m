@@ -116,8 +116,8 @@ theta_cvx(8,1) * Jeq == -(theta_cvx(16,1)-1)/((Jeq+JL)/(JL*Jeq)); %
 theta_cvx(6,1) + theta_cvx(14,1) == 1;
 theta_cvx(7,1) * Jeq == -theta_cvx(15,1)/((Jeq+JL)/(JL*Jeq)); % 
 %theta_cvx(8,1) + theta_cvx(16,1) == 1;
-theta_cvx(18,1)*Km*Kg+Beq*Rm == (theta_cvx(14,1));
 
+theta_cvx(18,1)*Km*Kg+Beq*Rm/(Jeq*Rm)*Ts == (theta_cvx(14,1));
 theta_cvx(18,1) == -theta_cvx(20,1);
 theta_cvx(17,1) == 0;
 theta_cvx(19,1) == 0;
@@ -189,8 +189,8 @@ alfa_val            =  data_val(4,1:downsample_factor:end)*conv2angle;          
 %calculate these using forward difference method
 thetadot_val = zeros(1,length(theta_val));
 alfadot_val = zeros(1,length(theta_val));
-thetadot_val(2:end) = 1*imgaussfilt([theta_val(2:end)- theta_val(1:end-1)],0.99); 
-alfadot_val(2:end)  = 1*imgaussfilt([alfa_val(2:end)- alfa_val(1:end-1)],0.99);
+thetadot_val(2:end) = 1*imgaussfilt([(theta_val(2:end)- theta_val(1:end-1))/Ts],0.99); 
+alfadot_val(2:end)  = 1*imgaussfilt([(alfa_val(2:end)- alfa_val(1:end-1))/Ts],0.99);
 
 initial = [theta_val(tstart)  thetadot_val(tstart) alfa_val(tstart) alfadot_val(tstart)]';
 statess_est(:,1) = initial;
