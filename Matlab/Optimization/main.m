@@ -7,7 +7,7 @@ m1 = 0.064;
 m2 = 0.03;
 L1 = 29.8/100;
 L2 = 15.6/100;
-d = 23.5/100; %we have 3 d12 ??????
+d = 20/100; %we have 3 d12 ??????
 
 Kt = 0.00768;
 Kg = 70; %high gear
@@ -23,7 +23,7 @@ Beq = 0.015;
 f=3.846;
 wn = 2*pi*f;
 Ks = JL*wn*wn; %invented  
-Ks = 300;
+%Ks = 300;
 %% god
 %TaoCons = ng*nm*Kt/Rm;
 TaoCons = ng*nm*Kt*Kg/Rm;
@@ -49,9 +49,8 @@ Cdt = sys_c.C;
 % JL in future it can be a disturbance and it can be calculated
 
 %% Load data
-load Chirp01_in_theta_alpha.mat
-data = data_06_Mar_2023_16_20_51;
-data=data(:,500*8:end) ;
+load data_train.mat
+%data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
 downsample_factor   =   1;
@@ -68,8 +67,8 @@ alfa            =  data(4,1:downsample_factor:end)*conv2angle;                % 
 %calculate these using forward difference method
 thetadot = zeros(1,length(theta));
 alfadot = zeros(1,length(theta));
-thetadot(2:end) = 1*imgaussfilt([theta(2:end)- theta(1:end-1)],0.9); 
-alfadot(2:end)  = 1*imgaussfilt([alfa(2:end)- alfa(1:end-1)],0.9);
+thetadot(2:end) = 1*imgaussfilt([theta(2:end)- theta(1:end-1)],0.99); 
+alfadot(2:end)  = 1*imgaussfilt([alfa(2:end)- alfa(1:end-1)],0.99);
 
 %% Use noise-free values
 % betavec_true        =   State.signals.values(1:end,4);                  % True sideslip angle
@@ -107,22 +106,27 @@ cvx_begin
 variable theta_cvx(20,1)
 minimize norm(Y-PHI*theta_cvx)
 subject to
-theta_cvx(1,1) == 1; theta_cvx(2,1) == 0.002 ; theta_cvx(3,1) == 0; theta_cvx(4,1) == 0;
-theta_cvx(5,1) == 0;theta_cvx(8,1) == 0;
-theta_cvx(9,1) == 0; theta_cvx(10,1) == 0;% theta_cvx(11,1) == 1; 
-theta_cvx(12,1) == 0.002;
+theta_cvx(1,1) == 1; theta_cvx(2,1) == Ts; theta_cvx(3,1) == 0; theta_cvx(4,1) == 0;
+theta_cvx(5,1) == 0;theta_cvx(8,1) == Ts;
+theta_cvx(9,1) == 0; theta_cvx(10,1) == 0;theta_cvx(11,1) == 1; 
+theta_cvx(12,1) ==  Ts;
 theta_cvx(13,1) == 0;
 
-%theta_cvx(8,1) * Jeq == -(theta_cvx(16,1)-1)/((Jeq+JL)/(JL*Jeq)); % 
+theta_cvx(8,1) * Jeq == -(theta_cvx(16,1)-1)/((Jeq+JL)/(JL*Jeq)); % 
 theta_cvx(6,1) + theta_cvx(14,1) == 1;
 theta_cvx(7,1) * Jeq == -theta_cvx(15,1)/((Jeq+JL)/(JL*Jeq)); % 
-theta_cvx(8,1) + theta_cvx(16,1) == 1;
-theta_cvx(18,1) == -(theta_cvx(14,1) -Beq*Rm)/(Km *Kg );
+%theta_cvx(8,1) + theta_cvx(16,1) == 1;
+theta_cvx(18,1)*Km*Kg+Beq*Rm == (theta_cvx(14,1));
 
 theta_cvx(18,1) == -theta_cvx(20,1);
 theta_cvx(17,1) == 0;
 theta_cvx(19,1) == 0;
 
+theta_cvx(7,1) == Ts*Ks/Jeq;
+
+theta_cvx(6,1) <= 0.99;
+
+theta_cvx(6,1) >= 0.8;
 cvx_end
 toc
 % Retrieve model matrices in continuous time (Forward Finite Difference)
@@ -167,3 +171,54 @@ display("A Adt Acvx Adtcvx")
 %% Plot results
 %figure(1),plot(Time_vec(2:end),Y(1:2:end)),grid on, hold on
 %plot(Time_vec(2:end),PHI(1:2:end,:)*theta_cvx)
+%% validation 
+load Chirp01_in_theta_alpha.mat
+data_val = data_06_Mar_2023_16_20_51;
+%data = data(:,500*4:end);
+
+Uvec_val                =   data_val(2,1:downsample_factor:end);
+Time_vec_val            =   data_val(1,1:downsample_factor:end);
+N_val                   =   length(Time_vec_val);                               % Total number of data points
+tstart =500*5;
+tstart = 1;
+
+%% Use noise-corrupted values
+theta_val           =  -data_val(3,1:downsample_factor:end)*conv2angle;               % Measured sideslip angle
+alfa_val            =  data_val(4,1:downsample_factor:end)*conv2angle;                % Measured yaw rate
+
+%calculate these using forward difference method
+thetadot_val = zeros(1,length(theta_val));
+alfadot_val = zeros(1,length(theta_val));
+thetadot_val(2:end) = 1*imgaussfilt([theta_val(2:end)- theta_val(1:end-1)],0.99); 
+alfadot_val(2:end)  = 1*imgaussfilt([alfa_val(2:end)- alfa_val(1:end-1)],0.99);
+
+initial = [theta_val(tstart)  thetadot_val(tstart) alfa_val(tstart) alfadot_val(tstart)]';
+statess_est(:,1) = initial;
+statess_phy(:,1) = initial;
+for i = 1:N_val-tstart
+
+statess_est(:,i+1) = A_cvx * statess_est(:,i) + B_cvx*Uvec_val(i);
+%statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
+
+statess_phy(:,i+1) = Adt *statess_phy(:,i) + Bdt*Uvec_val(i);
+end
+states_val = [theta_val(tstart:end);thetadot_val(tstart:end);alfa_val(tstart:end); alfadot_val(tstart:end)];
+
+%statess_est([2 4],:) = statess_est1([2 4],:);
+
+size(statess_est)
+size(states_val)
+
+ylab = ["theta" ,"thetadot", "alfa", "alfadot"];
+figure
+title('real(continuous) and estimated(dotted)')
+tvec = Time_vec_val(tstart:end);
+for i=1:4
+subplot(2,2,i)
+plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:");
+
+title(ylab(i));
+
+end
+
+
