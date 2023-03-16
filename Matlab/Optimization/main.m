@@ -50,6 +50,9 @@ Cdt = sys_c.C;
 
 %% Load data
 load data_train.mat
+load data_validation1.mat
+data_val =data_validation ;
+data = data;
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
@@ -61,14 +64,14 @@ N                   =   length(Time_vec);                               % Total 
 
 %% Use noise-corrupted values
 conv2angle = (2*pi)/4096;
-theta           =  data(3,1:downsample_factor:end)*conv2angle;               % Measured sideslip angle
+theta           =  -data(3,1:downsample_factor:end)*conv2angle;               % Measured sideslip angle
 alfa            =  data(4,1:downsample_factor:end)*conv2angle;                % Measured yaw rate
 
 %calculate these using forward difference method
 thetadot = zeros(1,length(theta));
 alfadot = zeros(1,length(theta));
-thetadot(2:end) = 1*imgaussfilt([theta(2:end)- theta(1:end-1)],0.99); 
-alfadot(2:end)  = 1*imgaussfilt([alfa(2:end)- alfa(1:end-1)],0.99);
+thetadot(2:end) = 1*imgaussfilt([theta(2:end)- theta(1:end-1)]/Ts,0.99); 
+alfadot(2:end)  = 1*imgaussfilt([alfa(2:end)- alfa(1:end-1)]/Ts,0.99);
 
 %% Use noise-free values
 % betavec_true        =   State.signals.values(1:end,4);                  % True sideslip angle
@@ -106,8 +109,8 @@ cvx_begin
 variable theta_cvx(20,1)
 minimize norm(Y-PHI*theta_cvx)
 subject to
-theta_cvx(1,1) == 1; theta_cvx(2,1) == Ts; theta_cvx(3,1) == 0; theta_cvx(4,1) == 0;
-theta_cvx(5,1) == 0;theta_cvx(8,1) == Ts;
+theta_cvx(1,1) == 1; theta_cvx(2,1) == Ts; theta_cvx(3,1) == 0.0017; theta_cvx(4,1) == 0;
+theta_cvx(5,1) == 0;theta_cvx(8,1) ==  0.0017;
 theta_cvx(9,1) == 0; theta_cvx(10,1) == 0;theta_cvx(11,1) == 1; 
 theta_cvx(12,1) ==  Ts;
 theta_cvx(13,1) == 0;
@@ -122,11 +125,10 @@ theta_cvx(18,1) == -theta_cvx(20,1);
 theta_cvx(17,1) == 0;
 theta_cvx(19,1) == 0;
 
-theta_cvx(7,1) == Ts*Ks/Jeq;
+theta_cvx(7,1) >= 0.8*Ts*Ks/Jeq;
+theta_cvx(7,1) <= 1.2*Ts*Ks/Jeq;
 
-theta_cvx(6,1) <= 0.99;
 
-theta_cvx(6,1) >= 0.8;
 cvx_end
 toc
 % Retrieve model matrices in continuous time (Forward Finite Difference)
@@ -172,8 +174,7 @@ display("A Adt Acvx Adtcvx")
 %figure(1),plot(Time_vec(2:end),Y(1:2:end)),grid on, hold on
 %plot(Time_vec(2:end),PHI(1:2:end,:)*theta_cvx)
 %% validation 
-load Chirp01_in_theta_alpha.mat
-data_val = data_06_Mar_2023_16_20_51;
+
 %data = data(:,500*4:end);
 
 Uvec_val                =   data_val(2,1:downsample_factor:end);
@@ -220,5 +221,46 @@ plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:)
 title(ylab(i));
 
 end
+sysest = ss(A_cvx, B_cvx,C, [], Ts)
+save("sysest.mat","sysest")
 
 
+%%
+states_nonlinear = initial;
+A23 = A_cvx(2,3);
+A43 = A_cvx(4,3);
+Tmodel1 = 0;
+Tmodel2 = 0;
+for i = 1:N_val-tstart
+alfa = states_nonlinear(3,i);
+   % if abs(alfa)  0.1
+        Tmodel1 = Ts*springcomp(alfa)/Jeq;
+        Tmodel2 = -Ts*springcomp(alfa)*((Jeq+JL)/(JL*Jeq));
+        A_cvx(2,3) = 0;
+        A_cvx(4,3) = 0;
+    %else
+     %   A_cvx(4,3) = A23;
+      %          A_cvx(4,3) = A43;
+
+       % Tmodel =0;
+        %Tmodel2 = 0;
+
+%    end
+states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
+%statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
+
+end
+
+ 
+figure
+for i=1:4
+subplot(2,2,i)
+plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:", tvec, states_nonlinear(i,:),":x");
+
+title(ylab(i));
+
+end
+%%
+sysest = ss(A_cvx,B_cvx,C,[],0.002);
+
+save("sysest.mat",sysest)
