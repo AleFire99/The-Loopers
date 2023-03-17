@@ -24,3 +24,8 @@ f = fs/2*linspace(0,1,NFFT/2);
 figure
 plot(f,Px)
 
+%%  From analysis of the plot we get this peak
+wn  = 2*pi*3.846; %3.846 is the frequency of the highest point
+Ks = JL * wn*wn;
+
+
