@@ -26,8 +26,8 @@ semilogx(fs,Pxs_est(1,:),"r",fs,Pxs_phy(1,:),"b",fs,Pxs_val(1,:),"k");
 %semilogx(fs,Pxs_phy(1,:));
 %semilogx(fs,Pxs_val(1,:));
 
-evaluation_phy = compareffts(Pxs_val(:,1:3277), Pxs_phy(:,1:3277));
-evaluation_est = compareffts(Pxs_val(:,1:3277), Pxs_est(:,1:3277));
+evaluation_phy = compareffts(Pxs_val(1:), Pxs_phy);
+evaluation_est = compareffts(Pxs_val, Pxs_est);
 
 display(["compatison pysics based error:"+ evaluation_phy + " and optimization based error " + evaluation_est])
 

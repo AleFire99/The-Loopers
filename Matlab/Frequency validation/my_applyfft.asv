@@ -2,16 +2,16 @@ close all
 clear all
 
 data_struct = load_mat;
-N_datastruct = length(data_struct);
+N = length(data_struct);
 load('sysest.mat')
 
-for i = 1:N_datastruct
+for i = 1:N
     data = data_struct(i).data;
     Numb_freq = length(data);
-    time = data(1,2500:Numb_freq);
-    input = data(2,2500:Numb_freq);          %extracting data
-    output_base = data(3,2500:Numb_freq);         %Choose output, 3 for base, 4 for tip
-    output_tip = data(4,2500:Numb_freq);         %Choose output, 3 for base, 4 for tip
+    time = data(1,((Numb_freq-1)/4):Numb_freq);
+    input = data(2,((Numb_freq-1)/4):Numb_freq);          %extracting data
+    output_base = data(3,((Numb_freq-1)/4):Numb_freq);         %Choose output, 3 for base, 4 for tip
+    output_tip = data(4,((Numb_freq-1)/4):Numb_freq);         %Choose output, 3 for base, 4 for tip
     
     dt = 0.002;
 
