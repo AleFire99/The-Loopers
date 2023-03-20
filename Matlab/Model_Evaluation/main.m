@@ -18,6 +18,12 @@ Uvec_val= Uvec_val;          % Real Data
 [fs Pxs_phy] = fft2data(states_pysics,Uvec_val);
 [fs Pxs_val] = fft2data(states_validation,Uvec_val);
 
+figure();
+hold;
+plot(fs,Pxs_est);
+plot(fs,Pxs_phy);
+plot(fs,Pxs_val);
+
 evaluation_phy = compareffts(Pxs_val, Pxs_phy);
 evaluation_est = compareffts(Pxs_val, Pxs_est);
 
