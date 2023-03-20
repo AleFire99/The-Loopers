@@ -9,8 +9,10 @@ states_pysics = statess_phy;            % Accordıng to datasheet
 load('./states_validation.mat');
 states_validation= states_val;          % Real Data
 
-load('./Uvec_val.mat');
-Uvec_val= Uvec_val;          % Real Data
+var = strcat("./Uvec_"+"01"+"_val.mat");
+load(var);
+
+Uvec_val= Uvec_val(1,:);          % Real Data
 
 %fourier transformation for all states fs is frequencies, Px are the
 %magnitudes normalized 
