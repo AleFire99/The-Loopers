@@ -28,15 +28,15 @@ Fs1 = 0.5*xforced1*kspring*[cos(ths1), sin(ths1)];
 Fs2 =0.5*xforced2*kspring*[cos(ths2), sin(ths2)];
 
 F = norm(Fs1)*[-cos(ths1-th1) sin(ths1-th1)];
-figure
+figure(1)
 xlim([-5 5])
 ylim([-5 5])
 grid on
 hold on
 viscircles([0 0],3,'Color',"b");
 
-plot(pin1(1),pin1(2),"ko")
-plot(pin2(1),pin2(2),"ko")
+plot(pin1(1),pin1(2),"ro")
+plot(pin2(1),pin2(2),"ro")
 
 plot(pinnew(1),pinnew(2),"rx")
 line([0 pinnew(1)*5], [0 pinnew(2)*5])
@@ -68,18 +68,18 @@ Fx_real = norms.*cos(theta+alfa);
 Fx_lin = (xk + alfa.*(xk)).*(cos(theta0));
 
 degree = alfa*180/pi;
-plot(degree,Fx_real,"k", degree,Fx_lin, "k:")
+plot(degree,Fx_real,"k", degree,Fx_lin, "r:")
 
-figure
+figure(2)
 error = Fx_real-Fx_lin;
 plot(degree,error, "r")
 
 %% checking taylor approx
-close all
-plot(degree,cos(theta0+alfa),degree, taylorapp(theta0, alfa))
-err = cos(theta0+alfa)-taylorapp(theta0, alfa);
-figure
-plot(abs(err),"r")
+% close all
+% plot(degree,cos(theta0+alfa),degree, taylorapp(theta0, alfa))
+% err = cos(theta0+alfa)-taylorapp(theta0, alfa);
+% figure
+% plot(abs(err),"r")
 
 
 

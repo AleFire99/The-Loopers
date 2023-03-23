@@ -9,7 +9,7 @@
 
     \section{Mathematical Model Creation}
 
-        \subsection{DC Motor}
+        \subsection{DC Motor Equations}
 
             The first task is to decide the shape of the model in terms of which dynamics consider or neglect.
 
@@ -20,30 +20,155 @@
             
             The physical equations of the Static DC Motor:
             
-            \begin{equation}
+            \begin{equation*}
                 \begin{cases}
                     V_a = R_a I_a + E \\
                     E = k_m \Omega \\
                     \tau = k_t I_a
                 \end{cases}
-            \end{equation}
+            \end{equation*}
 
             After several mathematician steps and considering the gearbox effect:
 
             \[
-                \tau = \frac{\eta_m\eta_gK_tK_g(V-K_gK_m\dot\theta)}{R_m} \]
+                \tau = \frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} \]
             
-            this is the output of the DC Motor's Model.
+            this is the output of the DC Motor's Model, where has been added the gear ratio $K_g$ to provide the angular position at the attaching point of the turret.
 
-        \subsection{Flexible Joint and The Gearbox}
+        \subsection{Flexible Joint and The Gearbox Equations}
 
-            Considering in the same section the joint and the mechanical components of the motor, it is possible to write down the two equation of the 2 mechanical system considering:
+            The model of the beam consider the scheme of the beam as:
+            \image{./images/beam_scheme_model.png}
+            in this model the system is a 2-dofs mechanical system and can be modeled following a Lagrangian's Approach.
+
+            The 2 \dofs are:
+            \begin{itemize}
+                \item $\theta$: the absolute angular position of the base of the turret;
+                \item $\alpha$: the relative angular position of the tip \wrt to the base of the turret.
+            \end{itemize}
+
+            The Kinetic Energy:
             \[
-                \]
+                V = \half J_{eq} \dot{\theta} ^2 + \half J_{L} (\dot{\theta} + \dot{\alpha}) ^2 \]
+            where $J_{eq}$ refers to the equivalent inertia of the motor + gearbox, instead $J_{L}$ refers to the inertia of the beam.
 
-            To model the inertia and the friction of the gearbox instead we consider their equivalent effect using the coefficient $J_{eq}$ and $B_{eq}$. The turret
+            The Potential Energy:
             \[
-                \]
+                V = \half K_s \dot{\alpha}^2\]
+            where $K_s$ refers to the linearized stiffness of the equivalent torsional spring. This assumption will be clarified later, but for readability reasons not here.
+            
+            The Dissipative Function:
+            \[
+                D = \half B_{eq} \dot{\theta}^2 + \half B_{L} \dot{\alpha}^2\]
+            where $B_{eq}$ refers to the equivalent friction of the motor + gearbox, instead $B_L$ refers to the equivalent friction that the single beam is subjected.
+            
+            Applying the Lagrange treatment for each \dof:
+            \begin{equation*}
+                \frac{d}{dt} \left(\frac{\partial T}{\partial \dot{x}}\right)-\left(\frac{\partial T}{\partial x}\right)+\left(\frac{\partial D}{\partial \dot{x}}\right)+\left(\frac{\partial V}{\partial x}\right) = \left(\frac{\delta W}{\delta x}\right)\
+            \end{equation*}
+            and after several mathematical steps the system of equation becomes:
+            \begin{equation*}
+                \begin{cases*}
+                    J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\tau \\
+                    J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_{stiff}\alpha=0
+                \end{cases*}
+            \end{equation*}
+
+            \subsubsection{Non-Linear Model for The Spring}
+
+                The reason of considering the couple of spring as an equivalent torsional one is to reduce the complexity of the system.
+                The validity of this assumption comes from a study that we did on the error that the linear approximation provides \wrt to the real model.
+
+                Considering the General equation of a spring 
+                    \[
+                        F = K_s (x_k - x_0)\]
+                in the following situations (we consider in this treatment only one spring, but the discussion is valid due to the symmetry for the entire couple)
+                \image{./images/non_linear_spring.jpg}
+                On the left the equilibrium position $x_k = x_0$, where:
+                \[
+                    \varphi_0 = atan\left(\frac{P_{1_y}}{P_{0_x}}\right)\]
+                \[
+                    F_x = F \cdot cos(\varphi_0)\]
+                \[
+                    x_0 = norm (P_1 - P_0)\]
+
+                On the right instead you are no longer in an equilibrium position, so:
+                \[
+                    x_k = norm(P_1-P_0) \rightarrow \Delta x_k = x_k - x_0\]
+                \[
+                    P_1^{NEXT} = [L cos(\alpha), L(1-sin(\alpha))] \rightarrow F_x = F \cdot cos(\varphi + \alpha)\]
+
+                Plotting the value of the $F_x$ in function of the angle $\alpha$ compared with a linear increase we obtain:
+                \image{./images/K_s_linvs_k_s_NL.png}
+                the error between the two curves:
+                \image{./images/K_s_linvs_k_s_NL_err.png}
+
+                it is possible to see from the graph that the error starts to be non-negligible above 25 degrees, but from measurements the angle remains under 10 degrees. For this reason we can consider the Force with a linear behavior and the $K_s$ constant.
+
+        \subsection{Development of The State Space Model}
+            \subsubsection{Continuous Time}
+
+                Starting from the equations:
+                \begin{equation*}
+                    \begin{cases}
+                        J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} \\
+                        J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_{stiff}\alpha=0
+                    \end{cases}
+                \end{equation*}
+                we develop the State Space system in continuous time, where the state are:
+                \[
+                    \left\lbrack \begin{array}{c}
+                        \theta \\
+                        \dot{\theta} \\
+                        \alpha \\
+                        \dot{\alpha} 
+                        \end{array}\right\rbrack\]
+                the matrix A:
+                \begin{equation*}
+                    \left\lbrack \begin{array}{cccc}
+                        0 & 1 & 0 & 0\\
+                        0 & -\frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & \frac{K_s }{J_{\mathrm{eq}} } & \frac{B_L }{J_{\mathrm{eq}} }\\
+                        0 & 0 & 0 & 1\\
+                        0 & \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & -K_S \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right) & -B_L \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right)
+                        \end{array}\right\rbrack 
+                \end{equation*}
+                and the B matrix:
+                \begin{equation*}
+                    \left\lbrack \begin{array}{c}
+                        0\\
+                        \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }\\
+                        0\\
+                        -\frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }
+                        \end{array}\right\rbrack
+                \end{equation*}
+
+                Considering as the outputs of the system the angular positions $\theta$ and $\alpha$.
+
+            \subsubsection{Discrete Time}
+                One last step is to compute the model in discrete time, this is necessary for the last and definitive approach we used in the identification procedure.
+
+                Considering a sampling time $\Delta$ the A matrix:
+
+                \begin{equation*}
+                    \left\lbrack \begin{array}{cccc}
+                        1 & \Delta  & 0 & 0\\
+                        0 & 1-\Delta \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & \Delta \frac{K_{\mathrm{stiff}} }{J_{\mathrm{eq}} } & \Delta \frac{B_L }{J_{\mathrm{eq}} }\\
+                        0 & 0 & 1 & \Delta \\
+                        0 & \Delta \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & -{\Delta K}_S \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right) & 1-{\Delta B}_L \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right)
+                    \end{array}\right\rbrack 
+                \end{equation*}
+                And the B matrix:       
+                \begin{equation*}
+                    \left\lbrack\begin{array}{c}
+                        0\\
+                        \Delta \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }\\
+                        0\\
+                        -\Delta \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }
+                    \end{array}\right\rbrack
+                \end{equation*}
+                the outputs remain the same.
+                
+
 
 
 
