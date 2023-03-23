@@ -1,29 +1,49 @@
 \chapter{Model Identification}
 \label{cha:model_identification}
 
-    The system is composed by a coupling of a DC electric motor, schematically the system is:
+    The system could be schematized:
 
     \image{./images/scheme.png}
 
-    The physical equations of The DC Motor follow the static motor dynamic (neglecting the $L_a \cdot p I_a$ component), in fact that the resonance frequency is pretty higher \wrt the maximum frequency that the system can acquire.
-    So the equations are:
-    
-    \begin{equation}
-        \begin{cases}
-            V_a = R_a I_a + E \\
-            E = k_m \Omega \\
-            \tau = k_t I_a
-        \end{cases}
-    \end{equation}
+    It is possible to recognize models of a DC electric motor powered by a voltage $V_{dc}$ coupled with a gearbox (both modeled in the same box) that provide torque $u$ to a flexible (due the springs) joint, at last an encoder to model all the conversion's dynamics between the angular positions $y$ and the red ones $\hat{y}$.
 
-    After several mathematician steps and considering the gearbox effect:
+    \section{Mathematical Model Creation}
 
-    \[
-        \tau = \frac{\eta_m\eta_gK_tK_g(V-K_gK_m\dot\theta)}{R_m} \]
+        \subsection{DC Motor}
 
-    To model the inertia and the friction of the gearbox instead we consider their equivalent effect using the coefficient $J_{eq}$ and $B_{eq}$. The turret
-    \[
-        \]
+            The first task is to decide the shape of the model in terms of which dynamics consider or neglect.
+
+            Starting from the DC motor we assumed a static model due to the fact that from the data sheet of the motor, it should have a dynamic given by the inductance at a frequency:
+            \[
+                \frac{R}{L} = \frac{2.6 \Omega}{0.18 mH} \approx  15 KHz\]
+            this is clearly above the frequency range of the mechanical system, that for its nature should have a frequency in the order at last of $100 Hz$ (deeper treatment in its section).
+            
+            The physical equations of the Static DC Motor:
+            
+            \begin{equation}
+                \begin{cases}
+                    V_a = R_a I_a + E \\
+                    E = k_m \Omega \\
+                    \tau = k_t I_a
+                \end{cases}
+            \end{equation}
+
+            After several mathematician steps and considering the gearbox effect:
+
+            \[
+                \tau = \frac{\eta_m\eta_gK_tK_g(V-K_gK_m\dot\theta)}{R_m} \]
+            
+            this is the output of the DC Motor's Model.
+
+        \subsection{Flexible Joint and The Gearbox}
+
+            Considering in the same section the joint and the mechanical components of the motor, it is possible to write down the two equation of the 2 mechanical system considering:
+            \[
+                \]
+
+            To model the inertia and the friction of the gearbox instead we consider their equivalent effect using the coefficient $J_{eq}$ and $B_{eq}$. The turret
+            \[
+                \]
 
 
 
