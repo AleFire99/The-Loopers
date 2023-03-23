@@ -1,136 +1,26 @@
 \chapter{Problem Description}
 \label{cha:problem_description}
 
-    This report will describe our model of the system and our solutions to control the system.
+    This report will describe the model of the system, our solution and some attempts to describe and control the system.
 
-    The system is composed by a motor block that provide torque to the turret, that turret has attached above a beam at one of the two edges with a screw. The beam will follow the movement of the base due to two spring attached from the turret to the beam.
+    The system is composed by a motor's module that provide torque to a turret, above the turret there's a beam which is attached at one of the two edges through a screw to the turret. The beam will follow the movement of the base due to two springs attached between the turret and the beam.
     \image{./images/system.png}
-    The interfaces:
+    The system has several interfaces that could be connected to an acquisition system (DAC/ADC + Amplifier) to acquire measurements and provide input signal, the interfaces are:
     \begin{itemize}
         \item Actuators:
-            \subitem Power Supply input of the motor (changing the voltage);
+            \subitem Power Supply input of the motor's module (changing the voltage);
         \item Sensors:
-            \subitem Incremental Encoder for the position of the turret \wrt to the motor module;
-            \subitem Incremental encoder for the relative position of the arm \wrt the turret.
+            \subitem Incremental Encoder for the position of the turret \wrt to the motor's module;
+            \subitem Incremental Encoder for the relative position of the arm \wrt the turret.
     \end{itemize}
-    The connection between the physical system and the computer is provided with a system DAQ+Amplifier already configured.
+    The acquisition system composed by ADC/DAC + Amplifier is already configured, it doesn't require our attention, for this reason it will not treat in this report.
 
-    The tasks are:
+    The main task is to control a low damped system with variable parameters, this goal is divided in sub-tasks to be achieved:
     \begin{enumerate}
-        \item position control of the top base;
-        \item position control of the arm tip;
-        \item position control of the arm tip with uncertainty in the spring stiffness and arm moment of inertia.
+        \item position control of the top base, with a frequency based approach;
+        \item position control of the arm tip, with a frequency based or a state space approach;
+        \item position control of the arm tip with uncertainty in the spring stiffness and arm moment of inertia, with a state space approach or other advanced control techniques.
     \end{enumerate}
-
-
-%     This report will treat the analysis of the modes of vibrates, the frequency responce funcions and the time hystory of an airplane hanger.
-
-%     The system is composed by several beams under 2 categories. 
-
-%     I choose a maximum analysis frequency of:
-%     \[
-%         f_{max} = 70 Hz \]
-
-%     For each type of beam was computed the maximum lenght:
-%     \begin{itemize}
-%         \item Blue Beam (IPE240):
-%             \subitem $L_{max_b} = 3.3915 $
-%         \item Red Beam (IPE500):
-%             \subitem $L_{max_r} = 4.8537 $
-%     \end{itemize}
-
-%     The undeformed structure:
-%     \image{pt_1_undefstr.jpg}
-
-
-% \chapter{Natural Frequencies (point 2)}
-% \label{cha:nat_freq}
-
-%     The following figures represents the firsts four natural frequencies (their title) and the relative modes of vibration:
-%     \image[0.7]{pt_2_natfreq1.jpg}
-%     mainly horizontal anti-symmetric and vertical symmetric movement
-%     \image[0.7]{pt_2_natfreq2.jpg}
-%     mainly vertical symmetric and symmetric horizontal movement
-%     \image[0.7]{pt_2_natfreq3.jpg}
-%     vertical anti-symmetric and horizontal anti-symmetric movement
-%     \image[0.7]{pt_2_natfreq4.jpg}
-%     mainly a horizontal symmetric and vertical symmetric movement
-%     where the first and the third are anti-symmetric modes, instead the second and the fourth are symmetric.
-
-
-% \chapter{Frequency Responce Function (point 3)}
-% \label{cha:frf_in_f}
-
-%     The following figures are the frequencies responce functions of a forse applied to a non constrained nodal point of the structure:
-    
-%     This are the displacements:
-
-%     \image[0.8]{pt_3_vdispl.jpg}
-%     as expected the only frequency is the second one because it's a vertical FRF and B it's a nodal point for the third mode
-%     \image[0.8]{pt_3_hdispl.jpg}
-%     you can see the first mode and the third modes, this two because they have a croos-dependency from vertical and horizontal movement, and vice versa.
-
-%     The following two have the same shape, but magnified by a $\omega^2$ factor.
-%     \image[0.8]{pt_3_vacc.jpg}
-%     \image[0.8]{pt_3_hacc.jpg}
-
-% \chapter{Frequency Responce Function (point 4)}
-% \label{cha:frf_constr_f}
-
-%     The following figures represent the FRF's of the constrain forces of the left pillar to a simulaneus displacement of the both pillars, infact for both you can see only contributes that are anti-symmetric:
-%     \image[0.7]{pt_4_hforce.jpg}
-%     \image[0.7]{pt_4_moment.jpg}
-
-% \chapter{Time Hystory (point 5)} 
-% \label{cha:time_hyst}
-
-%     The signal was implemented using the fourier serie decomposition:
-%     \[
-%         f(t)=\frac{8}{\pi^2} \sum_{n = 1,3,5,...}^\infty \frac{(-1)^{\frac{n-1}{2}}}{n^2} \cdot \sin\left(\frac{n \pi t}{L}\right)\]
-%     where $L$ is the semi-period.
-
-%     The plots:
-%     \image[1]{pt_5_initialsign.jpg}
-
-%     To find the resonance we can plot the FRF of the same IN-OUT and look for the peak:
-%     \image{pt_5_dispres.jpg}
-%     \image{pt_5_accres.jpg}
-
-%     So the resonance is at:
-%     \[
-%         f = 6.52 Hz \longrightarrow T = 0.1534 s \]
-    
-%     The resultant time hystories compared with the ones with the original period:
-%     \image[1]{pt_5_ressign.jpg}
-%     As expected the shape is identical, but with only one component that prevail on the others and describes the entire shape. This fact is greatly underlined on the accelleration that show more than one contribute in the initial signal, due to the fact that for the displacement the contributes over $6.52 Hz$ (as the third component of the triangular signal) go directly in semi-sismographic zone.
-
-
-% \chapter{Frequency Responce Function  of the unbalanced motor (point 6)}
-% \label{cha:frf_unbalanced_motor}
-
-%     The motor is modelled as an horizontal force plus a vertical one multiplied by $i$ to add the phase shift of the rotation, the magnitude of the force instead is proportional to the excencitry $e$ and the square of the forced $\omega$:
-%     \[
-%         \begin{cases}
-%             f_x = m \omega ^ 2 e \cdot \sin(\omega t)\\
-%             f_y = m \omega ^ 2 e \cdot \cos(\omega t)
-%         \end{cases}
-%         \]
-%     the resuls:
-%     \image{pt_6_Bhacc.jpg}
-%     \image{pt_6_Bvacc.jpg}
-%     \image{pt_6_Chacc.jpg}
-%     \image{pt_6_Cvacc.jpg}
-
-%     The only important contribute we get is in the fourth graph, this is given by the fact that we are exciting the structure in a point for the third modal shape that has a really high displacement and we are also reading in another high displacement point.
-
-% \chapter{Reinforced Structure (point 7)}
-% \label{cha:reinforced_structure}
-
-%     To reinforce the structure we can see that the main contribute comes from the first mode of vibrate, this means that add a structure that prevent that movement can help, like a couple of diagonal beam as shown in figure.
-%     \image[0.5]{pt_7_undefstr.jpg}
-%     these additional beams reduce the vibration by a factor $0.21$  with an icrease of the mass of $4.69\% $.
-%     \image[0.7]{pt_7_frf.jpg}
-    
 
 
 
