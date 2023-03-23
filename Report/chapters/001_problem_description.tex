@@ -1,0 +1,28 @@
+\chapter{Problem Description}
+\label{cha:problem_description}
+
+    This report will describe the model of the system, our solution and some attempts to describe and control the system.
+
+    The system is composed by a motor's module that provide torque to a turret, above the turret there's a beam which is attached at one of the two edges through a screw to the turret. The beam will follow the movement of the base due to two springs attached between the turret and the beam.
+    \image{./images/system.png}
+    The system has several interfaces that could be connected to an acquisition system (DAC/ADC + Amplifier) to acquire measurements and provide input signal, the interfaces are:
+    \begin{itemize}
+        \item Actuators:
+            \subitem Power Supply input of the motor's module (changing the voltage);
+        \item Sensors:
+            \subitem Incremental Encoder for the position of the turret \wrt to the motor's module;
+            \subitem Incremental Encoder for the relative position of the arm \wrt the turret.
+    \end{itemize}
+    The acquisition system composed by ADC/DAC + Amplifier is already configured, it doesn't require our attention, for this reason it will not treat in this report.
+
+    The main task is to control a low damped system with variable parameters, this goal is divided in sub-tasks to be achieved:
+    \begin{enumerate}
+        \item position control of the top base, with a frequency based approach;
+        \item position control of the arm tip, with a frequency based or a state space approach;
+        \item position control of the arm tip with uncertainty in the spring stiffness and arm moment of inertia, with a state space approach or other advanced control techniques.
+    \end{enumerate}
+
+
+
+
+

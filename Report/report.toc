@@ -1,0 +1,10 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Problem Description}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Model Identification}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Mathematical Model Creation}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}DC Motor}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Flexible Joint and The Gearbox}{5}{subsection.2.1.2}%
+\contentsline {chapter}{\numberline {3}Position Control of the Base}{6}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Position Control of The Tip}{7}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Position Control of the Tip with Uncertanties}{8}{chapter.5}%
+\contentsline {chapter}{Conclusioni}{9}{chapter*.5}%
