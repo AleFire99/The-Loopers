@@ -15,7 +15,8 @@ s = tf("s");
 DC_gain_1 = dcgain(s*TF);
 DC_gain_2 = dcgain(TF);
 
-%PI Base Controller
+%%
+% PI Base Controller
 %The actual set time differs due to DC gain in the system
 
 C_desired = (s-poles(3))*(s-poles(4))/((s+24)*(s+25));      %Compensator scheme
@@ -48,7 +49,8 @@ C_PI = C_desired*BW;
 % R = K_P + 1/s*K_I + s*K_D;
 
 
-%LQR
+%%
+% LQR
 
 Q = diag([10 1 100 1]);
 R = [1];
