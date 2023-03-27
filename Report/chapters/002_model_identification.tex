@@ -167,15 +167,79 @@
                     \end{array}\right\rbrack
                 \end{equation*}
                 the outputs remain the same.
+
+    \section{Identification Technique}
+
+        We proceeded in 3 different way, increasing the complexity, trying to fit as possible all the dynamics of the system. The first two methods didn't provide us enough good results, but are reported because guide us in the choice of a good method for the identification and the model produced is reliable. 
+        
+        \subsection{Deprecated Methods}
+            \subsubsection{Stiffness Identification}
+                    
+                The first method sticks too much on the reliability of the parameters from the data sheet: we tried to identify just the value of the stiffness of the spring using a step signal and analyzing the frequency of the peak of resonance:
+                \[
+                    K_s = J_L \cdot \omega_n^2\]
+                As result our model didn't fit a lot the real system and the results was so bad that encourage us to proceed in a complete different direction.
+
+            \subsubsection{Identification Toolbox}
+
+                Due to high number of possible uncertainties we look for a different approach that could work around the small number of possible types of experiments and the direct inaccessibility of some parameters. An interesting example of this last consideration is the impossible measurement of the current inside the armature to get a measurement of the resistance $R_m$.
+
+                For these reasons we choose to look for an optimization method that can provide the values of the state space matrices. The first attempt consisted in the usage of the model identification toolbox that, given the order of the system, provides a transfer function representation of the system. 
+                
+                I will not go in deep with this method became as first step in that direction we didn't put too much effort. In fact, we let Matlab works on its own to get the model however the results weren't good enough and in this way we lost the physical meaning of the provided quantities.
+
+        \subsection{Model Identification using CVX}
+
+            This is the definitive method that we used. CVX is a package allows, giving constraints and objectives, to implement a convex optimization in Matlab in the form:
+            \begin{align*}
+                \text{minimize   }  & \left\|Ax-b\right\|_{2} \\
+                \text{subject to   }& Cx=d \\
+                                    & \left\|x\right\|_{\infty} \leq e
+            \end{align*}
+                
+            As dataset we collect the values of the 2 outputs with the system subjected to a square wave of period of $T = 0,63 s$ 
+            \image{./images/data_train.png}
+
+            For the optimization we started from the nominal parameters, considering the idea that the real values should be not too far. 
+            
+            The nominal parameters:
+
+            \begin{itemize}
+                \item For the motor:
+                    \subitem Motor armature resistance: $R_m = 2.6 \Omega$
+                    \subitem Motor current-torque constant: $K_t = 0.00768 Nm/A$
+                    \subitem Motor back-emf constant: $K_m = 0.00768 V/(rad/s)$
+                    \subitem High-gear total gear ratio: $K_g = 70$
+                    \subitem Motor efficiency: $\eta_m = 0.69$
+                    \subitem Gearbox efficiency: $\eta_g = 0.9$
+                \item The equivalent mechanical system of the motor + gearbox:
+                    \subitem Equivalent moment of inertia: $J_{eq} = 0.002087 Kg m^2$
+                    \subitem Equivalent viscous damping coefficient: $B_{eq} = 0.015 Nm/(rad/s)$
+            \end{itemize}
+
+            For the parameters of the rotating arm we compute the values of the inertia, following its geometry, as:
+                \[
+                    J_L = m_1 \cdot \frac{L_1^2}{3} + m_2 \cdot \frac{L_2}{12} + m_2 \cdot d^2 = 0.0032 Kg m^2\]
+            \image[0.8]{./images/inertia_computation.png}
+            the value of the friction coefficient was supposed initially null:
+                \[
+                    B_L = 0\]
+            and the value of the $K_s$ we use the value generated in the analysis stiffness identification:
+                \[
+                    K_s = J_L \cdot \omega_n^2 = 1.8426 N/m \]
+            
+        
+
+                
                 
 
 
 
 
-% \section{Research of the machine paramethers}
-% \label{sec:reserche_machine_paramethers}
-% The DTC method needs only a few paramethers due to the fact that the current saturation is already handled in the computation of the maximum torque and most of the control variables are tuned empirically.
-% In fact the 3 needed paramethers are:
+% \section{Research of the machine parameters}
+% \label{sec:reserche_machine_parameters}
+% The DTC method needs only a few parameters due to the fact that the current saturation is already handled in the computation of the maximum torque and most of the control variables are tuned empirically.
+% In fact the 3 needed parameters are:
 % \begin{itemize}
 %     \item rated speed: 
 %             \begin{equation}
