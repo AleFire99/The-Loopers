@@ -64,13 +64,13 @@ for i = 1:N_datastruct
     
 end
 
+[A B C D ]= sysest;
 
-
-for  
+for freqs = 1:51
     %%
     states_nonlinear = initial;
-    A23 = A_cvx(2,3);
-    A43 = A_cvx(4,3);
+    A23 = A(2,3);
+    A43 = A(4,3);
     Tmodel1 = 0;
     Tmodel2 = 0;
     for i = 1:N_val-tstart
@@ -78,8 +78,8 @@ for
        % if abs(alfa)  0.1
             Tmodel1 = Ts*springcomp(alfa)/Jeq;
             Tmodel2 = -Ts*springcomp(alfa)*((Jeq+JL)/(JL*Jeq));
-            A_cvx(2,3) = 0;
-            A_cvx(4,3) = 0;
+            A(2,3) = 0;
+            A(4,3) = 0;
         %else
          %   A_cvx(4,3) = A23;
           %          A_cvx(4,3) = A43;
@@ -88,7 +88,7 @@ for
             %Tmodel2 = 0;
 
     %    end
-    states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
+    states_nonlinear(:,i+1) = A * states_nonlinear(:,i) + B*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
     %statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
 
     end
@@ -104,6 +104,8 @@ for
     end
 
 end    
+
+
 [mag,pha] = bode(sysest,omega);
 
 %G_1 = 20*log10(abs(y1_max ./u_max)*(2*pi/4096));
