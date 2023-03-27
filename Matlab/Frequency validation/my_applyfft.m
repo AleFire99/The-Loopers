@@ -3,7 +3,7 @@ clear all
 
 data_struct = load_mat;
 N_datastruct = length(data_struct);
-load('sysest.mat')
+load('sysest4.mat')
 
 for i = 1:N_datastruct
     data = data_struct(i).data;
@@ -64,17 +64,59 @@ for i = 1:N_datastruct
     
 end
 
+
+
+for  
+    %%
+    states_nonlinear = initial;
+    A23 = A_cvx(2,3);
+    A43 = A_cvx(4,3);
+    Tmodel1 = 0;
+    Tmodel2 = 0;
+    for i = 1:N_val-tstart
+    alfa = states_nonlinear(3,i);
+       % if abs(alfa)  0.1
+            Tmodel1 = Ts*springcomp(alfa)/Jeq;
+            Tmodel2 = -Ts*springcomp(alfa)*((Jeq+JL)/(JL*Jeq));
+            A_cvx(2,3) = 0;
+            A_cvx(4,3) = 0;
+        %else
+         %   A_cvx(4,3) = A23;
+          %          A_cvx(4,3) = A43;
+
+           % Tmodel =0;
+            %Tmodel2 = 0;
+
+    %    end
+    states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
+    %statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
+
+    end
+
+
+    figure
+    for i=1:4
+    subplot(2,2,i)
+    plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:", tvec, states_nonlinear(i,:),":x");
+
+    title(ylab(i));
+
+    end
+
+end    
 [mag,pha] = bode(sysest,omega);
 
-G_1 = 20*log10(abs(y1_max ./u_max)*(2*pi/4096));
+%G_1 = 20*log10(abs(y1_max ./u_max)*(2*pi/4096));
+G_1 = (abs(y1_max ./u_max)*(2*pi/4096));
 magbase = mag(1,:,:);           %extraction of the mag of base, first dynamic
 magbase = squeeze (magbase);
-magbase = 20*log10(magbase);
+%magbase = 20*log10(magbase);
 
-G_2 = 20*log10(abs(y2_max ./u_max)*(2*pi/4096));
+%G_2 = 20*log10(abs(y2_max ./u_max)*(2*pi/4096));
+G_2 = (abs(y2_max ./u_max)*(2*pi/4096));
 magtip = mag(2,:,:);           %extraction of the mag of tip, second dynamic
 magtip = squeeze (magtip);
-magtip = 20*log10(magtip);
+%magtip = 20*log10(magtip);
 
 figure;
 semilogx(omega,magbase,"r",omega,G_1,"xk");

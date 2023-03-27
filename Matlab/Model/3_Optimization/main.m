@@ -52,7 +52,7 @@ Cdt = sys_c.C;
 load data_train_01.mat
 load data_validation_01.mat
 data_val =data_validation ;
-data = data;
+data = [data data_validation];
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
@@ -86,7 +86,8 @@ nu              =   1;
 
 PHI             =   zeros(nz*(N-1),(nz*nz+nu*nz));                        % Initialize regressors' matrix
 Y               =   zeros(nz*(N-1),1);                                 % Initialize output vector
-W               =   1;% Relative weight between r and beta
+W               =   ones(nz*(N-1),1);% Relative weight between r and beta
+W(length(W)*0.75:end) = 1.1 * ones(length(W)-(length(W)*0.75)+1,1);
 for ind = 1:N-1
     state = [theta(ind) thetadot(ind) alfa(ind) alfadot(ind)];
     
@@ -103,11 +104,11 @@ end
 % Bl we dont know
 % nm
 variation = 0.1;
-
+%W = W';
 tic
 cvx_begin
 variable theta_cvx(20,1)
-minimize norm(Y-PHI*theta_cvx)
+minimize norm((Y-PHI*theta_cvx).*W)
 subject to
 theta_cvx(1,1) == 1; theta_cvx(2,1) == Ts; theta_cvx(3,1) == 0.0017; theta_cvx(4,1) == 0;
 theta_cvx(5,1) == 0;theta_cvx(8,1) ==  0.0017;

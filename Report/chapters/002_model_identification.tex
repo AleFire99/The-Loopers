@@ -220,13 +220,24 @@
             For the parameters of the rotating arm we compute the values of the inertia, following its geometry, as:
                 \[
                     J_L = m_1 \cdot \frac{L_1^2}{3} + m_2 \cdot \frac{L_2}{12} + m_2 \cdot d^2 = 0.0032 Kg m^2\]
-            \image[0.8]{./images/inertia_computation.png}
+            \image[0.7]{./images/inertia_computation.png}
             the value of the friction coefficient was supposed initially null:
                 \[
                     B_L = 0\]
             and the value of the $K_s$ we use the value generated in the analysis stiffness identification:
-                \[
+                
+            the analysis provide a Fourier transfer of the second output (the relative position of the tip) as in the figure:
+            \image[0.5]{./images/fourier_stiff_analysis.png}
+            the peak is at:
+            \[
+                f = 3.84568 Hz\]
+            as result we assign the stiffness initial value as:
+            \[
                     K_s = J_L \cdot \omega_n^2 = 1.8426 N/m \]
+
+            
+            
+            
             
         
 

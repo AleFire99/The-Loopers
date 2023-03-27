@@ -1278,6 +1278,11 @@ INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
+INPUT ./images/fourier_stiff_analysis.png
+INPUT ./images/fourier_stiff_analysis.png
+INPUT ./images/fourier_stiff_analysis.png
+INPUT ./images/fourier_stiff_analysis.png
+INPUT ./images/fourier_stiff_analysis.png
 INPUT ./chapters/003_position_control_base.tex
 INPUT chapters/003_position_control_base.tex
 INPUT ./chapters/003_position_control_base.tex

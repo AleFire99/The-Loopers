@@ -2,16 +2,16 @@ close all
 clear all
 
 data_struct = load_mat;
-N = length(data_struct);
-load('sysest.mat')
+N_datastruct = length(data_struct);
+load('sysest4.mat')
 
-for i = 1:N
+for i = 1:N_datastruct
     data = data_struct(i).data;
     Numb_freq = length(data);
-    time = data(1,((Numb_freq-1)/4):Numb_freq);
-    input = data(2,((Numb_freq-1)/4):Numb_freq);          %extracting data
-    output_base = data(3,((Numb_freq-1)/4):Numb_freq);         %Choose output, 3 for base, 4 for tip
-    output_tip = data(4,((Numb_freq-1)/4):Numb_freq);         %Choose output, 3 for base, 4 for tip
+    time = data(1,2500:Numb_freq);
+    input = data(2,2500:Numb_freq);          %extracting data
+    output_base = data(3,2500:Numb_freq);         %Choose output, 3 for base, 4 for tip
+    output_tip = data(4,2500:Numb_freq);         %Choose output, 3 for base, 4 for tip
     
     dt = 0.002;
 
@@ -64,17 +64,22 @@ for i = 1:N
     
 end
 
+
+
+
 [mag,pha] = bode(sysest,omega);
 
-G_1 = 20*log10(abs(y1_max ./u_max)*(2*pi/4096));
+%G_1 = 20*log10(abs(y1_max ./u_max)*(2*pi/4096));
+G_1 = (abs(y1_max ./u_max)*(2*pi/4096));
 magbase = mag(1,:,:);           %extraction of the mag of base, first dynamic
 magbase = squeeze (magbase);
-magbase = 20*log10(magbase);
+%magbase = 20*log10(magbase);
 
-G_2 = 20*log10(abs(y2_max ./u_max)*(2*pi/4096));
+%G_2 = 20*log10(abs(y2_max ./u_max)*(2*pi/4096));
+G_2 = (abs(y2_max ./u_max)*(2*pi/4096));
 magtip = mag(2,:,:);           %extraction of the mag of tip, second dynamic
 magtip = squeeze (magtip);
-magtip = 20*log10(magtip);
+%magtip = 20*log10(magtip);
 
 figure;
 semilogx(omega,magbase,"r",omega,G_1,"xk");

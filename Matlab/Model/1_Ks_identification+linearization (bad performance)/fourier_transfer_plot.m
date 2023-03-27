@@ -4,7 +4,8 @@
 %from 1 to 10 Hz
 %storage the data in a variable X
 %sample data:
-x = y(:,4);
+x = data(2,:);
+t = data(1,:);
 dt = t(2)-t(1);
 %samples
 N = length(x);
@@ -23,9 +24,11 @@ f = fs/2*linspace(0,1,NFFT/2);
 %plot to 10 Hz
 figure
 plot(f,Px)
+[M,I]= max(y);
+f_peak = f(I);
 
 %%  From analysis of the plot we get this peak
-wn  = 2*pi*3.846; %3.846 is the frequency of the highest point
-Ks = JL * wn*wn;
+wn  = 2*pi*f; %3.846 is the frequency of the highest point
+
 
 
