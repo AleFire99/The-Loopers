@@ -49,8 +49,8 @@ Cdt = sys_c.C;
 % JL in future it can be a disturbance and it can be calculated
 
 %% Load data
-load data_train_01.mat
-load data_validation_01.mat
+load ./Dataset/sin_dataset.mat
+load ./Dataset/data_validation_01.mat
 data_val =data_validation ;
 data = [data data_validation];
 %data=data(:,500*8:end) ;
@@ -87,7 +87,9 @@ nu              =   1;
 PHI             =   zeros(nz*(N-1),(nz*nz+nu*nz));                        % Initialize regressors' matrix
 Y               =   zeros(nz*(N-1),1);                                 % Initialize output vector
 W               =   ones(nz*(N-1),1);% Relative weight between r and beta
-W(length(W)*0.75:end) = 1.1 * ones(length(W)-(length(W)*0.75)+1,1);
+
+W(length(W)*0.75:end) = 1.1 * ones(length(W)-(length(W)*0.75)+1,1);         %addition of weights 
+
 for ind = 1:N-1
     state = [theta(ind) thetadot(ind) alfa(ind) alfadot(ind)];
     
@@ -104,7 +106,6 @@ end
 % Bl we dont know
 % nm
 variation = 0.1;
-%W = W';
 tic
 cvx_begin
 variable theta_cvx(20,1)

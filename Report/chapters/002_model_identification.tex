@@ -88,7 +88,7 @@
                 \[
                     \varphi_0 = atan\left(\frac{P_{1_y}}{P_{0_x}}\right)\]
                 \[
-                    F_x = F \cdot cos(\varphi_0)\]
+                    F_\perp = F \cdot cos(\varphi_0)\]
                 \[
                     x_0 = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2}\]
 
@@ -96,9 +96,13 @@
                 \[
                     x_k = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2} \rightarrow \Delta x_k = x_k - x_0\]
                 \[
-                    P_1^{NEXT} = [l \cdot cos(\alpha), l \cdot (1-sin(\alpha))] \rightarrow F_x = F \cdot cos(\varphi + \alpha)\]
+                    P_1^{NEXT} = \left\lbrack \begin{array}{c}
+                        l \cdot cos(\alpha) \\
+                        l \cdot (1-sin(\alpha))
+                        \end{array}\right\rbrack
+                        \rightarrow F_\perp  = F \cdot cos(\varphi + \alpha)\]
 
-                Plotting the value of the $F_x$ in function of the angle $\alpha$ compared with a linear increase we obtain:
+                Plotting the value of the $F_\perp$ in function of the angle $\alpha$ compared with a linear increase we obtain:
                 \image{./images/K_s_linvs_k_s_NL.png}
                 the error between the two curves:
                 \image{./images/K_s_linvs_k_s_NL_err.png}
