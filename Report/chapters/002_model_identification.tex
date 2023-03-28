@@ -90,13 +90,13 @@
                 \[
                     F_x = F \cdot cos(\varphi_0)\]
                 \[
-                    x_0 = norm (P_1 - P_0)\]
+                    x_0 = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2}\]
 
-                On the right instead you are no longer in an equilibrium position, so:
+                On the right  you are perturbed position, so:
                 \[
-                    x_k = norm(P_1-P_0) \rightarrow \Delta x_k = x_k - x_0\]
+                    x_k = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2} \rightarrow \Delta x_k = x_k - x_0\]
                 \[
-                    P_1^{NEXT} = [L cos(\alpha), L(1-sin(\alpha))] \rightarrow F_x = F \cdot cos(\varphi + \alpha)\]
+                    P_1^{NEXT} = [l \cdot cos(\alpha), l \cdot (1-sin(\alpha))] \rightarrow F_x = F \cdot cos(\varphi + \alpha)\]
 
                 Plotting the value of the $F_x$ in function of the angle $\alpha$ compared with a linear increase we obtain:
                 \image{./images/K_s_linvs_k_s_NL.png}
