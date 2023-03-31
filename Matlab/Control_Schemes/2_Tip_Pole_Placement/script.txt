@@ -1,0 +1,12 @@
+%% continous
+wn=24.1651;
+zeta= 0.7;
+sysestc = d2c(sysest);
+new_pole = [-wn*zeta, -21, -20, -22]; %wn*ζ +- wn*sqrt(1-ζ*ζ)i
+k = place(sysestc.A, sysestc.B, new_pole);
+syspp = ss(sysestc.A-sysestc.B*k,sysestc.B,sysestc.C,sysestc.D);
+p_cl = pole(syspp);
+step(syspp)
+Kdc = dcgain(syspp);
+Kr = 1/Kdc;
+L = place(sysestc.A',sysestc.C', 10*new_pole)';
