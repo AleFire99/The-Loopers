@@ -32,3 +32,8 @@ wn  = 2*pi*f; %3.846 is the frequency of the highest point
 
 
 
+%%  From analysis of the plot we get this peak
+wn  = 2*pi*3.846; %3.846 is the frequency of the highest point
+Ks = JL * wn*wn;
+
+

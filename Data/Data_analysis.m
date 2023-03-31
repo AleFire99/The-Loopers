@@ -16,6 +16,7 @@ subplot 312;plot(vett_t,Out_t2);grid
 
 xlabel('Time [s]');
 subplot 313;plot(vett_t,Out_t3);grid
+subplot 313;plot(vett_t,Out_t3);grid
 
 xlabel('Time [s]');
 
