@@ -11,18 +11,17 @@ zeta= 0.7;
 
 new_pole = [-wn*zeta ; -21; -23; -25];          %Definition of the new poles
 
-k = place(sysestc.A, sysestc.B, new_pole);      %Pole placement implementation
+%Pole placement implementation
 
+k = place(sysestc.A, sysestc.B, new_pole);      
 syspp = ss(sysestc.A-sysestc.B*k,sysestc.B,sysestc.C,sysestc.D);
-
 p_cl = pole(syspp);
-
 Kdc = dcgain(syspp);
-
 Kr = 1/Kdc(1);
 
-L = place(sysestc.A',sysestc.C', 10*new_pole)'; %Observer implementation  
+%Observer implementation  
 
+L = place(sysestc.A',sysestc.C', 10*new_pole)'; 
 
 %% Control with Pole Placement in Discrete Time
 new_pole2 = [0.95 + 0.0i, 0.98 + 0.0i, 0.96 + 0.0i, 0.993 - 0.0i];
