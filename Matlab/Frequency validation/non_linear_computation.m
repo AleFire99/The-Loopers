@@ -3,7 +3,7 @@ close all
 clear all
 
 [data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load('sysest4.mat')                             %loads the linear system
+load('sysest_illegal.mat')                             %loads the linear system
 Ts = sysest.Ts;
 fs =1/Ts;
 

@@ -1,16 +1,30 @@
-%% continous
-sysestc = d2c(sysest);
-zeta = 0.8;
-wn = 24.1651;
-new_pole = [-wn*zeta ; -21; -23; -25];
-k = place(sysestc.A, sysestc.B, new_pole);
+sysest = load("sysest.mat").sysest;
+sysestc = d2c(sysest);              % Implementation provided in Continuous time
+
+% Model Parameters coming from resonance measurements
+
+f=3.846;
+wn = 2*pi*f;
+zeta= 0.7;
+
+%% Control with Pole Placement in Continous Time
+
+new_pole = [-wn*zeta ; -21; -23; -25];          %Definition of the new poles
+
+k = place(sysestc.A, sysestc.B, new_pole);      %Pole placement implementation
+
 syspp = ss(sysestc.A-sysestc.B*k,sysestc.B,sysestc.C,sysestc.D);
+
 p_cl = pole(syspp);
-step(syspp)
+
 Kdc = dcgain(syspp);
-Kr = 1/Kdc;
-L = place(sysestc.A',sysestc.C', 10*new_pole)';
-%% discrete
+
+Kr = 1/Kdc(1);
+
+L = place(sysestc.A',sysestc.C', 10*new_pole)'; %Observer implementation  
+
+
+%% Control with Pole Placement in Discrete Time
 new_pole2 = [0.95 + 0.0i, 0.98 + 0.0i, 0.96 + 0.0i, 0.993 - 0.0i];
 k2 = place(sysest.A, sysest.B, new_pole2);
 syspp2 = ss(sysest.A-sysest.B*k2,sysest.B,sysest.C,sysest.D, 0.002);
