@@ -38,6 +38,6 @@ bode(L);
 %%
 % LQR
 
-Q = diag([10 1 100 1]);
+Q = diag([10 1 100 1]);     %initial values
 R = [1];
 K_lqr = lqr(sysestc,Q,R);
