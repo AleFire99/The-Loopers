@@ -40,7 +40,7 @@ D_en = [0;0];
 
 sys_en = ss(A_en, B_en, C_en, D_en);
 
-poles_en = [new_pole; 1.1*min(new_pole)];
+poles_en = [new_pole; 1.1*min(new_pole)];               %reduce new pole gain accordingly
 K_en = place(A_en, B_en, poles_en);
 K_x = K_en(1:4);
 K_eta = K_en(5);

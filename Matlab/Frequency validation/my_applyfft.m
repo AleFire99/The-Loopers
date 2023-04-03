@@ -3,7 +3,7 @@ close all
 clear all
 
 [data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load('sysest.mat')                             %loads the linear system
+load('sysest_illegal.mat')                             %loads the linear system
 dt = sysest.Ts;
 fs =1/dt;
 
@@ -65,7 +65,7 @@ end
 
 %flag to get the results in logscale:   0 - linear scale
 %                                       1 - log scale
-logscale_flag = 0;              
+logscale_flag = 1;              
 
 if logscale_flag==0
 

@@ -1,5 +1,5 @@
-clear all    %Initialization
-close all
+%clear all    %Initialization
+%close all
 
 sysest = load("sysest.mat").sysest;     %Loading system
 sysestc = d2c(sysest);
@@ -38,6 +38,6 @@ bode(L);
 %%
 % LQR
 
-Q = diag([10 1 100 1]);     %initial values
+Q = diag([1000 1 100 1]);     %initial values
 R = [1];
 K_lqr = lqr(sysestc,Q,R);

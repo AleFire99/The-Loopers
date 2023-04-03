@@ -3,7 +3,7 @@ close all
 clear all
 
 [data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load('sysest_illegal.mat')                             %loads the linear system
+load('sysest5.mat')                             %loads the linear system
 Ts = sysest.Ts;
 fs =1/Ts;
 
@@ -83,7 +83,7 @@ Beq = 0.015;
 
 % Supposed Value of Ks
 
-Ks = 313;
+Ks_lin = 313;
 
 
 %% Matrix Extraction
@@ -129,7 +129,7 @@ for i = 1:N_data_struct
     for k = 1:N_val-1
         
         alfa = states_nonlinear(3,k);
-        [Mx_real, Mx_lin] = springcomp_double(alfa, Ks);
+        [Mx_real, Mx_lin] = springcomp_double(alfa, Ks_lin);
         Tmodel1 = (Ts/Jeq) * Mx_real;
         Tmodel2 = -Ts*((Jeq+JL)/(JL*Jeq)) * Mx_real;
         A(2,3) = 0;
@@ -221,14 +221,14 @@ end
 
 figure;
 semilogx(omega,magbase,"r",omega,G_1,"xk" ,omega_nl,G_1_nl,"*b");
-title("Plot of the Base Frequency Responce (Ks = "+ Ks +" N/m)");
+title("Plot of the Base Frequency Responce (Ks = "+ Ks_lin +" N/m)");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
 legend('Model', 'Data lin', 'Sim n-lin');
 
 figure;
 semilogx(omega,magtip,"r",omega,G_2,"xk" ,omega_nl,G_2_nl,"*b");
-title("Plot of the Tip Frequency Responce (Ks = "+ Ks +" N/m)");
+title("Plot of the Tip Frequency Responce (Ks = "+ Ks_lin +" N/m)");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
 legend('Model', 'Data lin', 'Sim n-lin');

@@ -22,8 +22,8 @@ BL = 0; %invented but i am neglecting the damping in the link
 Beq = 0.015;
 f=3.846;
 wn = 2*pi*f;
-Ks = JL*wn*wn; %invented  
-%Ks = 300;
+%Ks = JL*wn*wn; %invented  
+Ks = 313;
 %% god
 %TaoCons = ng*nm*Kt/Rm;
 TaoCons = ng*nm*Kt*Kg/Rm;
@@ -127,8 +127,8 @@ theta_cvx(18,1) == -theta_cvx(20,1);
 theta_cvx(17,1) == 0;
 theta_cvx(19,1) == 0;
 
-theta_cvx(7,1) >= 0.8*Ts*Ks/Jeq;
-theta_cvx(7,1) <= 1.2*Ts*Ks/Jeq;
+% theta_cvx(7,1) >= 0.8*Ts*Ks/Jeq;
+% theta_cvx(7,1) <= 1.2*Ts*Ks/Jeq;
 
 
 cvx_end
@@ -265,4 +265,4 @@ end
 %%
 sysest = ss(A_cvx,B_cvx,C,[],0.002);
 
-save("sysest.mat",sysest)
+save("sysest666.mat",sysest)

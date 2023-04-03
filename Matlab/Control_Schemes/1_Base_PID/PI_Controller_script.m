@@ -1,3 +1,6 @@
+close all
+clear all
+
 sysest = load("sysest.mat").sysest;
 sysest_cont = d2c(sysest);              % Implementation provided in Continuous time
 
@@ -6,6 +9,8 @@ sysest_cont = d2c(sysest);              % Implementation provided in Continuous 
 f=3.846;
 wn = 2*pi*f;
 zeta= 0.7;
+
+v_a_max = 15;
 
 %% Control with a Compensator
 
@@ -75,3 +80,10 @@ Tpid = tts(indext2) - tts(indext1);     %Value of t2-t1
 
 Kp = 0.9*Tpid/(Kpid*Lpid);
 Ti = 3*Lpid;
+
+%Manual Tune 
+
+Kp = Kp *0.5;
+Ti = Ti * 20000;
+
+
