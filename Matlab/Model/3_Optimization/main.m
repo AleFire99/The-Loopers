@@ -49,10 +49,10 @@ Cdt = sys_c.C;
 % JL in future it can be a disturbance and it can be calculated
 
 %% Load data
-load ./Dataset/sin_dataset.mat
+load ./Dataset/data_train_02.mat
 load ./Dataset/data_validation_01.mat
 data_val =data_validation ;
-data = [data data_validation];
+data = [data_validation ];
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
@@ -88,7 +88,7 @@ PHI             =   zeros(nz*(N-1),(nz*nz+nu*nz));                        % Init
 Y               =   zeros(nz*(N-1),1);                                 % Initialize output vector
 W               =   ones(nz*(N-1),1);% Relative weight between r and beta
 
-W(length(W)*0.75:end) = 1.1 * ones(length(W)-(length(W)*0.75)+1,1);         %addition of weights 
+W(length(W)*0.75:end) = 1 * ones(length(W)-(length(W)*0.75)+1,1);         %addition of weights 
 
 for ind = 1:N-1
     state = [theta(ind) thetadot(ind) alfa(ind) alfadot(ind)];
