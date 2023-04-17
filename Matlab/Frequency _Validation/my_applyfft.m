@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream:Matlab/Frequency validation/my_applyfft.m
 %% Load of Datas
 close all
 clear all
@@ -110,7 +109,7 @@ legend('Model', 'Data');
 figure;
 bode(sysest);
 
-=======
+
 %% Load of Datas
 close all
 clear all
@@ -222,4 +221,3 @@ legend('Model', 'Data');
 figure;
 bode(sysest);
 
->>>>>>> Stashed changes:Matlab/Frequency _Validation/my_applyfft.m

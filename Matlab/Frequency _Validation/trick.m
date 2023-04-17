@@ -2,13 +2,15 @@ clc
 close all
 clear 
 
-load("Copy_of_sysest5.mat")
+load("sysest09a_lowfreq.mat")
 s1 = sysest;
-load("Copy_of_sysest_matching.mat")
+load("sysest09b_highfreq.mat")
 s2 = sysest;
 
-A = (s1.A + s2.A)/2;
-B = (s1.B + s2.B)/2;
-C = (s1.C + s2.C)/2;
+sysest.A = (s1.A + s2.A)/2;
+sysest.B = (s1.B + s2.B)/2;
+sysest.C = (s1.C + s2.C)/2;
 
-ss(A,B,C,[],0.002)
+%ss(A,B,C,[],0.002);
+
+save("sysest09c_trick.mat","sysest")
