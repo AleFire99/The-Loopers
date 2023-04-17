@@ -3,7 +3,7 @@ close all
 clear all
 
 [data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load('sysest_illegal.mat')                             %loads the linear system
+load('sysest_matching.mat')                             %loads the linear system
 dt = sysest.Ts;
 fs =1/dt;
 
@@ -61,7 +61,8 @@ end
 
 %% Plot of Results compared with the Bode Diagram of the Model
 
-[mag,pha] = bode(sysest,omega);
+om = 0.1:1:50;
+[mag,pha] = bode(sysest,om);
 
 %flag to get the results in logscale:   0 - linear scale
 %                                       1 - log scale
@@ -70,11 +71,11 @@ logscale_flag = 1;
 if logscale_flag==0
 
     G_1 = (abs(y1_max ./u_max)*(2*pi/4096));
-    magbase = mag(1,:,:)./u_max;           %extraction of the mag of base, first dynamic
+    magbase = mag(1,:,:);           %extraction of the mag of base, first dynamic
     magbase = squeeze (magbase);
 
     G_2 = (abs(y2_max ./u_max)*(2*pi/4096));
-    magtip = mag(2,:,:)./u_max;           %extraction of the mag of tip, second dynamic
+    magtip = mag(2,:,:);           %extraction of the mag of tip, second dynamic
     magtip = squeeze (magtip);
         
 elseif logscale_flag==1
@@ -93,14 +94,14 @@ end
         
 
 figure;
-semilogx(omega,magbase,"r",omega,G_1,"xk");
+loglog(omega,magbase,"xr",om,squeeze(mag(1,:,:)),"xk");
 title("Plot of the Base Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
 legend('Model', 'Data');
 
 figure;
-semilogx(omega,magtip,"r",omega,G_2,"xk");
+loglog(omega,magtip,"xr",om,squeeze(mag(2,:,:)),"xk");
 title("Plot of the Tip Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
@@ -108,4 +109,6 @@ legend('Model', 'Data');
 
 figure;
 bode(sysest);
+
+%%
 
