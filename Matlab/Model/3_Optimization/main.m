@@ -50,9 +50,11 @@ Cdt = sys_c.C;
 
 %% Load data
 load ./Dataset/data_newsetup_chirp.mat
-load ./Dataset/data_validation_01.mat
-data_val =data_validation ;
-data = [Data ];
+d1 = Data;
+load ./Dataset/slowquare2.mat
+d2 = Data;
+data_val =Data ;
+data = [d1 d2];% data(:,floor(length(data)/10):floor(length(data)/10)+100)];
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
@@ -224,7 +226,7 @@ title(ylab(i));
 
 end
 sysest = ss(A_cvx, B_cvx,C, [], Ts)
-save("sysest.mat","sysest")
+save("sysest_new.mat","sysest")
 
 
 %%
@@ -250,15 +252,13 @@ alfa = states_nonlinear(3,i);
 %    end
 states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
 %statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
-
 end
-
  
 figure
+
 for i=1:4
 subplot(2,2,i)
 plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:", tvec, states_nonlinear(i,:),":x");
-
 title(ylab(i));
 
 end
