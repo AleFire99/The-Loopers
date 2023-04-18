@@ -187,13 +187,8 @@ display("A Adt Acvx Adtcvx")
 Uvec_val                =   data_val(2,1:downsample_factor:end);
 Time_vec_val            =   data_val(1,1:downsample_factor:end);
 N_val                   =   length(Time_vec_val);                               % Total number of data points
-
-remove_settling = 0;
-if remove_settling == 0
-    tstart = 1;
-elseif remove_settling == 1
-    tstart = 5/Ts_002;
-end
+tstart =500*5;
+tstart = 1;
 
 %% Use noise-corrupted values
 
@@ -235,7 +230,7 @@ plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:)
 title(ylab(i));
 
 end
-sysest = ss(A_cvx, B_cvx,C, [], Ts);
+sysest = ss(A_cvx, B_cvx,C, [], Ts)
 save("sysest.mat","sysest")
 
 
