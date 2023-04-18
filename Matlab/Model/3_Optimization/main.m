@@ -20,10 +20,11 @@ Jeq = 0.002087; %High gear moment of inertia
 JL = m1*L1*L1/3 + m2*L2*L2/12 + m2*d*d;
 BL = 0; %invented but i am neglecting the damping in the link
 Beq = 0.015;
+
 f=3.846;
 wn = 2*pi*f;
-%Ks = JL*wn*wn; %invented  
-Ks = 313;
+Ks = JL*wn*wn; %invented  
+
 %% god
 %TaoCons = ng*nm*Kt/Rm;
 TaoCons = ng*nm*Kt*Kg/Rm;
@@ -114,9 +115,15 @@ cvx_begin
 variable theta_cvx(20,1)
 minimize norm((Y-PHI*theta_cvx).*W)
 subject to
-theta_cvx(1,1) == 1; theta_cvx(2,1) == Ts; theta_cvx(3,1) == 0.0017; theta_cvx(4,1) == 0;
-theta_cvx(5,1) == 0;theta_cvx(8,1) ==  0.0017;
-theta_cvx(9,1) == 0; theta_cvx(10,1) == 0;theta_cvx(11,1) == 1; 
+theta_cvx(1,1) == 1;
+theta_cvx(2,1) == Ts; 
+theta_cvx(3,1) == 0.0017; 
+theta_cvx(4,1) == 0;
+theta_cvx(5,1) == 0;
+theta_cvx(8,1) ==  0.0017;
+theta_cvx(9,1) == 0; 
+theta_cvx(10,1) == 0;
+theta_cvx(11,1) == 1; 
 theta_cvx(12,1) ==  Ts;
 theta_cvx(13,1) == 0;
 
