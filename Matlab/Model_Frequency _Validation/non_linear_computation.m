@@ -3,7 +3,7 @@ close all
 clear all
 
 [data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load('sysest5.mat')                             %loads the linear system
+load('sysest09c_trick.mat')                             %loads the linear system
 Ts = sysest.Ts;
 fs =1/Ts;
 
@@ -83,7 +83,7 @@ Beq = 0.015;
 
 % Supposed Value of Ks
 
-Ks_lin = 313;
+Ks_lin = 250;
 
 
 %% Matrix Extraction

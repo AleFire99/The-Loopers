@@ -113,6 +113,13 @@ figure;
 bode(sysest);
 
 
+
+
+
+
+
+
+
 %% Load of a second System (repeatable)
 
 %flag to get the comparison between 2 systems:   

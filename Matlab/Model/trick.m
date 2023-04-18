@@ -11,6 +11,5 @@ sysest.A = (s1.A + s2.A)/2;
 sysest.B = (s1.B + s2.B)/2;
 sysest.C = (s1.C + s2.C)/2;
 
-%ss(A,B,C,[],0.002);
 
 save("sysest09c_trick.mat","sysest")

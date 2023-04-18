@@ -47,7 +47,7 @@ sys_dt = c2d(sys_ct,sysest.Ts);
 
 %% Load data
 
-load ("./Dataset/slowquare3.mat");
+load ("./Dataset/data_newsetup_chirp.mat");
 data_val = data;
 
 downsample_factor   =   1;
@@ -95,9 +95,9 @@ figure
 title('real(continuous) and estimated(dotted)')
 tvec = Time_vec_val(tstart:end);
 
-for i=1:3
+for i=1:4
     
-    subplot(3,1,i)
+    subplot(4,1,i)
     plot(tvec,states_opt_main(i,:),":r",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
     ylabel(ylab(i));
     xlabel("Time [s]");
