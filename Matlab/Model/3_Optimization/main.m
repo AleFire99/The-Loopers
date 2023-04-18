@@ -50,11 +50,12 @@ Cdt = sys_c.C;
 
 %% Load data
 load ./Dataset/data_newsetup_chirp.mat
-d1 = Data;
+d1 = data;
 load ./Dataset/slowquare2.mat
-d2 = Data;
-data_val =Data ;
-data = [d1 d2];% data(:,floor(length(data)/10):floor(length(data)/10)+100)];
+d2 = data;
+data_val = data;
+data = [d1 d2];
+%data(:,floor(length(data)/10):floor(length(data)/10)+100)];
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
 Ts_002 = 0.002;
@@ -86,11 +87,11 @@ alfadot(2:end)  = 1*imgaussfilt([alfa(2:end)- alfa(1:end-1)]/Ts,0.99);
 nz             =   4;
 nu              =   1;
 
-PHI             =   zeros(nz*(N-1),(nz*nz+nu*nz));                        % Initialize regressors' matrix
-Y               =   zeros(nz*(N-1),1);                                 % Initialize output vector
-W               =   ones(nz*(N-1),1);% Relative weight between r and beta
+PHI             =   zeros(nz*(N-1),(nz*nz+nu*nz));                          % Initialize regressors' matrix
+Y               =   zeros(nz*(N-1),1);                                      % Initialize output vector
+W               =   ones(nz*(N-1),1);                                       % Relative weight between r and beta
 
-W(length(W)*0.75:end) = 1 * ones(length(W)-(length(W)*0.75)+1,1);         %addition of weights 
+%W(length(W)*0.75:end) = 1 * ones(length(W)-(length(W)*0.75)+1,1);           % addition of weights 
 
 for ind = 1:N-1
     state = [theta(ind) thetadot(ind) alfa(ind) alfadot(ind)];
@@ -175,8 +176,10 @@ display("A Adt Acvx Adtcvx")
 %sys_est = ss(A_cvx,B_cvx, C ,[])
 
 %% Plot results
+
 %figure(1),plot(Time_vec(2:end),Y(1:2:end)),grid on, hold on
 %plot(Time_vec(2:end),PHI(1:2:end,:)*theta_cvx)
+
 %% validation 
 
 %data = data(:,500*4:end);
@@ -188,10 +191,12 @@ tstart =500*5;
 tstart = 1;
 
 %% Use noise-corrupted values
+
 theta_val           =  -data_val(3,1:downsample_factor:end)*conv2angle;               % Measured sideslip angle
 alfa_val            =  data_val(4,1:downsample_factor:end)*conv2angle;                % Measured yaw rate
 
 %calculate these using forward difference method
+
 thetadot_val = zeros(1,length(theta_val));
 alfadot_val = zeros(1,length(theta_val));
 thetadot_val(2:end) = 1*imgaussfilt([(theta_val(2:end)- theta_val(1:end-1))/Ts],0.99); 
@@ -226,43 +231,51 @@ title(ylab(i));
 
 end
 sysest = ss(A_cvx, B_cvx,C, [], Ts)
-save("sysest_new.mat","sysest")
+save("sysest.mat","sysest")
 
 
-%%
-states_nonlinear = initial;
-A23 = A_cvx(2,3);
-A43 = A_cvx(4,3);
-Tmodel1 = 0;
-Tmodel2 = 0;
-for i = 1:N_val-tstart
-alfa = states_nonlinear(3,i);
-   % if abs(alfa)  0.1
-        Tmodel1 = Ts*springcomp(alfa)/Jeq;
-        Tmodel2 = -Ts*springcomp(alfa)*((Jeq+JL)/(JL*Jeq));
-        A_cvx(2,3) = 0;
-        A_cvx(4,3) = 0;
-    %else
-     %   A_cvx(4,3) = A23;
-      %          A_cvx(4,3) = A43;
+%% Non linear System Generation 
 
-       % Tmodel =0;
-        %Tmodel2 = 0;
+%flag to get the non linear model:      0 - skip the extraction
+%                                       1 - extraction as "sysest_nonlin.mat"
 
-%    end
-states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
-%statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
+non_lin_flag = 0;                
+
+if non_lin_flag == 1                         
+    states_nonlinear = initial;
+    A23 = A_cvx(2,3);
+    A43 = A_cvx(4,3);
+    Tmodel1 = 0;
+    Tmodel2 = 0;
+    for i = 1:N_val-tstart
+    alfa = states_nonlinear(3,i);
+       % if abs(alfa)  0.1
+            Tmodel1 = Ts*springcomp(alfa)/Jeq;
+            Tmodel2 = -Ts*springcomp(alfa)*((Jeq+JL)/(JL*Jeq));
+            A_cvx(2,3) = 0;
+            A_cvx(4,3) = 0;
+        %else
+         %   A_cvx(4,3) = A23;
+          %          A_cvx(4,3) = A43;
+
+           % Tmodel =0;
+            %Tmodel2 = 0;
+
+    %    end
+    states_nonlinear(:,i+1) = A_cvx * states_nonlinear(:,i) + B_cvx*Uvec_val(i) + [0 Tmodel1 0 Tmodel2 ]';
+    %statess_est1(:,i+1) = A_cvx * statess_est1(:,i) + Ts*B_cvx*Uvec_val(i);
+    end
+
+    figure
+
+    for i=1:4
+    subplot(2,2,i)
+    plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:", tvec, states_nonlinear(i,:),":x");
+    title(ylab(i));
+
+    end
+    
+    sysest = ss(A_cvx,B_cvx,C,[],0.002);
+    save("sysest_nonlin.mat","sysest")
+    
 end
- 
-figure
-
-for i=1:4
-subplot(2,2,i)
-plot(tvec,statess_est(i,:),":r",tvec,states_val(i,:),"k", tvec, statess_phy(i,:),"b:", tvec, states_nonlinear(i,:),":x");
-title(ylab(i));
-
-end
-%%
-sysest = ss(A_cvx,B_cvx,C,[],0.002);
-
-save("sysest666.mat",sysest)
