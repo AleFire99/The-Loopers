@@ -8,10 +8,6 @@ clc
 load('sysest09c_trick.mat'); 
 sysest_main = sysest;
 
-load('sysest07_matching.mat'); 
-sysest_compared = sysest;
-
-
 %% Creation of the Model using the Datasheet
 
 m1 = 0.064;
@@ -90,7 +86,6 @@ states_datasheet(:,1) = initial;
 for i = 1:N_val-tstart
     
     states_opt_main(:,i+1) = sysest_main.A * states_opt_main(:,i) + sysest_main.B*Uvec_val(i);                      %computation of the values for the optimised system main
-    states_opt_compared(:,i+1) = sysest_compared.A * states_opt_compared(:,i) + sysest_compared.B*Uvec_val(i);      %computation of the values for the optimised system to be compared
     states_datasheet(:,i+1) = sys_dt.A *states_datasheet(:,i) + sys_dt.B*Uvec_val(i);                               %computation of the values for the datasheet's system
 
 end
@@ -100,13 +95,13 @@ figure
 title('real(continuous) and estimated(dotted)')
 tvec = Time_vec_val(tstart:end);
 
-for i=1:4
+for i=1:3
     
-    subplot(4,1,i)
-    plot(tvec,states_opt_main(i,:),":r",tvec,states_opt_compared(i,:),":g",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
+    subplot(3,1,i)
+    plot(tvec,states_opt_main(i,:),":r",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
     ylabel(ylab(i));
     xlabel("Time [s]");
-    legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+    legend('Main Optimised curve', 'Validation Datas','Datasheet curve')
 
 end
 
@@ -116,8 +111,8 @@ fs =1/Ts;
 N = length(Uvec_val);         
 NFFT = 2^nextpow2(N);
 f_vect = fs/2*linspace(0,1,NFFT/2);
+
 Pxs_opt_main        = fft2data(states_opt_main,Uvec_val);
-Pxs_opt_compared    = fft2data(states_opt_compared,Uvec_val);
 Pxs_datasheet       = fft2data(states_datasheet,Uvec_val);
 Pxs_val             = fft2data(states_val,Uvec_val);
 
@@ -127,7 +122,6 @@ f_max = 20;
 df = f_vect(2);
 
 Pxs_opt_main        = Pxs_opt_main(:,1:floor(f_max/df));
-Pxs_opt_compared    = Pxs_opt_compared(:,1:floor(f_max/df));
 Pxs_datasheet       = Pxs_datasheet(:,1:floor(f_max/df));
 Pxs_val             = Pxs_val(:,1:floor(f_max/df));
 f_vect              = f_vect(1:floor(f_max/df));
@@ -136,47 +130,101 @@ f_vect              = f_vect(1:floor(f_max/df));
 %% Plotting of the Results of The Evaluation
 
 figure;
-semilogx(f_vect,Pxs_opt_main(1,:),"r",f_vect,Pxs_opt_compared(1,:),"g",f_vect,Pxs_datasheet(1,:),"b",f_vect,Pxs_val(1,:),"k");
+semilogx(f_vect,Pxs_opt_main(1,:),"r",f_vect,Pxs_datasheet(1,:),"b",f_vect,Pxs_val(1,:),"k");
 title("Plot of the Base Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
-legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+legend('Main Optimised curve', 'Validation Datas','Datasheet curve')
 
 figure;
-semilogx(f_vect,Pxs_opt_main(2,:),"r",f_vect,Pxs_opt_compared(2,:),"g",f_vect,Pxs_datasheet(2,:),"b",f_vect,Pxs_val(2,:),"k");
+semilogx(f_vect,Pxs_opt_main(2,:),"r",f_vect,Pxs_datasheet(2,:),"b",f_vect,Pxs_val(2,:),"k");
 title("Plot of the Tip Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
-legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+legend('Main Optimised curve', 'Validation Datas','Datasheet curve')
 
 %semilogx(fs,Pxs_phy(1,:));
 %semilogx(fs,Pxs_val(1,:));
 
 %% Results of the Frequency evaluation
 
-% evaluation_datasheet    = compareffts(Pxs_val(:,1:3277), Pxs_datasheet(:,1:3277));
-% evaluation_opt_main     = compareffts(Pxs_val(:,1:3277), Pxs_opt_main(:,1:3277));
-% evaluation_opt_compared = compareffts(Pxs_val(:,1:3277), Pxs_opt_compared(:,1:3277));
-% 
 evaluation_datasheet    = compareffts(Pxs_val, Pxs_datasheet);
 evaluation_opt_main     = compareffts(Pxs_val, Pxs_opt_main);
-evaluation_opt_compared = compareffts(Pxs_val, Pxs_opt_compared);
-
-display(["comparison in frequency between datasheet and Real values: "+ evaluation_datasheet])
-display(["comparison in frequency between Main Optimised and Real values: "+ evaluation_opt_main])
-display(["comparison in frequency between Compared Optimised and Real values: "+ evaluation_opt_compared])
 
 %% Results of the Time evaluation
 
 timer_datasheet         = comparetime(states_val,states_datasheet );
 timer_opt_main          = comparetime(states_val,states_opt_main );
-timer_opt_compared      = comparetime(states_val,states_opt_compared );
 
+display(["comparison in frequency between datasheet and Real values: "+ evaluation_datasheet])
 display(["comparison in time between datasheet and Real values: "+ timer_datasheet])
+display(["comparison in frequency between Main Optimised and Real values: "+ evaluation_opt_main])
 display(["comparison in time between Main Optimised and Real values: "+ timer_opt_main])
-display(["comparison in time between Compared Optimised and Real values: "+ timer_opt_compared])
 
 
+%% Load of a second System (repeatable)
 
+%flag to get the comparison between 2 systems:   
+%                                       0 - on 
+%                                       1 - off
+
+comparison = 0;
+
+if comparison == 1
+    
+    load('sysest07_matching.mat'); 
+    sysest_compared = sysest;
+
+    states_opt_compared(:,1) = initial;
+
+    for i = 1:N_val-tstart
+
+        states_opt_compared(:,i+1) = sysest_compared.A * states_opt_compared(:,i) + sysest_compared.B*Uvec_val(i);      %computation of the values for the optimised system to be compared
+
+    end
+
+    ylab = ["theta" ,"thetadot", "alfa", "alfadot"];
+    figure
+    title('real(continuous) and estimated(dotted)')
+    tvec = Time_vec_val(tstart:end);
+
+    for i=1:4
+
+        subplot(4,1,i)
+        plot(tvec,states_opt_main(i,:),":r",tvec,states_opt_compared(i,:),":g",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
+        ylabel(ylab(i));
+        xlabel("Time [s]");
+        legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+
+    end
+
+    Pxs_opt_compared    = fft2data(states_opt_compared,Uvec_val);
+    Pxs_opt_compared    = Pxs_opt_compared(:,1:floor(f_max/df));
+
+%% Plotting of the Results of The Evaluation
+
+    figure;
+    semilogx(f_vect,Pxs_opt_main(1,:),"r",f_vect,Pxs_opt_compared(1,:),"g",f_vect,Pxs_datasheet(1,:),"b",f_vect,Pxs_val(1,:),"k");
+    title("Plot of the Base Frequency Responce");
+    xlabel("Frequency [ras/s]");
+    ylabel("Gain");
+    legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+
+    figure;
+    semilogx(f_vect,Pxs_opt_main(2,:),"r",f_vect,Pxs_opt_compared(2,:),"g",f_vect,Pxs_datasheet(2,:),"b",f_vect,Pxs_val(2,:),"k");
+    title("Plot of the Tip Frequency Responce");
+    xlabel("Frequency [ras/s]");
+    ylabel("Gain");
+    legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+
+
+    evaluation_opt_compared = compareffts(Pxs_val, Pxs_opt_compared);
+
+    timer_opt_compared      = comparetime(states_val,states_opt_compared );
+
+    display(["comparison in frequency between Compared Optimised and Real values: "+ evaluation_opt_compared])
+    display(["comparison in time between Compared Optimised and Real values: "+ timer_opt_compared])
+
+end
 
 

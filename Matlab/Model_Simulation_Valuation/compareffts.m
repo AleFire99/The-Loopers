@@ -4,7 +4,7 @@ diff = [0,0];
     for i=1:2
         
         
-        diff(i) = sum(abs(Px1(i,:) - Px2(i,:)))
+        diff(i) = sum(abs(Px1(i,:) - Px2(i,:)));
         
         %error = norm(diff);
         %diff(i) = sum(sum(abs(diff(i))))

@@ -4,11 +4,11 @@ clear all
 
 analysed_model = 'sysest09c_trick.mat';
 
-[data_struct, N_data_struct] = load_mat;        %loads all tests in ./Sine_tests
-load(analysed_model)                             %loads the linear system
+[data_struct, N_data_struct] = load_mat;            %loads all tests in ./Sine_tests
+load(analysed_model)                                %loads the linear system
 dt = sysest.Ts;
 fs =1/dt;
-time_skip = 5                                   %second to be skipped from each sinwave
+time_skip = 5;                                      %second to be skipped from each sinwave
 
 %% Fourier Transform Computations Linear Model
 

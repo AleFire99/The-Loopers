@@ -8,8 +8,7 @@ clc
 load('sysest09c_trick.mat'); 
 sysest_main = sysest;
 
-load('sysest07_matching.mat'); 
-sysest_compared = sysest;
+
 
 
 %% Creation of the Model using the Datasheet
@@ -52,7 +51,7 @@ sys_dt = c2d(sys_ct,sysest.Ts);
 %% Load data
 
 load ("./Dataset/slowquare3.mat");
-data_val = data(:,1:3000);
+data_val = data;
 
 downsample_factor   =   1;
 Ts                  =   sysest.Ts*downsample_factor;
@@ -102,7 +101,7 @@ tvec = Time_vec_val(tstart:end);
 
 for i=1:4
     
-    subplot(4,1,i)
+    subplot(3,1,i)
     plot(tvec,states_opt_main(i,:),":r",tvec,states_opt_compared(i,:),":g",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
     ylabel(ylab(i));
     xlabel("Time [s]");
@@ -116,19 +115,20 @@ fs =1/Ts;
 N = length(Uvec_val);         
 NFFT = 2^nextpow2(N);
 f_vect = fs/2*linspace(0,1,NFFT/2);
+
 Pxs_opt_main        = fft2data(states_opt_main,Uvec_val);
-Pxs_opt_compared    = fft2data(states_opt_compared,Uvec_val);
 Pxs_datasheet       = fft2data(states_datasheet,Uvec_val);
 Pxs_val             = fft2data(states_val,Uvec_val);
 
 % Troncation of the Spectral content
 
-f_max = 10;
+f_max = 20;
+df = f_vect(2);
 
-Pxs_opt_main        = Pxs_opt_main(1:f_max);
-Pxs_opt_compared    = Pxs_opt_compared;
-Pxs_datasheet       = Pxs_datasheet;
-Pxs_val             = Pxs_val;
+Pxs_opt_main        = Pxs_opt_main(:,1:floor(f_max/df));
+Pxs_datasheet       = Pxs_datasheet(:,1:floor(f_max/df));
+Pxs_val             = Pxs_val(:,1:floor(f_max/df));
+f_vect              = f_vect(1:floor(f_max/df));
 
 
 %% Plotting of the Results of The Evaluation
@@ -152,26 +152,64 @@ legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','D
 
 %% Results of the Frequency evaluation
 
-% evaluation_datasheet    = compareffts(Pxs_val(:,1:3277), Pxs_datasheet(:,1:3277));
-% evaluation_opt_main     = compareffts(Pxs_val(:,1:3277), Pxs_opt_main(:,1:3277));
-% evaluation_opt_compared = compareffts(Pxs_val(:,1:3277), Pxs_opt_compared(:,1:3277));
-
-evaluation_datasheet    = compareffts(Pxs_val(:,1:300), Pxs_datasheet(:,1:300));
-
-display(["comparison in frequency between datasheet and Real values: "+ evaluation_datasheet])
-display(["comparison in frequency between Main Optimised and Real values: "+ evaluation_opt_main])
-display(["comparison in frequency between Compared Optimised and Real values: "+ evaluation_opt_compared])
+evaluation_datasheet    = compareffts(Pxs_val, Pxs_datasheet);
+evaluation_opt_main     = compareffts(Pxs_val, Pxs_opt_main);
 
 %% Results of the Time evaluation
 
 timer_datasheet         = comparetime(states_val,states_datasheet );
 timer_opt_main          = comparetime(states_val,states_opt_main );
+
+display(["comparison in frequency between datasheet and Real values: "+ evaluation_datasheet])
+display(["comparison in time between datasheet and Real values: "+ timer_datasheet])
+display(["comparison in frequency between Main Optimised and Real values: "+ evaluation_opt_main])
+display(["comparison in time between Main Optimised and Real values: "+ timer_opt_main])
+
+
+%% Load of a second System (repeatable)
+
+%flag to get the comparison between 2 systems:   
+%                                       0 - on 
+%                                       1 - off
+
+comparison = 0;
+
+load('sysest07_matching.mat'); 
+sysest_compared = sysest;
+
+states_opt_compared(:,1) = initial;
+
+for i = 1:N_val-tstart
+    
+    states_opt_compared(:,i+1) = sysest_compared.A * states_opt_compared(:,i) + sysest_compared.B*Uvec_val(i);      %computation of the values for the optimised system to be compared
+    
+end
+
+ylab = ["theta" ,"thetadot", "alfa", "alfadot"];
+figure
+title('real(continuous) and estimated(dotted)')
+tvec = Time_vec_val(tstart:end);
+
+for i=1:4
+    
+    subplot(4,1,i)
+    plot(tvec,states_opt_main(i,:),":r",tvec,states_opt_compared(i,:),":g",tvec,states_val(i,:),"k", tvec, states_datasheet(i,:),"b:");
+    ylabel(ylab(i));
+    xlabel("Time [s]");
+    legend('Main Optimised curve', 'Compared Optimised curve', 'Validation Datas','Datasheet curve')
+
+end
+
+Pxs_opt_compared    = fft2data(states_opt_compared,Uvec_val);
+Pxs_opt_compared    = Pxs_opt_compared(:,1:floor(f_max/df));
+
+
+evaluation_opt_compared = compareffts(Pxs_val, Pxs_opt_compared);
+
 timer_opt_compared      = comparetime(states_val,states_opt_compared );
 
-display(["comparison in time between datasheet and Real values: "+ timer_datasheet])
-display(["comparison in time between Main Optimised and Real values: "+ timer_opt_main])
+display(["comparison in frequency between Compared Optimised and Real values: "+ evaluation_opt_compared])
 display(["comparison in time between Compared Optimised and Real values: "+ timer_opt_compared])
-
 
 
 
