@@ -1,27 +1,23 @@
 % to analyse the dataset load the dataset and change the name of the vector in data
 close all
-
-Out_t0 = data(1,:);
+vett_t = data(1,:);
 Out_t1 = data(2,:);
 Out_t2 = data(3,:)*(360/4096);
 Out_t3 = data(4,:)*(360/4096);
-dt = 0.02;
-Dt = dt*(length(Out_t1)-1);
-vett_t = 0:dt:Dt;
+dt = data(1,2) - data(1,1);
 
 
 
 figure(1)
-subplot 411;plot(vett_t,Out_t0);grid;
-xlabel('Time [s]');
+subplot 311;plot(vett_t,Out_t1);grid;
 
-subplot 412;plot(vett_t,Out_t1);grid
 xlabel('Time [s]');
+subplot 312;plot(vett_t,Out_t2);grid
 
-subplot 413;plot(vett_t,Out_t2);grid
 xlabel('Time [s]');
+subplot 313;plot(vett_t,Out_t3);grid
+subplot 313;plot(vett_t,Out_t3);grid
 
-subplot 414;plot(vett_t,Out_t3);grid
 xlabel('Time [s]');
 
 
