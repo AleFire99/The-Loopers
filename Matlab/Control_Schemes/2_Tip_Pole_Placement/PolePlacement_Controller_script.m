@@ -1,4 +1,4 @@
-sysest = load("sysest.mat").sysest;
+sysest = load("sysest_matching.mat").sysest;
 sysestc = d2c(sysest);              % Implementation provided in Continuous time
 
 % Model Parameters coming from resonance measurements

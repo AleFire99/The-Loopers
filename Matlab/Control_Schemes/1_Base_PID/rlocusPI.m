@@ -2,7 +2,7 @@
 close all
 clear all
 clc
-load('sysest_matching.mat')   
+load('sysest.mat')   
 wn=24.1651;
 zeta= 0.7; % overshhot less than 4.5%
 sysestc = d2c(sysest);

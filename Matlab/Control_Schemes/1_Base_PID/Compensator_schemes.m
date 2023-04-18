@@ -2,7 +2,7 @@ close all
 clear all
 clc
 
-sysest = load("sysest.mat").sysest;
+sysest = load("systrick.mat").sysest;
 sysest_cont = d2c(sysest);              % Implementation provided in Continuous time
 
 G_sysest_cont = tf(sysest_cont);
@@ -33,7 +33,7 @@ s = tf('s');
 %%
 %JC's design
 
-syscomp_JC =((s-eigs(3))*(s-eigs(4)))/((s+22)*(s+wn*zeta))     %Poles come from the pid action
+syscomp_JC =2.6464+1.1/s%((s-eigs(2))*(s-eigs(3)))/((s+20)*s)     %Poles come from the pid action
 
 num =syscomp_JC.Numerator{:};
 dem = syscomp_JC.Denominator{:};
@@ -52,7 +52,7 @@ pzmap(L_JC);
 
 DC_gain_theta = dcgain(s*G_theta_cont);
 
-C_desired = (s-eigs(3))*(s-eigs(4))/((s+24)*(s+25));      %Compensator scheme
+C_desired = (s-eigs(3))*(s-eigs(2))/((s+24)*(s+25));      %Compensator scheme
 DC_C_des = dcgain(C_desired); 
 
 t_set = 2;       %Good trade-off between speed and robustness
