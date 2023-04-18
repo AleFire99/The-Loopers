@@ -8,6 +8,7 @@ analysed_model = 'sysest09c_trick.mat';
 load(analysed_model)                             %loads the linear system
 dt = sysest.Ts;
 fs =1/dt;
+time_skip = 5                                   %second to be skipped from each sinwave
 
 %% Fourier Transform Computations Linear Model
 
@@ -18,10 +19,10 @@ for i = 1:N_data_struct
     %Extraction of data component
     
     Numb_freq = length(data);
-    time = data(1,2500:Numb_freq);              
-    input = data(2,2500:Numb_freq);             
-    output_base = data(3,2500:Numb_freq);       %Outputs: 3 for base, 4 for tip
-    output_tip = data(4,2500:Numb_freq);        
+    time = data(1,time_skip/dt:Numb_freq);              
+    input = data(2,time_skip/dt:Numb_freq);             
+    output_base = data(3,time_skip/dt:Numb_freq);       %Outputs: 3 for base, 4 for tip
+    output_tip = data(4,time_skip/dt:Numb_freq);        
     
     
     %FFT computation of input

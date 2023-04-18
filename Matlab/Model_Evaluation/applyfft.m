@@ -1,5 +1,5 @@
 function [f,Px] = applyfft(input,output, dt)
-%APPLYFFT2DATA Summary of this function goes here
+
 
 N = length(input);
 NFFT = 2^nextpow2(N);

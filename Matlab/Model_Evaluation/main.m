@@ -29,14 +29,14 @@ semilogx(fs,Pxs_est(1,:),"r",fs,Pxs_phy(1,:),"b",fs,Pxs_val(1,:),"k");
 evaluation_phy = compareffts(Pxs_val(:,1:3277), Pxs_phy(:,1:3277));
 evaluation_est = compareffts(Pxs_val(:,1:3277), Pxs_est(:,1:3277));
 
-display(["compatison pysics based error:"+ evaluation_phy + " and optimization based error " + evaluation_est])
+display(["compatison physics based error:"+ evaluation_phy + " and optimization based error " + evaluation_est])
 
 
 timerphy = comparetime(states_validation,states_pysics );
 timerest = comparetime(states_validation,states_estimation );
 
 
-display(["compatison pysics based error:"+timerphy + " and optimization based error " + timerest])
+display(["compatison physics based error:"+timerphy + " and optimization based error " + timerest])
 
 
 

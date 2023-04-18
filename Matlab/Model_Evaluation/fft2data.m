@@ -1,6 +1,5 @@
 function [fs,Pxs] = fft2data(data,Uvec )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+
 data = data;
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);
