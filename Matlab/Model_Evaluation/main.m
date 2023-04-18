@@ -5,9 +5,7 @@ clc
 
 %% Load of the Optimized Model
 
-load('sysest09c_trick.mat')                                
-
-
+load('sysest09c_trick.mat');                                
 
 %% Creation of the Model using the Datasheet
 

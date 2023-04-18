@@ -5,9 +5,7 @@ clc
 
 %% Load of the Optimized Model
 
-load('sysest09c_trick.mat')                                
-Ts_model = sysest.Ts;
-fs_model =1/Ts_model;
+load('sysest09c_trick.mat');                                
 
 %% Creation of the Model using the Datasheet
 
@@ -41,7 +39,7 @@ B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
 C = [1 0 0 0; 0 0 1 0];
 
 sys_ct = ss(A,B,C,[]);
-sys_dt = c2d(sys_ct,Ts_model);
+sys_dt = c2d(sys_ct,sysest.Ts);
 
 %% Load data
 
@@ -49,7 +47,7 @@ load ("./Dataset/slowquare2.mat");
 data_val = data;
 
 downsample_factor   =   1;
-Ts                  =   Ts_model*downsample_factor;
+Ts                  =   sysest.Ts*downsample_factor;
 Uvec_val                =   data_val(2,1:downsample_factor:end);
 Time_vec_val            =   data_val(1,1:downsample_factor:end);
 N_val                   =   length(Time_vec_val);                               % Total number of data points
@@ -58,7 +56,7 @@ remove_settling = 0;
 if remove_settling == 0
     tstart = 1;
 elseif remove_settling == 1
-    tstart = 5/Ts_002;
+    tstart = 5/Ts;
 end
 
 %% Computation of the Data's Time series
@@ -103,9 +101,9 @@ end
 
 %% Fourier transformation for all states fs is frequencies, Px are the magnitudes normalized
 
-[fs Pxs_opt] = fft2data(states_opt,Uvec_val);
-[fs Pxs_datasheet] = fft2data(states_datasheet,Uvec_val);
-[fs Pxs_val] = fft2data(states_val,Uvec_val);
+[fs, Pxs_opt] = fft2data(states_opt,Uvec_val);
+[fs, Pxs_datasheet] = fft2data(states_datasheet,Uvec_val);
+[fs, Pxs_val] = fft2data(states_val,Uvec_val);
 
 %% Plotting of the Results of The Evaluation
 
@@ -114,16 +112,17 @@ semilogx(fs,Pxs_opt(1,:),"r",fs,Pxs_datasheet(1,:),"b",fs,Pxs_val(1,:),"k");
 %semilogx(fs,Pxs_phy(1,:));
 %semilogx(fs,Pxs_val(1,:));
 
-%% Results of th
+%% Results of the Frequency evaluation
 
 evaluation_phy = compareffts(Pxs_val(:,1:3277), Pxs_datasheet(:,1:3277));
 evaluation_est = compareffts(Pxs_val(:,1:3277), Pxs_opt(:,1:3277));
 
 display(["compatison physics based error:"+ evaluation_phy + " and optimization based error " + evaluation_est])
 
+%% Results of the Time evaluation
+
 timerphy = comparetime(states_val,states_datasheet );
 timerest = comparetime(states_val,states_opt );
-
 
 display(["compatison physics based error:"+ timerphy + " and optimization based error " + timerest])
 
