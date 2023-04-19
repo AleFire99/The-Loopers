@@ -45,10 +45,5 @@ Mx_real = (Fx_real_a + Fx_real_b)*l;
 Mx_lin = (Fx_lin_a + Fx_lin_b)*l;
 
 
-
-
-
-
-
 end
 
