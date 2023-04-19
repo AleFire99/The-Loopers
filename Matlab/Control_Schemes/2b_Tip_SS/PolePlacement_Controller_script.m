@@ -1,5 +1,29 @@
-sysest = load("sysest_matching.mat").sysest;
-sysestc = d2c(sysest);              % Implementation provided in Continuous time
+close all
+clear all
+clc
+
+%%
+%Loading model
+sysest = load("sysest09c_trick.mat").sysest;
+sysest_cont = d2c(sysest);              % Implementation provided in Continuous time
+
+A_ct = sysest_cont.A;
+B_ct = sysest_cont.B;
+C_ct = sysest_cont.C;
+D_ct = sysest_cont.D;
+
+G_sysest_cont = tf(sysest_cont);
+G_theta_cont = G_sysest_cont(1);
+G_alpha_cont = G_sysest_cont(1);
+eigs = pole(G_sysest_cont(1));
+theta_zeros = zero(G_theta_cont);
+
+figure(1)
+bode(G_theta_cont);
+margin(G_theta_cont);
+
+figure(2)
+pzmap(G_theta_cont);
 
 % Model Parameters coming from resonance measurements
 
@@ -7,12 +31,9 @@ f=3.846;
 wn = 2*pi*f;
 zeta= 0.7;
 
-p_ol = pole(sysestc);
+v_a_max = 10;
 
-A = sysestc.A;
-B = sysestc.B;
-C = sysestc.C;
-D = sysestc.D;
+s = tf('s');
 
 %% Control with Pole Placement in Continous Time
 
