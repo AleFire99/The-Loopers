@@ -2,11 +2,11 @@
 close all
 clear all
 clc
-load('sysest.mat')   
+load('sysest09c_trick.mat')   
 wn=24.1651;
 zeta= 0.7; % overshhot less than 4.5%
-sysestc = d2c(sysest);
-Gp = tf(sysestc);
+syses_ct = d2c(sysest);
+Gp = tf(syses_ct);
 eigs = pole(Gp(1));
 s = tf('s');
 figure
@@ -17,8 +17,7 @@ sgrid(zeta,wn)
 [numCL, denCL] = cloop(kd*Gp(1).Numerator{:}, Gp(1).Denominator{:})
 figure
 step(numCL,denCL)
-%% root locus comp
-close all
+%% root locus comclose all
 num = Gp(1).Numerator{:};
 den = Gp(1).Denominator{:};
 figure

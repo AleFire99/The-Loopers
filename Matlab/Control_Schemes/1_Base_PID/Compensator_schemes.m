@@ -2,7 +2,7 @@ close all
 clear all
 clc
 
-sysest = load("systrick.mat").sysest;
+sysest = load("sysest09c_trick.mat").sysest;
 sysest_cont = d2c(sysest);              % Implementation provided in Continuous time
 
 G_sysest_cont = tf(sysest_cont);
