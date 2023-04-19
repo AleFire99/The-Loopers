@@ -2,7 +2,7 @@
 close all
 clear all
 
-analysed_model = 'sysest09c_trick.mat';
+analysed_model = 'sysest11.mat';
 
 [data_struct, N_data_struct] = load_mat;            %loads all tests in ./Sine_tests
 load(analysed_model)                                %loads the linear system

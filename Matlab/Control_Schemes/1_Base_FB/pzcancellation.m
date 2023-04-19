@@ -20,14 +20,14 @@ syst = tf(num,den);
 figure
 rlocus(num,den)
 
-Cancel = s*(s-poles(3))*(s-poles(4));      %Compensator scheme
-Cancel = Cancel*((1)/(s+25)/(s+10)/(s+20));
+Cancel = s*(s-poles(3))*(s-poles(2));      %Compensator scheme
+Cancel = Cancel*((1)/((s+25)*(s+10)*(s+20)));
 cancelled = syst*Cancel;
 
 figure
 rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
-sgrid (zeta,Wn)
+sgrid (zeta,wn)
 [kd,poles] = rlocfind(cancelled)
 [numc,denc]=cloop(kd*cancelled,-1)
 

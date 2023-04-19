@@ -117,7 +117,7 @@ minimize norm((Y-PHI*theta_cvx).*W)
 subject to
 theta_cvx(1,1) == 1;
 theta_cvx(2,1) == Ts; 
-theta_cvx(3,1) == 0.0017; 
+theta_cvx(3,1) == 0; 
 theta_cvx(4,1) == 0;
 theta_cvx(5,1) == 0;
 theta_cvx(8,1) ==  0.0017;
