@@ -4,7 +4,7 @@ clear all
 clc
 s = tf('s');
 
-load('sysest.mat')   
+load('sysest09c_trick.mat')   
 wn=24.1651;
 zeta= 0.7; % overshhot less than 4.5%
 sysestc = d2c(sysest);

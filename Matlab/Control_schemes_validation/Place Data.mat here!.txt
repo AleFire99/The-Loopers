@@ -1,9 +1,0 @@
-The Data.mat file must be a struct with field data obtained as response of a step.
-Its structure is:
-- Time
-- Reference
-- Base values
-- Tip values
-- Base + tip values
-- Control signal
-- Integrated control signal
