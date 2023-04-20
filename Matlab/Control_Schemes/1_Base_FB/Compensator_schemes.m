@@ -6,10 +6,10 @@ sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
 G_sysest_cont = tf(sysest_ct);
-G_theta_cont = G_sysest_cont(1);
+G_theta_cont = G_sysest_cont(1)
 G_alpha_cont = G_sysest_cont(1);
-eigs = pole(G_sysest_cont(1));
-theta_zeros = zero(G_theta_cont);
+eigs = pole(G_sysest_cont(1))
+theta_zeros = zero(G_theta_cont)
 
 figure(1)
 bode(G_theta_cont);
@@ -33,7 +33,7 @@ s = tf('s');
 %%
 %JC's design
 
-syscomp_JC =2.6464+1.1/s%((s-eigs(2))*(s-eigs(3)))/((s+20)*s)     %Poles come from the pid action
+syscomp_JC =2.6464+1.1/s;%((s-eigs(2))*(s-eigs(3)))/((s+20)*s)     %Poles come from the pid action
 
 num =syscomp_JC.Numerator{:};
 dem = syscomp_JC.Denominator{:};
