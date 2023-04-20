@@ -52,11 +52,40 @@ tip_overshoot = max(abs(alpha))
 total_overshoot = max(tip-steady_state)
 
 %% Finding settling time
+% start_of_slope = find(tip>0.01,1);
+% slope = (tip(start_of_slope+30)-tip(start_of_slope+20))/(time(start_of_slope+30)-time(start_of_slope+20));
+% time_constant = steady_state/slope
+% settling_time = 5*time_constant
+
 
 slope = diff(theta)./diff(time);
 points = find(slope == max(slope)); %find the hightest slope
-time_constant = steady_state/slope(points)
-settling_time = 5*time_constant
+yTangent = (time - time(points))*slope(points)+theta(points); %tangent
+
+%No delaty so t0 = 0
+
+% Research of t1
+indext1 = find(yTangent<=0.002);
+indext1 = find(yTangent(indext1) >= -0.002);
+
+indext2 = find(yTangent<=1.0025);
+indext2 = find(yTangent(indext2) >= 0.9975);
+
+% Plot of the Step Responce of the System and the tangent curve at the
+% maximum slope
+
+figure
+
+% plot(time,theta);
+% xlim([0 3])
+% ylim([0 1.2])
+
+hold on
+
+plot(time(1), slope);
+% scatter(time(points),yTangent(points));
+hold off
+
 
 %% %Finding rising time
 low_out = find(tip>0.1*steady_state,1);

@@ -5,10 +5,14 @@ clc
 s = tf('s');
 
 load('sysest09c_trick.mat')   
-wn=24.1651;
-zeta= 0.7; % overshhot less than 4.5%
-sysestc = d2c(sysest);
-Gp = tf(sysestc);
+f=3.846;
+wn = 2*pi*f;
+zeta= 0.7;
+
+v_a_max = 15;
+
+sysest_ct = d2c(sysest);
+Gp = tf(sysest_ct);
 
 
 poles = pole(Gp(1))
@@ -33,5 +37,6 @@ sgrid (zeta,wn)
 
 figure
 tfc = tf(numc,denc)
-step(tfc/dcgain(tfc))
+K_comp = 1/dcgain(tfc);
+step(tfc*K_comp)
 kd
