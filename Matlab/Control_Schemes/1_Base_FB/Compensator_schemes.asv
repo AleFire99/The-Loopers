@@ -28,20 +28,10 @@ zeta= 0.7;
 
 v_a_max = 15;
 
-%% PI: Ziegler-Nichols step response method
-
-%[Kp,Ti] = PI_Ziegler_Nichols(sysest_ct, zeta, wn);
-
 %% JC's design
 
-%controller = JCs_desiged(sysest_ct);
+controller_JC = JCs_desiged(sysest_ct);
 
 %% Fire's design
 
-%controller = Fires_desiged(sysest_ct);
-
-
-%% Alp Design
-
-[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
-
+controller_fire = Fires_desiged(sysest_ct);

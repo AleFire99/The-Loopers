@@ -1,7 +1,19 @@
-function [Cancel,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn)
-
-Gp = tf(sysest_ct);
+%% root locus
+close all
+clear all
+clc
 s = tf('s');
+
+load('sysest09c_trick.mat')   
+f=3.846;
+wn = 2*pi*f;
+zeta= 0.7;
+
+v_a_max = 15;
+
+sysest_ct = d2c(sysest);
+Gp = tf(sysest_ct);
+
 
 poles = pole(Gp(1))
 zeros = zero(Gp(1))
@@ -28,6 +40,3 @@ tfc = tf(numc,denc)
 K_comp = 1/dcgain(tfc);
 step(tfc*K_comp)
 kd
-
-end
-
