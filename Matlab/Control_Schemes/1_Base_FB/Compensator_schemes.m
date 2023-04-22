@@ -5,6 +5,8 @@ clc
 sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
+addpath("./Implementations/")
+
 G_sysest_cont = tf(sysest_ct);
 G_theta_cont = G_sysest_cont(1)
 G_alpha_cont = G_sysest_cont(1);
@@ -28,7 +30,7 @@ zeta= 0.7;
 
 v_a_max = 15;
 
-%% PI: Ziegler-Nichols step response method
+%% PI: Ziegler-Nichols step response method (not good)
 
 %[Kp,Ti] = PI_Ziegler_Nichols(sysest_ct, zeta, wn);
 
@@ -43,5 +45,5 @@ v_a_max = 15;
 
 %% Alp Design
 
-[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
+%[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
 
