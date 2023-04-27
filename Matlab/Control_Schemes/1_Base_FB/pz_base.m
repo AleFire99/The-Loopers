@@ -40,7 +40,6 @@ sgrid (zeta,wn)
 pi = (s+3.2)/s;
 pic = pi*cancelled;
 [kd,poles] = rlocfind(pic)
-[numc,denc]=feedback(kd*pic,1,-1)
 CL_TF = feedback(kd*pic,1,-1);
 
 bode(pic)
@@ -52,3 +51,9 @@ step(CL_TF/dcgain(CL_TF))
 figure 
 bode(CL_TF)
 margin(CL_TF)
+
+controller_base = pi*Cancel;
+dccl_base = dcgain(CL_TF);
+kd_base = kd;
+save('FB_controller_base','controller_base', "kd_base",'dccl_base')
+

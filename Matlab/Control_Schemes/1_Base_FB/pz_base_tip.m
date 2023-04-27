@@ -42,3 +42,10 @@ margin(pic)
 figure
 step(CL_TF/(dcgain(CL_TF)))
 kd
+
+controller_tip = pi*Cancel;
+dccl_tip = dcgain(CL_TF);
+kd_tip = kd;
+save('FB_controller_tip','controller_tip', "kd_tip",'dccl_tip')
+
+
