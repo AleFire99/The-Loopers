@@ -32,7 +32,7 @@ rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
 sgrid (zeta,wn)
 
-pi = 1;
+pi = (s+0.5)/s;
 pic = pi*cancelled;
 [kd,poles] = rlocfind(pic)
 CL_TF =feedback(kd*pic,1,-1)
