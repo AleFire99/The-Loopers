@@ -40,7 +40,7 @@ v_a_max = 15;
 
 %% Fire's design
 
-%controller = Fires_desiged(sysest_ct);
+controller = Fires_desiged(sysest_ct);
 
 
 %% Alp Design
