@@ -12,22 +12,25 @@ G_theta_cont = G_sysest_cont(1)
 G_alpha_cont = G_sysest_cont(2);
 eigs = pole(G_sysest_cont(1))
 theta_zeros = zero(G_theta_cont)
-
-figure
-bode(G_theta_cont);
-margin(G_theta_cont);
-
-figure
-pzmap(G_theta_cont);
+ 
+% figure;
+% bode(G_theta_cont);
+% margin(G_theta_cont);
+% grid;
+% 
+% figure;
+% pzmap(G_theta_cont);
 
 CL = G_theta_cont/(1+G_theta_cont);
 
-figure
-step(CL);
-
-figure
-bode(CL);
-margin(CL);
+% figure;
+% step(CL);
+% grid;
+% 
+% figure;
+% bode(CL);
+% margin(CL);
+% grid;
 
 L_poles = pole(CL);
 L_zeros = zero(CL);
@@ -59,4 +62,38 @@ controller = Fires_desiged(sysest_ct);
 %% Alp Design
 
 %[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
+
+
+
+%% Comparison Part
+
+L_Controlled = controller*G_theta_cont;
+
+figure;
+bode(L_Controlled);
+margin(L_Controlled);
+grid;
+
+figure;
+hold on;
+sigma(G_theta_cont);
+sigma(L_Controlled)
+hold off; legend;
+grid;
+
+
+figure
+pzmap(L_Controlled);
+
+CL_Controlled = L_Controlled/(1+L_Controlled);
+
+figure; hold on;
+step(CL);
+step(CL_Controlled);
+legend;
+hold off;
+grid;
+
+L_poles = pole(CL_Controlled);
+L_zeros = zero(CL_Controlled);
 

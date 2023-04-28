@@ -27,22 +27,5 @@ K = 150;
 
 controller = C_desired*K
 
-L_Fire = controller*G_theta_cont;
-
-figure
-bode(L_Fire);
-margin(L_Fire);
-
-figure
-pzmap(L_Fire);
-
-CL = L_Fire/(1+L_Fire);
-
-figure
-step(CL);
-
-L_poles = pole(CL);
-L_zeros = zero(CL);
-
 end
 
