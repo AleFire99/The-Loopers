@@ -9,7 +9,7 @@ addpath("./Implementations/")
 
 G_sysest_cont = tf(sysest_ct);
 G_theta_cont = G_sysest_cont(1)
-G_alpha_cont = G_sysest_cont(1);
+G_alpha_cont = G_sysest_cont(2);
 eigs = pole(G_sysest_cont(1))
 theta_zeros = zero(G_theta_cont)
 

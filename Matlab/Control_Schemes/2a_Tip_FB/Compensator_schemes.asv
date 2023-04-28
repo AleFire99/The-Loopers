@@ -7,7 +7,10 @@ sysest_ct = d2c(sysest);              % Implementation provided in Continuous ti
 
 addpath("./Implementations/")
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0],0);
-G_tip_cont = tf(sysest_ct_tip);
+G_sysest_cont = tf(sysest_ct.A,sysest_ct.B,[1 0 1 0],0);
+G_theta_cont = G_sysest_cont(1)
+G_alpha_cont = G_sysest_cont(2);
+G_tip_cont = G_theta_cont + G_alpha_cont;
 eigs = pole(G_tip_cont)
 zeros = zero(G_tip_cont)
 
@@ -51,7 +54,7 @@ v_a_max = 15;
 
 %% Fire's design
 
-controller = Fires_desiged(sysest_ct);
+%controller = Fires_desiged(sysest_ct);
 
 
 %% Alp Design
