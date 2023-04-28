@@ -1,7 +1,7 @@
 function [controller] = Fires_desiged(sysest_ct)
 
 G_sysest_cont = tf(sysest_ct);
-G_theta_cont = G_sysest_cont(1)
+G_theta_cont = G_sysest_cont(1);
 G_alpha_cont = G_sysest_cont(1);
 eigs = pole(G_sysest_cont(1));
 theta_zeros = zero(G_theta_cont);
@@ -39,10 +39,10 @@ pzmap(L_Fire);
 CL = L_Fire/(1+L_Fire);
 
 figure
-step(L_Fire);
+step(CL);
 
-L_poles = pole(L_Fire);
-L_zeros = zero(L_Fire);
+L_poles = pole(CL);
+L_zeros = zero(CL);
 
 end
 

@@ -13,12 +13,25 @@ G_alpha_cont = G_sysest_cont(1);
 eigs = pole(G_sysest_cont(1))
 theta_zeros = zero(G_theta_cont)
 
-figure(1)
+figure
 bode(G_theta_cont);
 margin(G_theta_cont);
 
-figure(2)
+figure
 pzmap(G_theta_cont);
+
+CL = G_theta_cont/(1+G_theta_cont);
+
+figure
+step(CL);
+
+figure
+bode(CL);
+margin(CL);
+
+L_poles = pole(CL);
+L_zeros = zero(CL);
+
 
 %% Control with a Compensator 
 
