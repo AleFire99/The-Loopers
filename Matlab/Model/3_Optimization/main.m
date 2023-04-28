@@ -51,11 +51,11 @@ Cdt = sys_c.C;
 
 %% Load data
 load ./Dataset/data_newsetup_chirp.mat
-d1 = data;
-load ./Dataset/slowquare2.mat
-d2 = data;
+%d1 = data;
+%load ./Dataset/slowquare2.mat
+%d2 = data;
 data_val = data;
-data = [d1 d2];
+%data = [d1 d2];
 %data(:,floor(length(data)/10):floor(length(data)/10)+100)];
 %data=data(:,500*8:end) ;
 %data = data(:,1:500*0.5);

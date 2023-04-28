@@ -2,13 +2,15 @@
 close all
 clear all
 
-analysed_model = 'sysest11.mat';
+analysed_model = 'sysest09c_trick.mat';
 
 [data_struct, N_data_struct] = load_mat;            %loads all tests in ./Sine_tests
 load(analysed_model)                                %loads the linear system
 dt = sysest.Ts;
 fs =1/dt;
 time_skip = 5;                                      %second to be skipped from each sinwave
+
+sysest.A(1,3) = 0;
 
 %% Fourier Transform Computations Linear Model
 
@@ -96,14 +98,14 @@ end
         
 
 figure;
-semilogx(omega,magbase,"r",omega,G_1,"xk");
+semilogx(omega,magbase,"r",omega,G_1,"xk");grid;
 title("Plot of the Base Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
 legend('Model', 'Data');
 
 figure;
-semilogx(omega,magtip,"r",omega,G_2,"xk");
+semilogx(omega,magtip,"r",omega,G_2,"xk");grid;
 title("Plot of the Tip Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");
