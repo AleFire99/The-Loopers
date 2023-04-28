@@ -27,18 +27,21 @@ Cancel = (s-poles(2))*(s-poles(3))%*(s-poles(4))*(s-poles(5));      %Compensator
 Cancel = Cancel*(1)/((s+wn*2)*(s+wn*3))%/((s+wn*2)*(s+wn*3)));
 cancelled = syst*Cancel;
 
+bode(cancelled)
+margin(cancelled)
+
 figure
 rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
 sgrid (zeta,wn)
 
-pi = (s+0.5)/s;
+pi = (s+0.2)/s;
 pic = pi*cancelled;
-[kd,poles] = rlocfind(pic)
+[kd,poles] = rlocfind(pic, -wn*zeta)
 CL_TF =feedback(kd*pic,1,-1)
-
-bode(pic)
-margin(pic)
+figure
+bode(kd*pic)
+margin(kd*pic)
 figure
 step(CL_TF/(dcgain(CL_TF)))
 kd

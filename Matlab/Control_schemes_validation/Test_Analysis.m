@@ -14,6 +14,7 @@ clc
 % - Integrated control signal
 
 data = load("data.mat").data;
+data= data;
 time = data(1,:);
 reference = data(2,:);
 theta = data(3,:);

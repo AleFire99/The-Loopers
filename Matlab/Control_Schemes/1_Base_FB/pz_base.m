@@ -27,30 +27,29 @@ rlocus(num,den)
 % Cancel = Cancel*((1)/((s+wn*2)*(s+wn*3)));
 % cancelled = syst*Cancel;
 
-Cancel = s*(s-poles(2))*(s-poles(3));      %Compensator scheme
+Cancel = (s-poles(2))*(s-poles(3));      %Compensator scheme
 Cancel = Cancel*((1)/((s+wn*2)*(s+wn*3)));
 cancelled = syst*Cancel;
 
-
+%%
 figure
 rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
 sgrid (zeta,wn)
 
-pi = (s+3.2)/s;
+pi = (s+1)/s;
 pic = pi*cancelled;
 [kd,poles] = rlocfind(pic)
-CL_TF = feedback(kd*pic,1,-1);
+kd
 
-bode(pic)
-margin(pic)
+CL_TF = feedback(kd*pic,1,-1);
+bode(kd*pic)
+margin(kd*pic)
 
 figure
 
 step(CL_TF/dcgain(CL_TF))
-figure 
-bode(CL_TF)
-margin(CL_TF)
+
 
 controller_base = pi*Cancel;
 dccl_base = dcgain(CL_TF);
