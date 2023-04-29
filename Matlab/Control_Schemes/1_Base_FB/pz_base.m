@@ -37,7 +37,7 @@ rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
 sgrid (zeta,wn)
 
-pi = (s+1)/s;
+pi = (s+2)/s;
 pic = pi*cancelled;
 [kd,poles] = rlocfind(pic)
 kd
