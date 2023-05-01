@@ -61,7 +61,7 @@ controller = Fires_desiged(sysest_ct);
 
 %% Alp Design
 
-%[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
+%[controller,K_comp,Kd_base] = pzcancellation(sysest_ct, zeta, wn);
 
 
 

@@ -46,7 +46,7 @@ v_a_max = 15;
 
 %% Control with Pole Placement in Continous Time
 
-new_pole = [-21 ; -22; -23; -25];                           %Definition of the new poles
+new_pole = [-23; -25; -27; -29];                           %Definition of the new poles
 
 [sys_controlled_pp, K_pp,K_p] = PolePlacement(sysest_ct_tip,new_pole);
 

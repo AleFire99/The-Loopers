@@ -1,4 +1,4 @@
-function [Cancel,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn)
+function [controller,K_comp,Kd_base] = pzcancellation(sysest_ct, zeta, wn)
 
 Gp = tf(sysest_ct);
 s = tf('s');
@@ -12,22 +12,30 @@ syst = tf(num,den);
 figure
 rlocus(num,den)
 
-Cancel = s*(s-poles(3))*(s-poles(2));      %Compensator scheme
-Cancel = Cancel*((1)/((s+25)*(s+10)*(s+20)));
+% 
+% Cancel = (s-poles(3))*(s-poles(2));      %Compensator scheme
+% Cancel = Cancel*((1)/((s+wn*2)*(s+wn*3)));
+% cancelled = syst*Cancel;
+
+Cancel = (s-poles(2))*(s-poles(3));      %Compensator scheme
+Cancel = Cancel*((1)/((s+wn*2)*(s+wn*3)));
 cancelled = syst*Cancel;
 
 figure
 rlocus(cancelled)
 axis([-1e2 1e2 -30 30]) 
 sgrid (zeta,wn)
-[kd,poles] = rlocfind(cancelled)
-[numc,denc]=cloop(kd*cancelled,-1)
+
+pi = (s+1)/s;
+pic = pi*cancelled;
+[Kd_base,poles] = rlocfind(pic);
+CL_TF = feedback(Kd_base*pic,1,-1);
 
 figure
-tfc = tf(numc,denc)
-K_comp = 1/dcgain(tfc);
-step(tfc*K_comp)
-kd
+step(CL_TF/dcgain(CL_TF))
+
+controller = pi*Cancel;
+K_comp = 1/dcgain(CL_TF);
 
 end
 
