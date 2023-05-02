@@ -9,13 +9,13 @@
 % - Control signal
 % - Integrated control signal
 
-time = data(:,1);
-reference = data(:,2);
-theta = data(:,3);
-alpha = data(:,4);
-tip = data(:,5);
-control_signal = data(:,6);
-integral_control_signal = data(:,7);
+time = data(1,:);
+reference = data(2,:);
+theta = data(3,:);
+alpha = data(4,:);
+tip = data(5,:);
+control_signal = data(6,:);
+integral_control_signal = data(7,:);
 
 %% Plot of the Signals
 
@@ -54,7 +54,7 @@ total_overshoot = max(tip-steady_state)
 %% Finding settling time
 
 slope = diff(theta)./diff(time);
-points = find(slope == max(slope)); %find the hightest slope
+points = find(slope == max(slope),1); %find the hightest slope
 time_constant = steady_state/slope(points)
 settling_time = 5*time_constant
 

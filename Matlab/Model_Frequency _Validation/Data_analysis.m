@@ -20,17 +20,5 @@ subplot 313;plot(vett_t,Out_t3);grid
 
 xlabel('Time [s]');
 
-
-% 
-% N = length(Out_t);
-% NFFT = 2^nextpow2(N);
-% y = fft(Out_t,NFFT);
-% Sx = abs(y)/N;
-% Px = 2*Sx(1:NFFT/2);
-% fs =1/dt;
-% f = fs/2*linspace(0,1,NFFT/2);
-% %plot(f,Px);
-
-
 clear all
 
