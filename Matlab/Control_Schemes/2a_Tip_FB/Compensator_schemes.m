@@ -3,20 +3,36 @@ clear all
 clc
 
 sysest = load("sysest09c_trick.mat").sysest;
-sysest_cont = d2c(sysest);              % Implementation provided in Continuous time
+sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
-G_sysest_cont = tf(sysest_cont);
-G_theta_cont = G_sysest_cont(1);
-G_alpha_cont = G_sysest_cont(1);
-eigs = pole(G_sysest_cont(1));
-theta_zeros = zero(G_theta_cont);
+addpath("./Implementations/")
+sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0;0 0 1 0],sysest_ct.D);
+G_tip_cont = tf(sysest_ct_tip(1));
+eigs = pole(G_tip_cont)
+zeros = zero(G_tip_cont)
 
-figure(1)
-bode(G_theta_cont);
-margin(G_theta_cont);
+figure;
+bode(G_tip_cont);
+margin(G_tip_cont);
+grid;
 
-figure(2)
-pzmap(G_theta_cont);
+figure;
+pzmap(G_tip_cont);
+
+CL = G_tip_cont/(1+G_tip_cont);
+
+% figure;
+% step(CL);
+% grid;
+% 
+% figure;
+% bode(CL);
+% margin(CL);
+% grid;
+
+L_poles = pole(CL);
+L_zeros = zero(CL);
+
 
 %% Control with a Compensator 
 
@@ -28,44 +44,52 @@ zeta= 0.7;
 
 v_a_max = 15;
 
-s = tf('s');
+%% PI: Ziegler-Nichols step response method (not good)
 
-%%
-%JC's design
+%[Kp,Ti] = PI_Ziegler_Nichols(sysest_ct, zeta, wn);
 
-syscomp_JC =2.6464+1.1/s%((s-eigs(2))*(s-eigs(3)))/((s+20)*s)     %Poles come from the pid action
+%% JC's design
 
-num =syscomp_JC.Numerator{:};
-dem = syscomp_JC.Denominator{:};
+%controller = JCs_desiged(sysest_ct);
 
-L_JC = syscomp_JC*G_theta_cont;
+%% Fire's design
 
-figure(3)
-bode(L_JC);
-margin(L_JC);
+controller = Fires_desiged(sysest_ct);
 
-figure(4)
-pzmap(L_JC);
 
-%%
-%Fire's design
+%% Alp Design
 
-DC_gain_theta = dcgain(s*G_theta_cont);
+%[controller,K_comp,kd] = pzcancellation(sysest_ct, zeta, wn);
 
-C_desired = (s-eigs(3))*(s-eigs(2))/((s+24)*(s+25));      %Compensator scheme
-DC_C_des = dcgain(C_desired); 
+%% Comparison Part
 
-t_set = 2;       %Good trade-off between speed and robustness
-tau = t_set/5;
-BW = 1/(tau*DC_C_des*DC_gain_theta);
+L_Controlled = controller*G_tip_cont;
 
-syscomp_Fire = C_desired*BW
+figure;
+bode(L_Controlled);
+margin(L_Controlled);
+grid;
 
-L_Fire = syscomp_Fire*G_theta_cont;
+figure;
+hold on;
+sigma(G_tip_cont);
+sigma(L_Controlled)
+hold off; legend;
+grid;
 
-figure(5)
-bode(L_Fire);
-margin(L_Fire);
 
-figure(6)
-pzmap(L_Fire);
+figure
+pzmap(L_Controlled);
+
+CL_Controlled = L_Controlled/(1+L_Controlled);
+
+figure; hold on;
+step(CL);
+step(CL_Controlled);
+legend;
+hold off;
+grid;
+
+L_poles = pole(CL_Controlled);
+L_zeros = zero(CL_Controlled);
+

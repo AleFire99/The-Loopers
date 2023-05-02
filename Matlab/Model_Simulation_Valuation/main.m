@@ -168,11 +168,11 @@ display(["comparison in time between Main Optimised and Real values: "+ timer_op
 %                                       0 - on 
 %                                       1 - off
 
-comparison = 0;
+comparison = 1;
 
 if comparison == 1
     
-    load('sysest07_matching.mat'); 
+    load('sysest11.mat'); 
     sysest_compared = sysest;
 
     states_opt_compared(:,1) = initial;

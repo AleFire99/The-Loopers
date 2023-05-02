@@ -1,7 +1,3 @@
-clear all
-close all
-clc
-
 %% Loading data coming from The simulink in this Folder
 % The data.mat file must be a struct with field data obtained as response of a step.
 % Its structure is:
@@ -13,6 +9,7 @@ clc
 % - Control signal
 % - Integrated control signal
 
+<<<<<<< HEAD
 data = load("data.mat").data;
 data= data;
 time = data(1,:);
@@ -22,6 +19,15 @@ alpha = data(4,:);
 tip = data(5,:);
 control_signal = data(6,:);
 integral_control_signal = data(7,:);
+=======
+time = data(:,1);
+reference = data(:,2);
+theta = data(:,3);
+alpha = data(:,4);
+tip = data(:,5);
+control_signal = data(:,6);
+integral_control_signal = data(:,7);
+>>>>>>> fb3291923037780f8d4e348dab470857352c7331
 
 %% Plot of the Signals
 
@@ -58,9 +64,10 @@ tip_overshoot = max(abs(alpha))
 total_overshoot = max(tip-steady_state)
 
 %% Finding settling time
-start_of_slope = find(tip>0.01,1);
-slope = (tip(start_of_slope+30)-tip(start_of_slope+20))/(time(start_of_slope+30)-time(start_of_slope+20));
-time_constant = steady_state/slope
+
+slope = diff(theta)./diff(time);
+points = find(slope == max(slope)); %find the hightest slope
+time_constant = steady_state/slope(points)
 settling_time = 5*time_constant
 
 %% %Finding rising time
