@@ -11,12 +11,12 @@
 
 time = data(1,:);
 reference = data(2,:);
-theta = data(3,:);
-alpha = data(4,:);
-tip = data(5,:);
-control_signal = data(6,:);
-integral_control_signal = data(7,:);
-out8 = data(8,:);
+% theta = data(3,:);
+% alpha = data(4,:);
+% tip = data(5,:);
+% control_signal = data(6,:);
+% integral_control_signal = data(7,:);
+% out8 = data(8,:);
 
 %% Plot of the Signals
 

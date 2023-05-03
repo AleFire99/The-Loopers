@@ -8,7 +8,7 @@ dt = data(1,2) - data(1,1);
 
 
 
-figure(1)
+figure
 subplot 411;plot(vett_t,Out_t1);grid;
 xlabel('Time [s]');
 legend('reference','theta');

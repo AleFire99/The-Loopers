@@ -1,7 +1,3 @@
-close all
-clear all
-clc
-
 %%
 %Loading model
 sysest = load("sysest09c_trick.mat").sysest;
