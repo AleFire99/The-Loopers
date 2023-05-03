@@ -1,5 +1,5 @@
 % to analyse the dataset load the dataset and change the name of the vector in data
-%close all
+close all
 vett_t = data(1,:);
 Out_t1 = data(2,:);
 Out_t2 = data(3,:);
@@ -8,7 +8,7 @@ dt = data(1,2) - data(1,1);
 
 
 
-figure
+figure(1)
 subplot 411;plot(vett_t,Out_t1);grid;
 xlabel('Time [s]');
 legend('reference','theta');
@@ -27,4 +27,4 @@ xlabel('Time [s]');
 legend('theta','alpha');
 
 
-clear all
+%clear all
