@@ -58,7 +58,7 @@ pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new
 
 %% LQR
 
-omega_c = 20;
+omega_c = 20;                                   %Restiction on the speed of the controller
 
 [K_lqr_x, K_lqr_eta] = LQRegulator(sysest_ct_tip, omega_c);
 
