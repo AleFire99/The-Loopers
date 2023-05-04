@@ -9,7 +9,7 @@ power_max = 200;
 Delta_t_per_signal = 20;
 sampling_time = 0.002;
 
-plot_flag = 0;
+plot_
 
 %% Vectors initializations
 
@@ -78,14 +78,10 @@ end
 
 %% Plotting
 
-if plot_flag == 1
-    
-    figure
-    plot(vett_t,vett_ref);grid;
-    xlabel('Time [s]');
-    legend('reference');
-    
-end
+figure
+plot(vett_t,vett_ref);grid;
+xlabel('Time [s]');
+legend('reference');
 
 %% Creation of The Time serie
 
