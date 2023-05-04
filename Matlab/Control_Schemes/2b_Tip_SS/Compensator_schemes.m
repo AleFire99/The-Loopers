@@ -68,6 +68,14 @@ obs_poles = 10*pp_poles;
 
 L_obs = StateObserver(sysest_ct_tip,obs_poles);
 
+A_ob = sysest_ct_tip.A - L_obs*sysest_ct_tip.C;
+B_ob = [ sysest_ct_tip.B - L_obs*sysest_ct_tip.D, L_obs];
+C_ob = eye(4);
+D_ob = zeros(4, 3);
+
+Obs = ss(A_ob, B_ob, C_ob, D_ob);
+
+
 %% Kalman Filter
 
 L_KF = KalmanFilter(sysest_ct_tip);
@@ -75,7 +83,7 @@ L_KF = KalmanFilter(sysest_ct_tip);
 %% Comparison Part
 
 figure;
-sigma(sysest_ct_tip, 'b-x', sys_controlled_pp_enla, 'r-o');
+sigma(sysest_ct_tip, 'b-x', Obs, 'r-o');
 legend;grid;
 
 % figure
