@@ -10,9 +10,10 @@ Longsim_Signal;
 
 addpath("./Implementations/")
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
-G_tip_cont = tf(sysest_ct_tip(1))
-eigs_tip = pole(G_tip_cont)
-zeros_tip = zero(G_tip_cont)
+G_tip_cont = tf(sysest_ct_tip(1));
+
+eigs_tip = pole(G_tip_cont);
+zeros_tip = zero(G_tip_cont);
 
 % figure;
 % bode(G_tip_cont);
@@ -75,10 +76,10 @@ omega_c = 20;                                   %Restiction on the speed of the 
 
 obs_poles = 10*pp_poles;
 
-L_obs = StateObserver(sysest_ct_tip,obs_poles);
+L_obs = StateObserver(sysest_ct,obs_poles);
 
-A_ob = sysest_ct_tip.A - L_obs*sysest_ct_tip.C;
-B_ob = [ sysest_ct_tip.B - L_obs*sysest_ct_tip.D, L_obs];
+A_ob = sysest_ct.A - L_obs*sysest_ct.C;
+B_ob = [ sysest_ct.B - L_obs*sysest_ct.D, L_obs];
 C_ob = eye(4);
 D_ob = zeros(4, 3);
 
@@ -90,23 +91,30 @@ L_KF = KalmanFilter(sysest_ct_tip);
 
 %% Comparison Part
 
-figure;
-sigma(sysest_ct_tip, 'b-x', sys_controlled_pp_enla, 'r-o');
-legend;grid;
+comparison_flag = 0;
 
-% figure
-% pzmap(L_Controlled);
-% 
-% CL_Controlled = L_Controlled/(1+L_Controlled);
-% 
-% figure; hold on;
-% step(CL);
-% step(CL_Controlled);
-% legend;
-% hold off;
-% grid;
-% 
-% L_poles = pole(CL_Controlled);
-% L_zeros = zero(CL_Controlled);
+if comparison_flag == 1
+  
+    figure;
+    sigma(sysest_ct_tip, 'b-x', sys_controlled_pp_enla, 'r-o');
+    legend;grid;
+    
+%     figure
+%     pzmap(L_Controlled);
+%     
+%     CL_Controlled = L_Controlled/(1+L_Controlled);
+%     
+%     figure; hold on;
+%     step(CL);
+%     step(CL_Controlled);
+%     legend;
+%     hold off;
+%     grid;
+%     
+%     L_poles = pole(CL_Controlled);
+%     L_zeros = zero(CL_Controlled);
+
+end
+
 
 
