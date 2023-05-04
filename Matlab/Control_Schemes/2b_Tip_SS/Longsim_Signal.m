@@ -44,11 +44,17 @@ previus_reference_signals = n_steps;
 for k = 0:n_ramps-1
     initial_time_signal = (k+previus_reference_signals)*Delta_t_per_signal/sampling_time;
 
-    slope = tip_max_ramps(k+1)/Delta_t_per_signal;
-
-    for i = 1:Delta_t_per_signal/sampling_time+1    
-        vett_ref(initial_time_signal+i) = sampling_time*(i-1)*slope;    
+    vett_ref(initial_time_signal+1) = 0;
+    slope = tip_max_ramps(k+1)/(Delta_t_per_signal*(3/4));
+    
+    for i = 2:(Delta_t_per_signal*3)/(4*sampling_time)
+        vett_ref(initial_time_signal+i) = sampling_time*(i-1)*slope;  
     end
+    
+    for i = (Delta_t_per_signal*3)/(4*sampling_time)+1:Delta_t_per_signal/sampling_time    
+        vett_ref(initial_time_signal+i) = 0;    
+    end
+
 end
 
 %% Sinevawes
