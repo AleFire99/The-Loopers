@@ -6,6 +6,8 @@ tip_max_ramps = [20 45 90];
 frequencies_rads = 0.1*[ 010 030 050 070 090 100 110 120 130 140 150 160 170 180 185 190 193 195 197 200 205 210 220 230 240 250 260 270 280 290 300 340 370 400 450 500 ];
 power_max = 200;
 
+%% Vectors initializations
+
 n_steps = length(tip_max_steps);
 n_ramps = length(tip_max_ramps);
 n_sinewaves = length(frequencies_rads);
