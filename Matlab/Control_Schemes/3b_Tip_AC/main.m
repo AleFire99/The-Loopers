@@ -9,9 +9,13 @@ clc
 
 %% System model
 % Model parameters
-load sysest.mat
+load('sysest09c_trick.mat')   
+
+syses_ct = d2c(sysest);
+sysest_ct = d2c(sysest);
 Vbar = 5;%max volts
- 
+v_a_max = Vbar;
+
 Ts  =   0.002;            % Sampling time                       
  
 % System matrices:
@@ -97,9 +101,9 @@ for ind=2:Nsim+1
     U                                   =   quadprog(H,f,[],[],Aeq,beq,[],[],[],options);
     tQP(ind-1,1)                        =   toc;
     Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1) =   U(1:nu,1);
-    Zsim_MPC((ind-1)*nz+1:ind*nz,1)  =   A*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+B*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
+    Zsim_MPC((ind-1)*nz+1:ind*nz,1)     =   A*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+B*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
     Ysim_MPC((ind-2)*ny+1:(ind-1)*ny,1) =   C*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+D*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
-    zt                                 =   Zsim_MPC((ind-1)*nz+1:ind*nz,1);
+    zt                                  =   Zsim_MPC((ind-1)*nz+1:ind*nz,1);
 end
 
 %%
