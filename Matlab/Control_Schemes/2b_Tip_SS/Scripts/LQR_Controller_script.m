@@ -38,4 +38,4 @@ s = tf('s');
 
 Q = diag([1000 1 100 1]);     %initial values
 R = [1];
-K_lqr = lqr(syses_ct,Q,R);
+K_lqr = lqr(sysest_cont,Q,R);

@@ -9,6 +9,17 @@
 % - Control signal
 % - Integrated control signal
 
+<<<<<<< HEAD
+data = load("data.mat").data;
+data= data;
+time = data(1,:);
+reference = data(2,:);
+theta = data(3,:);
+alpha = data(4,:);
+tip = data(5,:);
+control_signal = data(6,:);
+integral_control_signal = data(7,:);
+=======
 time = data(:,1);
 reference = data(:,2);
 theta = data(:,3);
@@ -16,6 +27,7 @@ alpha = data(:,4);
 tip = data(:,5);
 control_signal = data(:,6);
 integral_control_signal = data(:,7);
+>>>>>>> fb3291923037780f8d4e348dab470857352c7331
 
 %% Plot of the Signals
 
