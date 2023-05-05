@@ -6,7 +6,9 @@ sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
 % To create the long reference's signal for the simulation
-Longsim_Signal;
+%Longsim_Signal;                 %All possible references
+%Longsim_Signal_Step_Ramp;       %Only ramp and step references
+Longsim_Signal_Sinewaves;       %Only sinewaves references
 
 addpath("./Implementations/")
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
@@ -91,7 +93,7 @@ L_KF = KalmanFilter(sysest_ct_tip);
 
 %% Comparison Part
 
-comparison_flag = 1;
+comparison_flag = 0;
 
 if comparison_flag == 1
   
