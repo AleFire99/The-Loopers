@@ -9,7 +9,7 @@ power_max = 200;
 Delta_t_per_signal = 20;
 sampling_time = 0.002;
 
-plot_flag = 0;
+plot_flag = 1;
 
 %% Vectors initializations
 
