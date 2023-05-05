@@ -2,15 +2,19 @@ close all
 clear all
 clc
 
+addpath("./Implementations/")
+addpath("./Simulation_Signals/")
+addpath("./Validation/")
+
 sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
 % To create the long reference's signal for the simulation
-%Longsim_Signal;                 %All possible references
+Longsim_Signal;                 %All possible references
 %Longsim_Signal_Step_Ramp;       %Only ramp and step references
-Longsim_Signal_Sinewaves;       %Only sinewaves references
+%Longsim_Signal_Sinewaves;       %Only sinewaves references
 
-addpath("./Implementations/")
+
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
 G_tip_cont = tf(sysest_ct_tip(1));
 
@@ -51,14 +55,16 @@ zeta= 0.7;
 v_a_max = 15;
 
 %% Control with Pole Placement in Continous Time
+%Definition of the new poles
 
-pp_poles = [-23 -25 -27 -29];                           %Definition of the new poles
+%pp_poles = [-23 -25 -27 -29];                  %Arco                         
+pp_poles = [-23 -25 -27 -29];                  %JC   
 
 [sys_controlled_pp, K_pp,K_p] = PolePlacement(sysest_ct_tip,pp_poles);
 
 % Addition of the PI in the outer loop instead of just the proportional action
 
-wc_req = 40;
+wc_req = 2;
 s = tf('s');
 PI_pp = wc_req * K_p * (s + 1) / s;
 
@@ -76,29 +82,30 @@ omega_c = 20;                                   %Restiction on the speed of the 
 
 %% Observer implementation  
 
-obs_poles = 10*pp_poles;
+%obs_poles = 10*pp_poles;            %Arco
+obs_poles = 2*pp_poles;            %Jc
 
 L_obs = StateObserver(sysest_ct,obs_poles);
 
-A_ob = sysest_ct.A - L_obs*sysest_ct.C;
-B_ob = [ sysest_ct.B - L_obs*sysest_ct.D, L_obs];
-C_ob = eye(4);
-D_ob = zeros(4, 3);
-
-Obs = ss(A_ob, B_ob, C_ob, D_ob);
-
 %% Kalman Filter
 
-L_KF = KalmanFilter(sysest_ct_tip);
+Q_KF = eye(4);     %Arco
+R_KF = eye(1);
+
+%Q_KF = eye(4);     %Alp
+%R_KF = eye(1)*10;
+
+
+L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
 
 %% Comparison Part
 
-comparison_flag = 0;
+comparison_flag = 1;
 
 if comparison_flag == 1
   
     figure;
-    sigma(sysest_ct_tip, 'b-x', L_G_sys_controlled_pp, 'r-o');
+    sigma(sysest_ct_tip, 'b-x', sys_controlled_pp, 'r-o');
     legend;grid;
     
 %     figure
@@ -117,6 +124,5 @@ if comparison_flag == 1
 %     L_zeros = zero(CL_Controlled);
 
 end
-
 
 
