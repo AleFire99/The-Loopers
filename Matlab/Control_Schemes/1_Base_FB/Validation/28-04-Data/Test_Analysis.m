@@ -19,7 +19,7 @@ integral_control_signal = data(7,:);
 
 %% Plot of the Signals
 
-figure(1)
+figure
 subplot 611;plot(time,reference);grid;
 title('Reference Signal');
 xlabel('Time [s]');

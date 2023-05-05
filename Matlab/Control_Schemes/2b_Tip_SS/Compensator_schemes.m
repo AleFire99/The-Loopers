@@ -106,7 +106,7 @@ if comparison_flag == 1
   
     figure;
     sigma(sysest_ct_tip, 'b-x', sys_controlled_pp, 'r-o');
-    legend;grid;
+    legend;grid on;
     
 %     figure
 %     pzmap(L_Controlled);

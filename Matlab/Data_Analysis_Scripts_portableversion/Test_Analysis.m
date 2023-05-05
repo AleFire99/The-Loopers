@@ -20,31 +20,27 @@ integral_control_signal = data(7,:);
 %% Plot of the Signals
 
 figure
-subplot 711;plot(time,reference);grid;
+subplot 611;plot(time,reference);grid;
 title('Reference Signal');
 xlabel('Time [s]');
 
-subplot 712;plot(time,theta);grid
+subplot 612;plot(time,theta);grid
 title('Theta Output');
 xlabel('Time [s]');
 
-subplot 713;plot(time,alpha);grid
+subplot 613;plot(time,alpha);grid
 title('Alpha Output');
 xlabel('Time [s]');
 
-subplot 714;plot(time,tip);grid
+subplot 614;plot(time,tip);grid
 title('Tip Position (Alpha + Theta)');
 xlabel('Time [s]');
 
-subplot 715;plot(time,control_signal);grid
+subplot 615;plot(time,control_signal);grid
 title('Voltage Control Signal');
 xlabel('Time [s]');
 
-subplot 716;plot(time,integral_control_signal);grid
-title('Integral of The Voltage');
-xlabel('Time [s]');
-
-subplot 717;plot(time,out8);grid
+subplot 616;plot(time,integral_control_signal);grid
 title('Integral of The Voltage');
 xlabel('Time [s]');
 

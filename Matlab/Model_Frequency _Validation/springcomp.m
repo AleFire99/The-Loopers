@@ -16,7 +16,7 @@ norms = sqrt(norms(1,:) + norms(2,:));
 Mx_real = Ks*(norms-xk).*cos(theta+alfa)*l;
 %Fx_lin = (alfa+ norm(Pinit)).*taylorapp(theta0, alfa);%cosx = cos(x0) - sin(x0)*(x);
 %Fx_lin = norm(Pinit)*cos(theta0) - norm(Pinit)*sin(theta0).*alfa + alfa*cos(theta0);
-Mx_lin = Ks*(norms-xk + alfa.*(norms-xk)).*(cos(theta0))*l;
+Mx_lin = Ks*(cos(theta0))*(norms-xk)*l;
 
 end
 
