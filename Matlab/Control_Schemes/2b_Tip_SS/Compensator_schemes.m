@@ -56,7 +56,7 @@ pp_poles = [-23 -25 -27 -29];                           %Definition of the new p
 
 % Addition of the PI in the outer loop instead of just the proportional action
 
-wc_req = 20;
+wc_req = 40;
 s = tf('s');
 PI_pp = wc_req * K_p * (s + 1) / s;
 
@@ -91,12 +91,12 @@ L_KF = KalmanFilter(sysest_ct_tip);
 
 %% Comparison Part
 
-comparison_flag = 0;
+comparison_flag = 1;
 
 if comparison_flag == 1
   
     figure;
-    sigma(sysest_ct_tip, 'b-x', sys_controlled_pp_enla, 'r-o');
+    sigma(sysest_ct_tip, 'b-x', L_G_sys_controlled_pp, 'r-o');
     legend;grid;
     
 %     figure
