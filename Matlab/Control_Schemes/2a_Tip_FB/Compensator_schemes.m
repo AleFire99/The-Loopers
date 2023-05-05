@@ -8,8 +8,8 @@ sysest_ct = d2c(sysest);              % Implementation provided in Continuous ti
 addpath("./Implementations/")
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0;0 0 1 0],sysest_ct.D);
 G_tip_cont = tf(sysest_ct_tip(1));
-eigs = pole(G_tip_cont)
-zeros = zero(G_tip_cont)
+eigs_tip = pole(G_tip_cont)
+zeros_tip = zero(G_tip_cont)
 
 figure;
 bode(G_tip_cont);
