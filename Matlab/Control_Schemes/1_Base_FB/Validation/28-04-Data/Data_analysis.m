@@ -29,4 +29,4 @@ xlabel('Time [s]');
 legend('theta','alpha');
 
 
-%clear all
+clear all;
