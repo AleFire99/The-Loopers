@@ -24,9 +24,9 @@ for i = 1:N_data_struct
     
     Numb_freq = length(data);
     time = data(1,time_skip/dt:Numb_freq);              
-    input = data(2,time_skip/dt:Numb_freq);             
-    output_theta = data(3,time_skip/dt:Numb_freq);       %Outputs: 3 for base, 4 for tip
-    output_alpha = data(4,time_skip/dt:Numb_freq);        
+    input = data(2,time_skip/dt:Numb_freq)*360/(2*pi);             
+    output_theta = data(3,time_skip/dt:Numb_freq)*360/4096;       %Outputs: 3 for base, 4 for tip
+    output_alpha = data(4,time_skip/dt:Numb_freq)*360/4096;        
     
     
     %FFT computation of input
@@ -75,14 +75,12 @@ s = tf('s');
 
 G_sysest_cont = tf(sysest_ct);
 G_theta_cont_tf = G_sysest_cont(1);
-controller_base_tf = tf(controller_base);
+controller_base_tf = tf(controller);
 L_Controlled = controller_base_tf*G_theta_cont_tf;
 CL_Controlled = L_Controlled/(1+L_Controlled);
   
 [mag_sysest,pha_sysest] = bode(G_theta_cont_tf, omega);
 [mag_CL,pha_CL] = bode(CL_Controlled, omega);
-
-G_1 = 20*log10(abs(y1_max ./u_max));
 
 mag_sysest_base = mag_sysest(1,:,:);           %extraction of the mag of base, first dynamic
 mag_sysest_base = squeeze (mag_sysest_base);
@@ -92,10 +90,10 @@ mag_CL_base = mag_CL(1,:,:);           %extraction of the mag of base, first dyn
 mag_CL_base = squeeze (mag_CL_base);
 mag_CL_base = 20*log10(mag_CL_base);
 
-
+mag_CL_data = 20*log10(abs(y1_max ./u_max));
 
 figure;
-semilogx(omega,mag_sysest_base,"r", omega,mag_CL_base,"g", omega,G_1,"xk");grid on;
+semilogx(omega,mag_sysest_base,"r", omega,mag_CL_base,"g", omega,mag_CL_data,"xk");grid on;
 title("Plot of the Base Frequency Responce");
 xlabel("Frequency [ras/s]");
 ylabel("Gain");

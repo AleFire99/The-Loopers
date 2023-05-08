@@ -1,4 +1,4 @@
-function [controller,K_comp,Kd_base] = pzcancellation(sysest_ct, zeta, wn)
+function [controller,Kd_base, K_comp] = pzcancellation(sysest_ct, zeta, wn)
 
 Gp = tf(sysest_ct);
 s = tf('s');

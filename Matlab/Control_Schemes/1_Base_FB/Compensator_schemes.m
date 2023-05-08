@@ -56,14 +56,15 @@ v_a_max = 15;
 
 %% Fire's design
 
-controller = Fires_desiged(sysest_ct);
+%controller = Fires_desiged(sysest_ct);
 
+%% Alp Design 01
 
-%% Alp Design
+%[controller,Kd, K_comp] = pzcancellation(sysest_ct, zeta, wn);
 
-%[controller,K_comp,Kd_base] = pzcancellation(sysest_ct, zeta, wn);
+%% Alp Design 02
 
-
+[controller,Kd, K_comp] = Alp02_rootlocus(sysest_ct, wn, zeta);
 
 %% Comparison Part
 
@@ -96,4 +97,13 @@ grid;
 
 L_poles = pole(CL_Controlled);
 L_zeros = zero(CL_Controlled);
+
+
+%% Save of the Parameters
+
+controller
+Kd
+K_comp
+
+% save('FB_controller_base','controller', "Kd",'K_comp')
 
