@@ -2,10 +2,20 @@ close all
 clear all
 clc
 
+addpath("./Implementations/")
+addpath("./Simulation_Signals/")
+addpath("./Validation/")
+
 sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
-addpath("./Implementations/")
+% To create the long reference's signal for the simulation
+Longsim_Signal;                 %All possible references
+%Longsim_Signal_Step_Ramp;       %Only ramp and step references
+%Longsim_Signal_Sinewaves;       %Only sinewaves references
+
+
+
 sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0;0 0 1 0],sysest_ct.D);
 G_tip_cont = tf(sysest_ct_tip(1));
 eigs_tip = pole(G_tip_cont)
