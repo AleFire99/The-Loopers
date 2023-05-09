@@ -1,0 +1,1 @@
+Load file in workspace check if the  parameter section is equal to the one of the signal generator
