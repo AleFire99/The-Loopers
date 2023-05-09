@@ -1,0 +1,10 @@
+- Compy the folder in the lecation of the main
+- inside the main insert these rows: 
+    addpath("./Simulation_Signals/")
+    
+    % To create the long reference's signal for the simulation
+    %Longsim_Signal;                 %All possible references
+    %Longsim_Signal_Step_Ramp;       %Only ramp and step references
+    %Longsim_Signal_Sinewaves;       %Only sinewaves references
+
+- uncomment the script thet you need
