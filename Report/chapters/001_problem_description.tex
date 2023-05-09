@@ -3,23 +3,28 @@
 
     This report will describe the model of the system, our solution and some attempts to describe and control the system.
 
-    The system is composed by a motor's module that provide torque to a turret, above the turret there's a beam which is attached at one of the two edges through a screw to the turret. The beam will follow the movement of the base due to two springs attached between the turret and the beam.
+    The system is composed of a DC motor that provides torque to a metal base, over which a metal arm is fixed with an hinge and two symmetrical springs.
+
+    The length of the arm, hence its inertia, and the the equilibiurm length of the springs can be modified in a variety of different configurations.
+
     \image{./images/system.png}
-    The system has several interfaces that could be connected to an acquisition system (DAC/ADC + Amplifier) to acquire measurements and provide input signal, the interfaces are:
+    The system has several interfaces that could be connected to an acquisition system (DAC/ADC + Amplifier) to acquire measurements and provide input signal, namely:
     \begin{itemize}
         \item Actuators:
             \subitem Power Supply input of the motor's module (changing the voltage);
         \item Sensors:
-            \subitem Incremental Encoder for the position of the turret \wrt to the motor's module;
-            \subitem Incremental Encoder for the relative position of the arm \wrt the turret.
+            \subitem Incremental Encoder for the position of the base \wrt the global reference frame;
+            \subitem Incremental Encoder for the relative position of the arm \wrt the base.
     \end{itemize}
-    The acquisition system composed by ADC/DAC + Amplifier is already configured, it doesn't require our attention, for this reason it will not treat in this report.
+    The acquisition system composed by ADC/DAC + Amplifier is already configured, it doesn't require our attention, for this reason it will not be discussed in this report.
 
-    The main task is to control a low damped system with variable parameters, this goal is divided in sub-tasks to be achieved:
+    The main task of this project is to provide a basic control strategy for such system and to develope a more advanced control strategy to accomodate all possible configurations of the system in question.
+    
+    This goal is divided in sub-tasks to be achieved:
     \begin{enumerate}
-        \item position control of the top base, with a frequency based approach;
+        \item position control of the base, with a frequency based approach;
         \item position control of the arm tip, with a frequency based or a state space approach;
-        \item position control of the arm tip with uncertainty in the spring stiffness and arm moment of inertia, with a state space approach or other advanced control techniques.
+        \item manage uncertainties and control the position of the arm tip with the system in different configurations, with a state space approach or other advanced control techniques.
     \end{enumerate}
 
 

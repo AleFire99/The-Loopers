@@ -1,76 +1,90 @@
 \chapter{Model Identification}
 \label{cha:model_identification}
 
-    The system could be schematized:
+    The system could be schematized as:
 
     \image{./images/scheme.png}
 
-    It is possible to recognize models of a DC electric motor powered by a voltage $V_{dc}$ coupled with a gearbox (both modeled in the same box) that provide torque $u$ to a flexible (due the springs) joint, at last an encoder to model all the conversion's dynamics between the angular positions $y$ and the red ones $\hat{y}$.
+    It is possible to recognize models of a DC motor powered by a voltage $V_{dc}$ coupled with a gearbox (both modeled in the same box) that provides torque $u$ to the flexible joint. Finally two encoders read the angular positions $y$ and send the estimated values $\hat{y}$ to the ADC converter.
 
-    \section{Mathematical Model Creation}
+    \section{Mathematical Model}
 
-        \subsection{DC Motor Equations}
+        \subsection{DC motor equations}
 
-            The first task is to decide the shape of the model in terms of which dynamics consider or neglect.
+            Before starting to model the DC motor we can get the time constant of its dynamics from the values inthe datasheet:
 
-            Starting from the DC motor we assumed a static model due to the fact that from the data sheet of the motor, it should have a dynamic given by the inductance at a frequency:
             \[
-                \frac{R}{L} = \frac{2.6 \Omega}{0.18 mH} \approx  15 KHz\]
-            this is clearly above the frequency range of the mechanical system, that for its nature should have a frequency in the order at last of $100 Hz$ (deeper treatment in its section).
+                \frac{R}{L} = \frac{2.6 \, \Omega}{0.18 \, mH} \approx  15 \, KHz
+            \]
+                
+            As this is clearly above the frequency range of the mechanical system, we can neglect its dynamics and model only the static contribution.
             
-            The physical equations of the Static DC Motor:
+            The physical equations of the DC Motor then become:
             
             \begin{equation*}
                 \begin{cases}
                     V_a = R_a I_a + E \\
-                    E = k_m \Omega \\
+                    E = k_m \dot\theta \\
                     \tau = k_t I_a
                 \end{cases}
             \end{equation*}
 
-            After several mathematician steps and considering the gearbox effect:
+            After several mathematical steps and considering the gearbox ratio $K_g$ and the conversion efficiencies we get:
 
             \[
-                \tau = \frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} \]
+                \tau = \frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} 
+            \]
             
-            this is the output of the DC Motor's Model, where has been added the gear ratio $K_g$ to provide the angular position at the attaching point of the turret.
+            Where $\tau$ is the torque applied to the system and $\theta$ is the angular position of the base.
 
-        \subsection{Flexible Joint and The Gearbox Equations}
+        \subsection{Flexible joint equations}
 
-            The model of the beam consider the scheme of the beam as:
+            We can represent our system as follows:
             \image{./images/beam_scheme_model.png}
-            in this model the system is a 2-dofs mechanical system and can be modeled following a Lagrangian's Approach.
+            Here we have a 2-dofs mechanical system that can be modelled using a Lagrangian approach.
+
+            \bigbreak
 
             The 2 \dofs are:
             \begin{itemize}
-                \item $\theta$: the absolute angular position of the base of the turret;
-                \item $\alpha$: the relative angular position of the tip \wrt to the base of the turret.
+                \item $\theta$: the absolute angular position of the base;
+                \item $\alpha$: the relative angular position of the arm \wrt to the base.
             \end{itemize}
 
-            The Kinetic Energy:
+            \bigbreak
+
+            The kinetic energy:
             \[
-                V = \half J_{eq} \dot{\theta} ^2 + \half J_{L} (\dot{\theta} + \dot{\alpha}) ^2 \]
-            where $J_{eq}$ refers to the equivalent inertia of the motor + gearbox, instead $J_{L}$ refers to the inertia of the beam.
+                T = \half J_{eq} \dot{\theta} ^2 + \half J_{L} (\dot{\theta} + \dot{\alpha}) ^2 
+            \]
+
+            where $J_{eq}$ refers to the equivalent inertia of the motor + gearbox, and $J_{L}$ refers to the inertia of the arm.
+
+            \bigbreak 
 
             The Potential Energy:
             \[
-                V = \half K_s \dot{\alpha}^2\]
-            where $K_s$ refers to the linearized stiffness of the equivalent torsional spring. This assumption will be clarified later, but for readability reasons not here.
+                V = \half K_s \dot{\alpha}^2
+            \]
+
+            where $K_s$ refers to the linearized stiffness of the equivalent torsional spring.
             
+            \bigbreak
+
             The Dissipative Function:
             \[
                 D = \half B_{eq} \dot{\theta}^2 + \half B_{L} \dot{\alpha}^2\]
-            where $B_{eq}$ refers to the equivalent friction of the motor + gearbox, instead $B_L$ refers to the equivalent friction that the single beam is subjected.
+            where $B_{eq}$ and $B_L$ refer respectively to the equivalent friction of the motor + gearbox and the equivalent friction of the arm.
             
-            Applying the Lagrange treatment for each \dof:
+            The dynamics of the system can be found applying the Euler-Lagrange equations for each \dof:
             \begin{equation*}
                 \frac{d}{dt} \left(\frac{\partial T}{\partial \dot{x}}\right)-\left(\frac{\partial T}{\partial x}\right)+\left(\frac{\partial D}{\partial \dot{x}}\right)+\left(\frac{\partial V}{\partial x}\right) = \left(\frac{\delta W}{\delta x}\right)\
             \end{equation*}
-            and after several mathematical steps the system of equation becomes:
+            finally we get the following system of equation:
             \begin{equation*}
                 \begin{cases*}
                     J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\tau \\
-                    J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_{stiff}\alpha=0
+                    J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_s\alpha=0
                 \end{cases*}
             \end{equation*}
 
