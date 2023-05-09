@@ -1,0 +1,22 @@
+The data.mat file must be a struct with field data obtained as response of a step.
+
+Its structure is:
+- Time
+- Reference
+- Base values
+- Tip values
+- Base + tip values
+- Control signal
+- Integrated control signal
+
+The outputs are:
+- plot of all the signals
+- base overshoot
+- tip overshoot
+- total overshoot
+- time constant
+- settling time
+- rising time
+- dead time
+- max control signal
+- total control signal

@@ -1,0 +1,11 @@
+The "Data_analysis" script takes as input a ".mat" file having a "data" structure in like:
+- time
+- reference
+- theta
+- alpha
+
+And outputs plots of:
+- reference
+- theta
+- alpha
+- norm of theta, norm of alpha
