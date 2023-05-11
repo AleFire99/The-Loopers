@@ -78,6 +78,12 @@ pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new
 
 [K_lqr] = Fire_LQRegulator(sysest_ct);
 
+%% LQR Arco
+
+omega_c = 20;                                   %Restiction on the speed of the controller
+
+[K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, omega_c);
+
 %% Observer implementation  
 
 %obs_poles = 10*pp_poles;            %Arco
@@ -90,7 +96,7 @@ L_obs = StateObserver_JC(sysest_ct,obs_poles);
 Q_KF = eye(4);     %Arco
 R_KF = eye(1);
 
-L_KF = KalmanFilter_Arco(sysest_ct, Q_KF, R_KF);
+L_KF = Arco_KalmanFilter(sysest_ct, Q_KF, R_KF);
 
 
 
