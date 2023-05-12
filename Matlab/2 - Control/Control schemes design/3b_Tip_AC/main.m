@@ -27,7 +27,7 @@ nu      =   size(B,2);
 ny      =   size(C,1);
 
 %% Prediction horizon and cost function weighting matrices
-N       =   7;
+N       =   100;
 Q       =   1e4;
 R       =   1e-6;
 
@@ -38,8 +38,8 @@ bu      =   Vbar*ones(2*nu,1);
 nqu     =   size(Au,1);                 % Number of input inequality constraints per stage
 
 % State inequalities
-%Az     =   zeros();[Ktheta/tau_g -Ktheta 0 0;-Ktheta/tau_g +Ktheta 0 0];
-%bz     =   Vbar*ones(2,1);
+%Az     =   [eye(4);-eye(4)];
+%bz     =   100*[pi 10 pi/10 10]*ones(4,1);
 %nqz    =   size(Az,1);
 nqz = 0;
 %% Reference output and initial state
@@ -69,8 +69,8 @@ for ind = 1:N
     bubar((ind-1)*nqu+1:ind*nqu,1)                          =   bu;
 end
 %
-%Aineq   =   [Aubar;Azbar*Gamma_z];
-%bineq   =   [bubar;bzbar-Azbar*Lambda_z*z0];
+Aineq   =   [Aubar;Azbar*Gamma_z];
+bineq   =   [bubar;bzbar-Azbar*Lambda_z*z0];
 
 % Terminal equality constraint
 Aeq     =   Gamma_z(end-nz+1:end,:)-Gamma_z(end-2*nz+1:end-nz,:);
@@ -98,7 +98,7 @@ for ind=2:Nsim+1
     beq                                 =   -(Lambda_z(end-nz+1:end,:)-Lambda_z(end-2*nz+1:end-nz,:))*zt;
     f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
     tic
-    U                                   =   quadprog(H,f,[],[],Aeq,beq,[],[],[],options);
+    U                                   =   quadprog(H,f,Aineq,bineq,Aeq,beq,[],[],[],options);
     tQP(ind-1,1)                        =   toc;
     Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1) =   U(1:nu,1);
     Zsim_MPC((ind-1)*nz+1:ind*nz,1)     =   A*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+B*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
@@ -106,9 +106,9 @@ for ind=2:Nsim+1
     zt                                  =   Zsim_MPC((ind-1)*nz+1:ind*nz,1);
 end
 
-%%
 theta = Ysim_MPC(1:2:end);
 alfa= Ysim_MPC(2:2:end);
 tpause = 0.001;
 
 simulateArm(theta,alfa,Ts,tpause)  
+plot(Usim_MPC)

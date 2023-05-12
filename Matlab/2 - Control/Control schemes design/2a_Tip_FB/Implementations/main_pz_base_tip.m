@@ -42,7 +42,7 @@ sgrid (zeta,wn)
 
 pi = (s+1)/s;
 pic = pi*cancelled;
-[kd,poles] = rlocfind(pic, -wn*0.7)
+[kd,poles] = rlocfind(pic, -wn*0.9)
 CL_TF =feedback(kd*pic,1,-1)
 figure
 bode(kd*pic)
