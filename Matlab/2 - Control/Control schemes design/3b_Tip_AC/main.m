@@ -10,16 +10,15 @@ clc
 %% System model
 % Model parameters
 load('sysest09c_trick.mat')   
-
-syses_ct = d2c(sysest);
-sysest_ct = d2c(sysest);
+s=tf(1,[1 0])
+%syses_ct = d2c(sysest*s);
+%sysest_ct = d2c(sysest*s);
 Vbar = 5;%max volts
-v_a_max = Vbar;
 
-Ts  =   0.002;            % Sampling time                       
+%Ts  =   0.002;            % Sampling time                       
 Ts  = 0.01;
 % System matrices:
-[A,B,C,D]       =   ssdata(d2d(sysest,Ts));                  % Model matrices 
+[A,B,C,D]       =   ssdata(c2d((d2c(sysest)*s),Ts));                  % Model matrices 
 
 %% Signal dimensions
 nz     =   size(A,1);
@@ -27,9 +26,10 @@ nu      =   size(B,2);
 ny      =   size(C,1);
 
 %% Prediction horizon and cost function weighting matrices
-N       =   2/Ts;
+predhorizonseconds = 3;
+N       =   predhorizonseconds/Ts;
 Q       =   1e4;
-R       =   1e-6;
+R       =   1e2;
 
 %% Inequality constraints
 % Input inequalities
@@ -44,7 +44,7 @@ nqu     =   size(Au,1);                 % Number of input inequality constraints
 nqz = 0;
 %% Reference output and initial state
 z0     =   zeros(nz,1);
-yref    =   [deg2rad(45);  0];
+yref    =   [deg2rad(30);  0];
 
 %% Build overall matrices and vectors for QP (note - quadprog solves: min 0.5*x'*H*x + f'*x   subject to:  A*x <= b, Aeq*x = beq)
 [Lambda_y,Gamma_y,Lambda_z,Gamma_z]   =   Traj_matrices(N,A,B,C,D);
@@ -85,7 +85,8 @@ H       =   0.5*(H+H');
 options =   optimset('display','none');
 
 %% Simulate with MPC
-Nsim                =   2/Ts;
+seconds = 5;
+Nsim                =   seconds/Ts;
 Zsim_MPC            =   zeros((Nsim+1)*nz,1);
 Ysim_MPC            =   zeros(Nsim*ny,1);
 Usim_MPC            =   zeros(Nsim*nu,1);
@@ -96,11 +97,13 @@ tQP                 =   zeros(Nsim-1,1);
 uprev = 0;
 unow = 0;
 U = zeros(N,1);
+T = zeros(5,5);
+%T(3,3) = 1e3; 
 for ind=2:Nsim+1
     bineq                               =   [bubar;bzbar-Azbar*Lambda_z*zt];
     beq                                 =   -(Lambda_z(end-nz+1:end,:)-Lambda_z(end-2*nz+1:end-nz,:))*zt;
     %f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
-    f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y + 1e4*[abs(U(1:end-1)-U(2:end))' 0];% + (uprev-unow)*1e3*(uprev-unow);
+    f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y + zt'*T*zt;
     tic
     U                                   =   quadprog(H,f,Aineq,bineq,Aeq,beq,[],[],[],options);
     tQP(ind-1,1)                        =   toc;
@@ -116,8 +119,9 @@ end
 theta = Ysim_MPC(1:2:end);
 alfa= Ysim_MPC(2:2:end);
 tpause = Ts;
-
 simulateArm(theta,alfa,Ts,tpause)  
-plot(Usim_MPC)
+%%
+time = 0:Ts:Nsim*Ts-Ts
+plot(time,Usim_MPC)
 xlabel("time[s]")
 ylabel("Voltage(V)")
