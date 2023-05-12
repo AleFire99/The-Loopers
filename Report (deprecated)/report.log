@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.15)  9 MAY 2023 13:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.15)  11 MAY 2023 19:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -732,8 +732,13 @@ Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \titlewidth=\dimen329
 \titlewidthlast=\dimen330
 \titlewidthfirst=\dimen331
+) (c:/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2022-07-02 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks52
+\verbatim@line=\toks53
+\verbatim@in@stream=\read4
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 76.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 77.
  (c:/texlive/2022/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -743,24 +748,24 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 ) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -797,24 +802,24 @@ LaTeX Font Info:    ... okay on input line 76.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 76.
+Package hyperref Info: Link coloring ON on input line 77.
 (./report.out) (./report.out)
 \@outlinefile=\write4
 \openout4 = `report.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 76.
-Package microtype Info: Applying patch `item' on input line 76.
-Package microtype Info: Applying patch `toc' on input line 76.
-Package microtype Info: Applying patch `eqnum' on input line 76.
-Package microtype Info: Applying patch `footnote' on input line 76.
-Package microtype Info: Applying patch `verbatim' on input line 76.
+LaTeX Info: Redefining \microtypecontext on input line 77.
+Package microtype Info: Applying patch `item' on input line 77.
+Package microtype Info: Applying patch `toc' on input line 77.
+Package microtype Info: Applying patch `eqnum' on input line 77.
+Package microtype Info: Applying patch `footnote' on input line 77.
+Package microtype Info: Applying patch `verbatim' on input line 77.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 76.
+LaTeX Info: Redefining \showhyphens on input line 77.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -823,7 +828,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (
 ) (c:/texlive/2022/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 76.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 77.
  (c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count353
@@ -831,12 +836,12 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 \scratchbox=\box83
 \nofMPsegments=\count354
 \nofMParguments=\count355
-\everyMPshowfont=\toks52
+\everyMPshowfont=\toks54
 \MPscratchCnt=\count356
 \MPscratchDim=\dimen333
 \MPnumerator=\count357
 \makeMPintoPDFobject=\count358
-\everyMPtoPDFconversion=\toks53
+\everyMPtoPDFconversion=\toks55
 ) (c:/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -847,146 +852,14 @@ Package pgfplots notification 'compat/show suggested version=true': you might be
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<images/logo_poli_bianco.pdf, id=59, 56.09688pt x 56.08853pt>
-File: images/logo_poli_bianco.pdf Graphic file (type pdf)
-<use images/logo_poli_bianco.pdf>
-Package pdftex.def Info: images/logo_poli_bianco.pdf  used on input line 92.
+<images/Template/logo_poli_bianco.pdf, id=55, 56.09688pt x 56.08853pt>
+File: images/Template/logo_poli_bianco.pdf Graphic file (type pdf)
+<use images/Template/logo_poli_bianco.pdf>
+Package pdftex.def Info: images/Template/logo_poli_bianco.pdf  used on input line 93.
 (pdftex.def)             Requested size: 203.7692pt x 203.70207pt.
 [1
 
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/logo_poli_bianco.pdf>] (./report.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4.
- (c:/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
-File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4.
- (c:/texlive/2022/texmf-dist/tex/latex/lm/omllmm.fd
-File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 4.
- (c:/texlive/2022/texmf-dist/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 4.
- (c:/texlive/2022/texmf-dist/tex/latex/lm/omxlmex.fd
-File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 4.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 4.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 4.
-)
-\tf@toc=\write5
-\openout5 = `report.toc'.
-
- (./chapters/001_problem_description.tex
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Problem Description} [1
-
-
-]
-Chapter 1.
-<./images/system.png, id=106, 841.1425pt x 576.1525pt>
-File: ./images/system.png Graphic file (type png)
-<use ./images/system.png>
-Package pdftex.def Info: ./images/system.png  used on input line 10.
-(pdftex.def)             Requested size: 324.36143pt x 222.17545pt.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 13.
-(c:/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [2
-
- <./images/system.png>]) (./chapters/002_model_identification.tex [3]
-Chapter 2.
-<./images/scheme.png, id=123, 488.82625pt x 96.36pt>
-File: ./images/scheme.png Graphic file (type png)
-<use ./images/scheme.png>
-Package pdftex.def Info: ./images/scheme.png  used on input line 6.
-(pdftex.def)             Requested size: 324.36143pt x 63.94037pt.
-<./images/beam_scheme_model.png, id=124, 634.37pt x 533.995pt>
-File: ./images/beam_scheme_model.png Graphic file (type png)
-<use ./images/beam_scheme_model.png>
-Package pdftex.def Info: ./images/beam_scheme_model.png  used on input line 43.
-(pdftex.def)             Requested size: 324.36143pt x 273.04272pt.
-[4
-
- <./images/scheme.png>] [5 <./images/beam_scheme_model.png>]
-<./images/non_linear_spring.jpg, id=143, 1371.1225pt x 705.63625pt>
-File: ./images/non_linear_spring.jpg Graphic file (type jpg)
-<use ./images/non_linear_spring.jpg>
-Package pdftex.def Info: ./images/non_linear_spring.jpg  used on input line 100.
-(pdftex.def)             Requested size: 324.36143pt x 166.92278pt.
-<./images/K_s_linvs_k_s_NL.png, id=144, 475.7775pt x 377.41pt>
-File: ./images/K_s_linvs_k_s_NL.png Graphic file (type png)
-<use ./images/K_s_linvs_k_s_NL.png>
-Package pdftex.def Info: ./images/K_s_linvs_k_s_NL.png  used on input line 120.
-(pdftex.def)             Requested size: 324.36143pt x 257.30917pt.
- [6 <./images/non_linear_spring.jpg>]
-<./images/K_s_linvs_k_s_NL_err.png, id=153, 485.815pt x 381.425pt>
-File: ./images/K_s_linvs_k_s_NL_err.png Graphic file (type png)
-<use ./images/K_s_linvs_k_s_NL_err.png>
-Package pdftex.def Info: ./images/K_s_linvs_k_s_NL_err.png  used on input line 122.
-(pdftex.def)             Requested size: 324.36143pt x 254.66295pt.
- [7 <./images/K_s_linvs_k_s_NL.png> <./images/K_s_linvs_k_s_NL_err.png>] [8]
-<./images/data_train.png, id=167, 493.845pt x 399.4925pt>
-File: ./images/data_train.png Graphic file (type png)
-<use ./images/data_train.png>
-Package pdftex.def Info: ./images/data_train.png  used on input line 219.
-(pdftex.def)             Requested size: 324.36143pt x 262.38574pt.
- [9]
-<./images/inertia_computation.png, id=173, 498.86375pt x 308.15125pt>
-File: ./images/inertia_computation.png Graphic file (type png)
-<use ./images/inertia_computation.png>
-Package pdftex.def Info: ./images/inertia_computation.png  used on input line 241.
-(pdftex.def)             Requested size: 302.73602pt x 187.00806pt.
- [10 <./images/data_train.png>]
-<./images/fourier_stiff_analysis.png, id=180, 525.965pt x 493.845pt>
-File: ./images/fourier_stiff_analysis.png Graphic file (type png)
-<use ./images/fourier_stiff_analysis.png>
-Package pdftex.def Info: ./images/fourier_stiff_analysis.png  used on input line 248.
-(pdftex.def)             Requested size: 216.24095pt x 203.03537pt.
-) (./chapters/003_position_control_base.tex [11 <./images/inertia_computation.png> <./images/fourier_stiff_analysis.png>]
-Chapter 3.
-) (./chapters/004_position_control_tip.tex [12
-
-]
-Chapter 4.
-) (./chapters/005_position_control_tip_uncertanties.tex [13
-
-]
-Chapter 5.
-) (./chapters/conclusions.tex [14
-
-])
-
-Package caption Warning: Unused \captionsetup[sub] on input line 37.
-See the caption package documentation for explanation.
-
-[15
-
-] (./report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: AF8FA0055808526F3183E88C5B78D603;2360.
- ) 
-Here is how much of TeX's memory you used:
- 41285 strings out of 476024
- 969672 string characters out of 5794016
- 1869382 words of memory out of 5000000
- 60938 multiletter control sequences out of 15000+600000
- 568334 words of font info for 108 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 114i,12n,117p,1109b,997s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on report.pdf (16 pages, 1512577 bytes).
-PDF statistics:
- 281 PDF objects out of 1000 (max. 8388607)
- 210 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
- 34983 words of extra memory for PDF output out of 35830 (max. 10000000)
-
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+!pdfTeX error: pdflatex.exe (file c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map): fflush() failed (Invalid argument)
+ ==> Fatal error occurred, no output PDF file produced!

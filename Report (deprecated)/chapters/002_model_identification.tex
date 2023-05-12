@@ -3,7 +3,7 @@
 
     The system could be schematized as:
 
-    \image{./images/scheme.png}
+    \image{./images/Chapter 2/scheme.png}
 
     It is possible to recognize models of a DC motor powered by a voltage $V_{dc}$ coupled with a gearbox (both modeled in the same box) that provides torque $u$ to the flexible joint. Finally two encoders read the angular positions $y$ and send the estimated values $\hat{y}$ to the ADC converter.
 
@@ -40,7 +40,7 @@
         \subsection{Flexible joint equations}
 
             We can represent our system as follows:
-            \image{./images/beam_scheme_model.png}
+            \image{./images/Chapter 2/beam_scheme_model.png}
             Here we have a 2-dofs mechanical system that can be modelled using a Lagrangian approach.
 
             \bigbreak
@@ -88,17 +88,20 @@
                 \end{cases*}
             \end{equation*}
 
-            \subsubsection{Non-Linear Model for The Spring}
+            \subsubsection{Non-Linear model of the springs}
 
-                The reason of considering the couple of spring as an equivalent torsional one is to reduce the complexity of the system.
-                The validity of this assumption comes from a study that we did on the error that the linear approximation provides \wrt to the real model.
+                Until now we have modeled the two linear springs as an equivalent torsional one in order to reduce the complexity of the system.
 
-                Considering the General equation of a spring 
+                To prove the validity of this assumption we can consider Hooke's law:
                     \[
-                        F = K_s (x_k - x_0)\]
-                in the following situations (we consider in this treatment only one spring, but the discussion is valid due to the symmetry for the entire couple)
+                        F = - K_s (x_k - x_0)
+                    \]
+
+                Thanks to the symmetry of the system, studying the behaviour of a single spring is enough to model both of them.
+
                 \image{./images/non_linear_spring.jpg}
-                On the left the equilibrium position $x_k = x_0$, where:
+
+                In the left figure the equilibrium position is $x_k = x_0$, where:
                 \[
                     \varphi_0 = atan\left(\frac{P_{1_y}}{P_{0_x}}\right)\]
                 \[
@@ -106,7 +109,7 @@
                 \[
                     x_0 = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2}\]
 
-                On the right  you are perturbed position, so:
+                In the right the system is in a perturbed position, so:
                 \[
                     x_k = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2} \rightarrow \Delta x_k = x_k - x_0\]
                 \[
@@ -116,24 +119,28 @@
                         \end{array}\right\rbrack
                         \rightarrow F_\perp  = F \cdot cos(\varphi + \alpha)\]
 
-                Plotting the value of the $F_\perp$ in function of the angle $\alpha$ compared with a linear increase we obtain:
-                \image{./images/K_s_linvs_k_s_NL.png}
-                the error between the two curves:
-                \image{./images/K_s_linvs_k_s_NL_err.png}
+                        %TODO Put right images, add grid and axis
+                
+                \image{./images/Chapter 2/K_s_linvs_k_s_NL.png}
 
-                it is possible to see from the graph that the error starts to be non-negligible above 25 degrees, but from measurements the angle remains under 10 degrees. For this reason we can consider the Force with a linear behavior and the $K_s$ constant.
+                The plot above represents the value of the $F_\perp$ as function of the angle $\alpha$ and its linear approximation at the origin.
 
-        \subsection{Development of The State Space Model}
-            \subsubsection{Continuous Time}
+                The error between the two curves is expressed by the curve below:
+                \image{./images/Chapter 2/K_s_linvs_k_s_NL_err.png}
 
-                Starting from the equations:
+                As we can see, while $\alpha$ is below 25° the error between the two models is less than 10$\%$. As the tip's angle always remained below 10° in our measurements, the linear model introduced before is precise enough to represent our system.
+
+        \subsection{State Space Representation}
+            \subsubsection{Continuous time}
+
+                Starting from the aforementioned equations:
                 \begin{equation*}
                     \begin{cases}
                         J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} \\
                         J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_{S}\alpha=0
                     \end{cases}
                 \end{equation*}
-                we develop the State Space system in continuous time, where the state are:
+                we develop the State Space system in continuous time, having as states the following array:
                 \[
                     \left\lbrack \begin{array}{c}
                         \theta \\
@@ -141,7 +148,7 @@
                         \alpha \\
                         \dot{\alpha} 
                         \end{array}\right\rbrack\]
-                the matrix A:
+                the A matrix:
                 \begin{equation*}
                     \left\lbrack \begin{array}{cccc}
                         0 & 1 & 0 & 0\\
@@ -162,10 +169,11 @@
 
                 Considering as the outputs of the system the angular positions $\theta$ and $\alpha$.
 
-            \subsubsection{Discrete Time}
-                One last step is to compute the model in discrete time, this is necessary for the last and definitive approach we used in the identification procedure.
+            \subsubsection{Discrete time}
 
-                Considering a sampling time $\Delta$ the A matrix:
+                In order to apply optimization techniques on our data in order to find the parameters of the system, we need a state space representation in discrete time. To do so we apply the forward Euler method considering a sampling time $\Delta$.
+
+                Our discrete time A matrix becomes then:
 
                 \begin{equation*}
                     \left\lbrack \begin{array}{cccc}
@@ -175,7 +183,7 @@
                         0 & \Delta \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & -{\Delta K}_S \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right) & 1-{\Delta B}_L \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right)
                     \end{array}\right\rbrack 
                 \end{equation*}
-                And the B matrix:       
+                whereas the B matrix becomes:       
                 \begin{equation*}
                     \left\lbrack\begin{array}{c}
                         0\\
@@ -184,14 +192,16 @@
                         -\Delta \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }
                     \end{array}\right\rbrack
                 \end{equation*}
-                the outputs remain the same.
+                while the outputs are still $\theta$ and $\alpha$.
 
-    \section{Identification Technique}
+                %TODO remove deprecated methods, add d
+    \section{Identification Techniques}
 
-        We proceeded in 3 different way, increasing the complexity, trying to fit as possible all the dynamics of the system. The first two methods didn't provide us enough good results, but are reported because guide us in the choice of a good method for the identification and the model produced is reliable. 
+    \begin{comment}
+        Knowing the state space model of our system we tried 3 different approaches in order to find our system's physical parameters:
         
         \subsection{Deprecated Methods}
-            \subsubsection{Stiffness Identification}
+            \subsubsection{Stiffness identification}
                     
                 The first method sticks too much on the reliability of the parameters from the data sheet: we tried to identify just the value of the stiffness of the spring using a step signal and analyzing the frequency of the peak of resonance:
                 \[
@@ -205,7 +215,7 @@
                 For these reasons we choose to look for an optimization method that can provide the values of the state space matrices. The first attempt consisted in the usage of the model identification toolbox that, given the order of the system, provides a transfer function representation of the system. 
                 
                 I will not go in deep with this method became as first step in that direction we didn't put too much effort. In fact, we let Matlab works on its own to get the model however the results weren't good enough and in this way we lost the physical meaning of the provided quantities.
-
+    \end{comment}
         \subsection{Model Identification using CVX}
 
             This is the definitive method that we used. CVX is a package allows, giving constraints and objectives, to implement a convex optimization in Matlab in the form:
@@ -254,151 +264,3 @@
                     K_s = J_L \cdot \omega_n^2 = 1.8426 N/m \]
 
             
-            
-            
-            
-        
-
-                
-                
-
-
-
-
-% \section{Research of the machine parameters}
-% \label{sec:reserche_machine_parameters}
-% The DTC method needs only a few parameters due to the fact that the current saturation is already handled in the computation of the maximum torque and most of the control variables are tuned empirically.
-% In fact the 3 needed parameters are:
-% \begin{itemize}
-%     \item rated speed: 
-%             \begin{equation}
-%                 \omega_{m_{rated}} = \frac{2\pi f}{n_p} = 104.72 rad/s
-%                 \label{eq:omega_m_rated}
-%             \end{equation}
-
-%     \item maximum torque:
-%             \begin{equation}
-%                 me_{max} = \frac{V_{rated}^2}{((\frac{3}{2} (2 \pi f)^2 L_s ((\frac{L_s L_r}{L_m^2})-1)))} = 203.99 Nm
-%                 \label{eq:me_max}
-%             \end{equation}
-
-%     \item reference stator flux(to use the ferromagnetic material at its maximum):
-%             \begin{equation}
-%                 \psi_{s_{ref}} = \frac{V_{rated} \sqrt{3}}{2 \pi f} = 2.095 Wb
-%                 \label{eq:psi_s_ref}
-%             \end{equation}
-
-% \end{itemize}
-% \newpage
-
-% \section{Development of the Machine Model}
-% \label{sec:machine_model}
-% The following scheme in figure \ref*{fig: machine_model} represents the machine model.
-% The block scheme uses blocks of Simulink to describe the entire behavior of the motor using differential equations.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{machine_model.png}
-%     \caption{Model of the machine in Simulink}
-%     \label{fig: machine_model}
-% \end{figure}
-
-% The next ones are all the components used to control the control variables, the 3-phase voltage $V_s$ indeed, and estimate all the control references using the 3-phase vector of the stator current $i_s$.
-% Inside the model there are some Complex Integrator that allow to integrete the real part and the imaginary parts of the state vectors separatly and after recompose the originally space vectors.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{complex_integrator.png}
-%     \caption{Scheme of a Complex integrator}
-%     \label{fig: complex_integrator}
-% \end{figure}
-% \newpage
-
-% \section{Development of the Control Unit}
-% \label{sec: control_unit}
-% The following scheme repreesents the implementation of the controller with the DTC method. This method is based on the dynamic approximation $V_s = \Delta\psi$ that can applies only for high power machine keeping negligible the voltage dissipated on the $R_s$. 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{DTC_hexagon.png}
-%     \caption{Scheme of the stator phase control}
-%     \label{fig: DTC_hexagon}
-% \end{figure}
-% The idea is to keep bounded the magnitude of the $\psi_s$ continuosly switching between different configuation, depending on the sector in which the $\psi_s$ is, (according to $\varphi$) of the 3-phase $V_s$ accorting with the switching table in figure \ref*{fig: switching_table} to keep in rotation the the flux.
-% In order to control instead the speed (unless the motor will rotate at the maximum speed) you control the torque, which is controlled by appling null configuaration of the $V_s$ (according to $\tau$) accorting with the switching table in figure \ref*{fig: switching_table}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{switchin_table.png}
-%     \caption{Switching table used in DTC}
-%     \label{fig: switching_table}
-% \end{figure}
-% \\
-% The implementation is made by sending to a block that manages the switchin table the two signal $\varphi$ and $\tau$ computed using 2 hysteresis controllers as represented in figure \ref*{fig: hysteresis_controllers}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{hysteresis_controllers.png}
-%     \caption{The hysteresis controllers}
-%     \label{fig: hysteresis_controllers}
-% \end{figure}
-% \\
-% In the Simulink implementation is similar to the block scheme, the only differences are:
-% \begin{itemize}
-%     \item The two side hysteresis for the torque is made with two hysteresis blocks;
-%     \item The sector recognition is done evaluating the phase shift of the $\psi_s$;
-%     \item The magnitude of the stator flux is evalated comparing the estimated magnitude with a reference value.
-% \end{itemize}
-% The outputs from these comparisons are the input of a block that implements the switching table as reported in figure \ref*{fig: DTC_controller}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{DTC_control_scheme.png}
-%     \caption{The DTC control scheme created in Simulink}
-%     \label{fig: DTC_controller}
-% \end{figure}
-% \\
-% The inputs of this controller is $m_{e_{err}}$ that is the error of a closed loop control for the torque, where the reference torque is the output of a PI controller that implements a closed loop control for the $\omega_m$, this PI is represented in figure \ref*{fig: speed_controller}. The PI has an anti-windup strategy to avoid saturation's issues with related to the maximum torque.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{speed_controller.png}
-%     \caption{The speed controller}
-%     \label{fig: speed_controller}
-% \end{figure}
-% \\
-% Another important component is the VI-Estimator that given the the stator current and voltage estimates the stator flux and the torque.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{VI_estimator.png}
-%     \caption{The VI-Estimator}
-%     \label{fig: VI_estimator}
-% \end{figure}
-% The conversion of the Space Vectors into 3-phase components and vice versa are made with the Clark transform and anti-transform.
-% \begin{figure}
-%     \centering
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{clark_transform.png}
-%         \caption{Clark transform}
-%         \label{fig:clark_transform}
-%     \end{subfigure}
-%     \qquad
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{anti_clark_transform.png}
-%         \caption{Clark anti-transform}
-%         \label{fig:anti_clark_transform}
-%     \end{subfigure}
-% \end{figure}
-
-
-
-% % \begin{table}[htbp!]
-% % \caption{Prima tabella}
-% % \label{tab:prima_tabella}
-% % \centering
-% % \begin{tabular}{cccc}
-% % \toprule
-% % Prima Variabile	& Seconda Variabile	& Terza Variabile	& Quarta Variabile	\\
-% % \midrule
-% % XXX				& XXX				& XXX				& XXX				\\
-% % \bottomrule	
-% % \end{tabular}
-% %\end{table}
-
-% % \section{Terza Sezione}
-% % \label{sec:terza_sezione_2}
