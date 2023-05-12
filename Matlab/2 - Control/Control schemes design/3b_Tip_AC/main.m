@@ -10,15 +10,15 @@ clc
 %% System model
 % Model parameters
 load('sysest09c_trick.mat')   
-s=tf(1,[1 0])
-%syses_ct = d2c(sysest*s);
-%sysest_ct = d2c(sysest*s);
-Vbar = 5;%max volts
 
+syses_ct = d2c(sysest);
+sysest_ct = d2c(sysest);
+Vbar = 5;%max volts
+v_a_max = Vbar;
 %Ts  =   0.002;            % Sampling time                       
-Ts  = 0.01;
+Ts  = 0.02;
 % System matrices:
-[A,B,C,D]       =   ssdata(c2d((d2c(sysest)*s),Ts));                  % Model matrices 
+[A,B,C,D]       =   ssdata(c2d((d2c(sysest)*1),Ts));                  % Model matrices 
 
 %% Signal dimensions
 nz     =   size(A,1);
@@ -97,7 +97,7 @@ tQP                 =   zeros(Nsim-1,1);
 uprev = 0;
 unow = 0;
 U = zeros(N,1);
-T = zeros(5,5);
+T = zeros(4,4);
 %T(3,3) = 1e3; 
 for ind=2:Nsim+1
     bineq                               =   [bubar;bzbar-Azbar*Lambda_z*zt];

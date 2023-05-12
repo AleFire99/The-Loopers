@@ -18,6 +18,8 @@ Rm = 2.6;
 
 Jeq = 0.002087; %High gear moment of inertia
 JL = m1*L1*L1/3 + m2*L2*L2/12 + m2*d*d;
+JL = m1*L1*L1/3 + m2*L2*L2/12 + m2*d*d;
+
 BL = 0; %invented but i am neglecting the damping in the link
 Beq = 0.015;
 
