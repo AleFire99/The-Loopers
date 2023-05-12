@@ -17,9 +17,9 @@ Vbar = 5;%max volts
 v_a_max = Vbar;
 
 Ts  =   0.002;            % Sampling time                       
- 
+Ts  = 0.01;
 % System matrices:
-[A,B,C,D]       =   ssdata(sysest);                  % Model matrices 
+[A,B,C,D]       =   ssdata(d2d(sysest,Ts));                  % Model matrices 
 
 %% Signal dimensions
 nz     =   size(A,1);
@@ -27,7 +27,7 @@ nu      =   size(B,2);
 ny      =   size(C,1);
 
 %% Prediction horizon and cost function weighting matrices
-N       =   100;
+N       =   2/Ts;
 Q       =   1e4;
 R       =   1e-6;
 
@@ -85,7 +85,7 @@ H       =   0.5*(H+H');
 options =   optimset('display','none');
 
 %% Simulate with MPC
-Nsim                =   1000;
+Nsim                =   2/Ts;
 Zsim_MPC            =   zeros((Nsim+1)*nz,1);
 Ysim_MPC            =   zeros(Nsim*ny,1);
 Usim_MPC            =   zeros(Nsim*nu,1);
@@ -93,14 +93,21 @@ Zsim_MPC(1:nz,1)    =   z0;
 zt                  =   z0;
 tQP                 =   zeros(Nsim-1,1);
 
+uprev = 0;
+unow = 0;
+U = zeros(N,1);
 for ind=2:Nsim+1
     bineq                               =   [bubar;bzbar-Azbar*Lambda_z*zt];
     beq                                 =   -(Lambda_z(end-nz+1:end,:)-Lambda_z(end-2*nz+1:end-nz,:))*zt;
-    f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
+    %f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
+    f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y + 1e4*[abs(U(1:end-1)-U(2:end))' 0];% + (uprev-unow)*1e3*(uprev-unow);
     tic
     U                                   =   quadprog(H,f,Aineq,bineq,Aeq,beq,[],[],[],options);
     tQP(ind-1,1)                        =   toc;
     Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1) =   U(1:nu,1);
+    uprev = unow;
+    unow =  U(1:nu,1);
+    
     Zsim_MPC((ind-1)*nz+1:ind*nz,1)     =   A*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+B*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
     Ysim_MPC((ind-2)*ny+1:(ind-1)*ny,1) =   C*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+D*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
     zt                                  =   Zsim_MPC((ind-1)*nz+1:ind*nz,1);
@@ -108,7 +115,9 @@ end
 
 theta = Ysim_MPC(1:2:end);
 alfa= Ysim_MPC(2:2:end);
-tpause = 0.001;
+tpause = Ts;
 
 simulateArm(theta,alfa,Ts,tpause)  
 plot(Usim_MPC)
+xlabel("time[s]")
+ylabel("Voltage(V)")
