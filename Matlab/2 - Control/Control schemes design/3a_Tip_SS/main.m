@@ -37,9 +37,22 @@ f=3.846;
 wn = 2*pi*f;
 Ks = JL*wn*wn; %invented  
 
+%% Estimated System
+
+TaoCons = ng*nm*Kt*Kg/Rm;
+sysest_ct.A = [0 1 0 0;
+                            0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
+                            0 0 0 1;
+                            0 (TaoCons*Km*Kg+Beq)/Jeq -Ks*((Jeq+JL)/(JL*Jeq)) -BL*((Jeq+JL)/(JL*Jeq))];
+ 
+sysest_ct.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
+sysest_ct.C = [1 0 0 0; 0 0 1 0];
+
+
+%% Uncertian System
+
 JL = 0.1* JL;
 
-%TaoCons = ng*nm*Kt/Rm;
 TaoCons = ng*nm*Kt*Kg/Rm;
 sysest_ct_uncertanties.A = [0 1 0 0;
                             0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
@@ -76,8 +89,8 @@ zeros_tip = zero(G_tip_ct);
 
 T_CL = G_tip_ct/(1+G_tip_ct);
 
-L_poles = pole(T_CL)
-L_zeros = zero(T_CL)
+L_poles = pole(T_CL);
+L_zeros = zero(T_CL);
 
 
 % Uncertain Model
@@ -90,8 +103,8 @@ zeros_tip_uncertanties = zero(G_tip_ct_uncertanties);
 
 T_CL_uncertanties = G_tip_ct_uncertanties/(1+G_tip_ct_uncertanties);
 
-L_poles_uncertanties = pole(T_CL_uncertanties)
-L_zeros_uncertanties = zero(T_CL_uncertanties)
+L_poles_uncertanties = pole(T_CL_uncertanties);
+L_zeros_uncertanties = zero(T_CL_uncertanties);
 
 
 figure;
@@ -126,46 +139,12 @@ zeta= 0.7;
 
 v_a_max = 15;
 
-%% Control with Pole Placement in Continous Time
-%Definition of the new poles
-
-pp_poles = [-23 -25 -27 -29];                  %Arco                         
-%pp_poles = [-23 -25 -27 -29];                  %JC   
-
-[sys_controlled_pp, K_pp,K_p] = JC_PolePlacement(sysest_ct,pp_poles);
-
-% Addition of the PI in the outer loop instead of just the proportional action
-
-wc_req = 2;
-s = tf('s');
-PI_pp = wc_req * K_p * (s + 1) / s;
-
-%% Pole placement with Integral action
-
-pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new poles
-
-[sys_controlled_pp_en,K_pp_en_x,K_pp_en_eta] = Fire_PolePlacement_en(sysest_ct,pp_pole_en);
-
-%% Fire's LQR
-
-[K_lqr] = Fire_LQRegulator(sysest_ct);
 
 %% Arco's LQR
 
 tau = 5;           % Maximum value related to the satuaration of the control variable limit
 
 [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct, tau);
-
-%% LQGR
-
-%[K_lqgr, L_lqgr] = Arco_LQGR(sysest_ct);
-
-%% Observer implementation  
-
-%obs_poles = 10*pp_poles;            %Arco
-obs_poles = 2*pp_poles;            %Jc
-
-L_obs = StateObserver(sysest_ct,obs_poles);
 
 %% Kalman Filter
 
@@ -175,9 +154,7 @@ R_KF = eye(1)*10e-8;
 %Q_KF = eye(4);     %Alp
 %R_KF = eye(1)*10;
 
-
 L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
-
 
 %% Comparison 
 
