@@ -1,110 +1,229 @@
-% Constrained Numerical Optimization for Estimation and Control (based on lab F)
-% Script to set up and simulate a linear-quadratic MPC strategy
-% for the linear servo-mechanism example, with equality constraints and
-% terminal equality constraint
-
-clear all
 close all
+clear all
 clc
+%%% NOTE: run this code first and then the main from State estimators
+%%% folder
+addpath("./Implementations/")
+addpath("./Arco's Longsim/Simulation_Signals")
+addpath("./Extended_KF/")
 
-%% System model
-% Model parameters
-load sysest.mat
-Vbar = 5;%max volts
+sysest = load("sysest09c_trick.mat").sysest;
+sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
+
+%% Creation of Model with Uncertanties
+
+sysest_ct_uncertanties = sysest_ct;
+
+%Simulation flexible arm
+m1 = 0.064;
+m2 = 0.03;
+L1 = 29.8/100;
+L2 = 15.6/100;
+d = 20/100; 
+
+Kt = 0.00768;
+Kg = 70; %high gear
+Km = 0.00768;
+nm = 0.69;
+ng = 0.9;
+Rm = 2.6;
+
+Jeq = 0.002087; %High gear moment of inertia
+JL = m1*L1*L1/3 + m2*L2*L2/12 + m2*d*d;
+BL = 0; %invented but i am neglecting the damping in the link
+Beq = 0.015;
+
+f=3.846;
+wn = 2*pi*f;
+Ks = JL*wn*wn; %invented  
+
+JL = 0.1* JL;
+
+%TaoCons = ng*nm*Kt/Rm;
+TaoCons = ng*nm*Kt*Kg/Rm;
+sysest_ct_uncertanties.A = [0 1 0 0;
+                            0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
+                            0 0 0 1;
+                            0 (TaoCons*Km*Kg+Beq)/Jeq -Ks*((Jeq+JL)/(JL*Jeq)) -BL*((Jeq+JL)/(JL*Jeq))];
  
-Ts  =   0.002;            % Sampling time                       
- 
-% System matrices:
-[A,B,C,D]       =   ssdata(sysest);                  % Model matrices 
+sysest_ct_uncertanties.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
+sysest_ct_uncertanties.C = [1 0 0 0; 0 0 1 0];
 
-%% Signal dimensions
-nz     =   size(A,1);
-nu      =   size(B,2);
-ny      =   size(C,1);
+% ng and nm are efficiency we may need to estimate
+% Jeq for the base and its fixed
+% Beq may be estimated
+% Ks jesus measured
+% Bl we dont know
+% JL in future it can be a disturbance and it can be calculated
 
-%% Prediction horizon and cost function weighting matrices
-N       =   7;
-Q       =   1e4;
-R       =   1e-6;
 
-%% Inequality constraints
-% Input inequalities
-Au      =   [eye(nu);-eye(nu)];
-bu      =   Vbar*ones(2*nu,1);
-nqu     =   size(Au,1);                 % Number of input inequality constraints per stage
+%% To create the long reference's signal for the simulation
+%Longsim_Signal;                 %All possible references
+ Longsim_Signal_Step_Ramp;       %Only ramp and step references
+%Longsim_Signal_Sinewaves;       %Only sinewaves references
 
-% State inequalities
-%Az     =   zeros();[Ktheta/tau_g -Ktheta 0 0;-Ktheta/tau_g +Ktheta 0 0];
-%bz     =   Vbar*ones(2,1);
-%nqz    =   size(Az,1);
-nqz = 0;
-%% Reference output and initial state
-z0     =   zeros(nz,1);
-yref    =   [deg2rad(45);  0];
+%% To get a comparison
 
-%% Build overall matrices and vectors for QP (note - quadprog solves: min 0.5*x'*H*x + f'*x   subject to:  A*x <= b, Aeq*x = beq)
-[Lambda_y,Gamma_y,Lambda_z,Gamma_z]   =   Traj_matrices(N,A,B,C,D);
-Qbar                                    =   zeros((N+1)*ny);
-Rbar                                    =   zeros(N*nu);
-Yref                                    =   zeros((N+1)*ny,1);
-Aubar                                   =   zeros(N*nqu,N*nu);
-bubar                                   =   zeros(N*nqu,1);
-Azbar                                  =   zeros((N+1)*nqz,(N+1)*nz);
-bzbar                                  =   zeros((N+1)*nqz,1);
+% Estimated Model
 
-for ind = 1:N+1
-    Qbar((ind-1)*ny+1:ind*ny,(ind-1)*ny+1:ind*ny)           =   Q;
-    Yref((ind-1)*ny+1:ind*ny,1)                             =   yref;
-   % Azbar((ind-1)*nqz+1:ind*nqz,(ind-1)*nz+1:ind*nz)   =   Az;
-%    bzbar((ind-1)*nqz+1:ind*nqz,1)                       =   bz;
-end
+sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
+G_tip_ct = tf(sysest_ct_tip(1));
 
-for ind = 1:N
-    Rbar((ind-1)*nu+1:ind*nu,(ind-1)*nu+1:ind*nu)           =   R;
-    Aubar((ind-1)*nqu+1:ind*nqu,(ind-1)*nu+1:ind*nu)        =   Au;
-    bubar((ind-1)*nqu+1:ind*nqu,1)                          =   bu;
-end
-%
-%Aineq   =   [Aubar;Azbar*Gamma_z];
-%bineq   =   [bubar;bzbar-Azbar*Lambda_z*z0];
+eigs_tip = pole(G_tip_ct);
+zeros_tip = zero(G_tip_ct);
 
-% Terminal equality constraint
-Aeq     =   Gamma_z(end-nz+1:end,:)-Gamma_z(end-2*nz+1:end-nz,:);
-beq     =   -(Lambda_z(end-nz+1:end,:)-Lambda_z(end-2*nz+1:end-nz,:))*z0;
+% Closed Loop System
 
-% Cost function
-f       =   z0'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
-H       =   (Gamma_y'*Qbar*Gamma_y)+Rbar;
-H       =   0.5*(H+H');
+T_CL = G_tip_ct/(1+G_tip_ct);
 
-%% QP options
-options =   optimset('display','none');
+L_poles = pole(T_CL)
+L_zeros = zero(T_CL)
 
-%% Simulate with MPC
-Nsim                =   1000;
-Zsim_MPC            =   zeros((Nsim+1)*nz,1);
-Ysim_MPC            =   zeros(Nsim*ny,1);
-Usim_MPC            =   zeros(Nsim*nu,1);
-Zsim_MPC(1:nz,1)    =   z0;
-zt                  =   z0;
-tQP                 =   zeros(Nsim-1,1);
 
-for ind=2:Nsim+1
-    bineq                               =   [bubar;bzbar-Azbar*Lambda_z*zt];
-    beq                                 =   -(Lambda_z(end-nz+1:end,:)-Lambda_z(end-2*nz+1:end-nz,:))*zt;
-    f                                   =   zt'*Lambda_y'*Qbar*Gamma_y-Yref'*Qbar*Gamma_y;
-    tic
-    U                                   =   quadprog(H,f,[],[],Aeq,beq,[],[],[],options);
-    tQP(ind-1,1)                        =   toc;
-    Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1) =   U(1:nu,1);
-    Zsim_MPC((ind-1)*nz+1:ind*nz,1)  =   A*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+B*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
-    Ysim_MPC((ind-2)*ny+1:(ind-1)*ny,1) =   C*Zsim_MPC((ind-2)*nz+1:(ind-1)*nz,1)+D*Usim_MPC((ind-2)*nu+1:(ind-1)*nu,1);
-    zt                                 =   Zsim_MPC((ind-1)*nz+1:ind*nz,1);
-end
+% Uncertain Model
 
-%%
-theta = Ysim_MPC(1:2:end);
-alfa= Ysim_MPC(2:2:end);
-tpause = 0.001;
+sysest_ct_tip_uncertanties = ss(sysest_ct_uncertanties.A,sysest_ct_uncertanties.B,[1 0 1 0; 0 0 1 0],sysest_ct_uncertanties.D);
+G_tip_ct_uncertanties = tf(sysest_ct_tip_uncertanties(1));
 
-simulateArm(theta,alfa,Ts,tpause)  
+eigs_tip_uncertanties = pole(G_tip_ct_uncertanties);
+zeros_tip_uncertanties = zero(G_tip_ct_uncertanties);
+
+T_CL_uncertanties = G_tip_ct_uncertanties/(1+G_tip_ct_uncertanties);
+
+L_poles_uncertanties = pole(T_CL_uncertanties)
+L_zeros_uncertanties = zero(T_CL_uncertanties)
+
+
+figure;
+bode(G_tip_ct,G_tip_ct_uncertanties,{10e-2,10e6});
+legend('Estimated Open Loop', 'Uncertain Open Loop');
+grid;
+
+% figure;
+% pzmap(G_tip_ct);
+
+figure;
+hold on;
+step(T_CL);
+step(T_CL_uncertanties);
+legend('Estimated Closed Loop', 'Uncertain Closed Loop');
+grid;
+hold off;
+
+figure;
+bode(T_CL,T_CL_uncertanties,{10e-2,10e6});
+legend('Estimated Closed Loop', 'Uncertain Closed Loop');
+grid;
+
+% 
+%% State space control
+
+% Model Parameters coming from resonance measurements
+
+f=3.846;
+wn = 2*pi*f;
+zeta= 0.7;
+
+v_a_max = 15;
+
+%% Control with Pole Placement in Continous Time
+%Definition of the new poles
+
+pp_poles = [-23 -25 -27 -29];                  %Arco                         
+%pp_poles = [-23 -25 -27 -29];                  %JC   
+
+[sys_controlled_pp, K_pp,K_p] = JC_PolePlacement(sysest_ct,pp_poles);
+
+% Addition of the PI in the outer loop instead of just the proportional action
+
+wc_req = 2;
+s = tf('s');
+PI_pp = wc_req * K_p * (s + 1) / s;
+
+%% Pole placement with Integral action
+
+pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new poles
+
+[sys_controlled_pp_en,K_pp_en_x,K_pp_en_eta] = Fire_PolePlacement_en(sysest_ct,pp_pole_en);
+
+%% Fire's LQR
+
+[K_lqr] = Fire_LQRegulator(sysest_ct);
+
+%% Arco's LQR
+
+tau = 5;           % Maximum value related to the satuaration of the control variable limit
+
+[K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct, tau);
+
+%% LQGR
+
+%[K_lqgr, L_lqgr] = Arco_LQGR(sysest_ct);
+
+%% Observer implementation  
+
+%obs_poles = 10*pp_poles;            %Arco
+obs_poles = 2*pp_poles;            %Jc
+
+L_obs = StateObserver(sysest_ct,obs_poles);
+
+%% Kalman Filter
+
+Q_KF = eye(4)*10e-5;     %Arco
+R_KF = eye(1)*10e-8;
+
+%Q_KF = eye(4);     %Alp
+%R_KF = eye(1)*10;
+
+
+L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
+
+
+%% Comparison 
+
+A_tilde = [ sysest_ct.A, zeros(4,1), zeros(4,4);
+            -sysest_ct.C(1, :), 0, zeros(1,4);
+            L_KF*sysest_ct.C,  -sysest_ct.B*K_lqr_eta, sysest_ct.A-sysest_ct.B*K_lqr_x-L_KF*sysest_ct.C];
+        
+B_tilde = [ sysest_ct.B;
+            0;
+            zeros(4,1)];
+        
+C_tilde = [ sysest_ct.C, zeros(2,5)];
+
+D_tilde = zeros(2,1);
+
+
+A_tilde_unc = [ sysest_ct_uncertanties.A, zeros(4,1), zeros(4,4);
+            -sysest_ct_uncertanties.C(1, :), 0, zeros(1,4);
+            L_KF*sysest_ct_uncertanties.C,  -sysest_ct_uncertanties.B*K_lqr_eta, sysest_ct_uncertanties.A-sysest_ct_uncertanties.B*K_lqr_x-L_KF*sysest_ct_uncertanties.C];
+        
+B_tilde_unc = [ sysest_ct_uncertanties.B;
+            0;
+            zeros(4,1)];
+        
+C_tilde_unc = [ sysest_ct_uncertanties.C, zeros(2,5)];
+
+D_tilde_unc = zeros(2,1);
+        
+sys_controlled = ss(A_tilde, B_tilde, C_tilde,D_tilde);      
+
+        
+sys_controlled_unc = ss(A_tilde_unc, B_tilde_unc, C_tilde_unc,D_tilde_unc);      
+
+
+figure;
+bode(sysest_ct(1),sys_controlled(1), sys_controlled_unc(1),{10e-2,10e6});
+legend('Uncontrolled Estimated Closed Loop','Estimated Closed Loop', 'Uncertain Closed Loop');
+grid;
+
+figure;
+margin(sys_controlled(1));
+figure;
+margin(sys_controlled_unc(1));
+
+
+figure;
+bode(sysest_ct_tip, sysest_ct_tip_uncertanties,{1,1e3});
+legend('Estimated', 'Uncertain');
+grid;

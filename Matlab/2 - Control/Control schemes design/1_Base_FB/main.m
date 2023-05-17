@@ -2,18 +2,10 @@ close all
 clear all
 clc
 
-addpath("./Implementations/")
-addpath("./Simulation_Signals/")
-addpath("./Validation/")
-
 sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
 
-% To create the long reference's signal for the simulation
-%Longsim_Signal;                 %All possible references
-%Longsim_Signal_Step_Ramp;       %Only ramp and step references
-Longsim_Signal_Sinewaves;       %Only sinewaves references
-
+addpath("./Implementations/")
 
 G_sysest_cont = tf(sysest_ct);
 G_theta_cont = G_sysest_cont(1)
@@ -53,9 +45,6 @@ controller = Fires_design(sysest_ct);
 
 %[controller,K_comp] = Alps_design(sysest_ct, zeta, wn);
 
-%% Alp Design 02
-
-[controller, K_comp] = Alp02_rootlocus(sysest_ct, wn, zeta);
 
 %% Comparison Part
 
