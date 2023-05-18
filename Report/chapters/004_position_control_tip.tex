@@ -1,135 +1,134 @@
 \chapter{Position Control of the Tip}
-\label{cha:position_tip}
+    \label{cha:position_tip}
 
-In order to control the position of the tip we tried two different approaches: a frequency based one, like we did for the control of the position of the base, and a full state feedback control scheme.
+    In order to control the position of the tip we tried two different approaches: a frequency based one, like we did for the control of the position of the base, and a full state feedback control scheme.
 
-\section{Frequency Based Approach}
+    \section{Frequency Based Approach}
 
-Our goal is once again to track a set point for the position of the tip granting a phase margin $\approx$ 60° for robustness. This time we have a trade-off between speed of the controlled system and overshoot of the $\alpha$ angle and we decided to focus more on the latter option.
+        Our goal is once again to track a set point for the position of the tip granting a phase margin $\approx$ 60° for robustness. This time we have a trade-off between speed of the controlled system and overshoot of the $\alpha$ angle and we decided to focus more on the latter option.
 
-\subsection{Controller Design}
+        \subsection{Controller Design}
 
-%TODO Insert here Bode of OL uncontrolled scheme, pz map and bode of OL controlled with pz map and explain design
+            %TODO Insert here Bode of OL uncontrolled scheme, pz map and bode of OL controlled with pz map and explain design
 
-\subsection{Step Response}
+        \subsection{Step Response}
 
-%TODO Insert here step response and explain features
+            %TODO Insert here step response and explain features
 
-\subsection{Frequency Validation}
+        \subsection{Frequency Validation}
 
-%TODO Insert here Bode of CL controlled scheme
+            %TODO Insert here Bode of CL controlled scheme
 
-\section{State Estimators}
+    \section{State Estimators}
 
-In order to apply a full state feedback control scheme we must be able to know or to estimate the state of our system knowing only its outputs and inputs.
+            In order to apply a full state feedback control scheme we must be able to know or to estimate the state of our system knowing only its outputs and inputs.
 
-\subsection{State Extractor}
+            \subsection{State Extractor}
 
-As our output is the array 
-$\begin{bmatrix}
-    \theta \\
-    \alpha
-\end{bmatrix}$
-and the full state is 
-$\begin{bmatrix}
-    \theta \\
-    \dot\theta \\
-    \alpha \\
-    \dot\alpha 
-\end{bmatrix}$,
-we could just apply a derivative to the output to get the full state, as expressed in the simulink scheme below.
+                As our output is the array 
+                $\begin{bmatrix}
+                    \theta \\
+                    \alpha
+                \end{bmatrix}$
+                and the full state is 
+                $\begin{bmatrix}
+                    \theta \\
+                    \dot\theta \\
+                    \alpha \\
+                    \dot\alpha 
+                \end{bmatrix}$,
+                we could just apply a derivative to the output to get the full state, as expressed in the simulink scheme below.
 
-\image{./images/Chapter 4/Observers/SE.png}
+                \image{./images/Chapter 4/Observers/SE.png}
 
-The benefits of such observer is that the estimation of the state is instantaneous and there is no dynamics for the error between the real and the estimated state.
+                The benefits of such observer is that the estimation of the state is instantaneous and there is no dynamics for the error between the real and the estimated state.
 
-The main drawback is that the derivative is done numerically, so high frequency noises in the measurements could lead to wrong state estimations.
-Luckily the sensors where precise enough so that the noise was not an issue, otherwise we would have introduced a low pass filter to mitigate it.
-
-
-\subsection{Luenberger Observer}
-
-    In order to provide an estimation for the states of the 
-
-\subsection{Kalman Filter}
-
-\section{Pole Placement}
-
-\subsection{Controller Design}
-
-\subsection{Observers Comparison}
-
-\subsection{Validation}
-
-\subsubsection{Step Response}
-
-\subsubsection{Frequency Validation}
+                The main drawback is that the derivative is done numerically, so high frequency noises in the measurements could lead to wrong state estimations.
+                Luckily the sensors where precise enough so that the noise was not an issue, otherwise we would have introduced a low pass filter to mitigate it.
 
 
-\section{Linear Quadratic Regulator}
+            \subsection{Luenberger Observer}
 
-The LQ regulator is an optimal full state feedback control scheme which has as control law:
+                In order to provide an estimation for the states of the 
 
-\begin{equation*}
-    u = -K_{LQR}x
-\end{equation*}
+            \subsection{Kalman Filter}
 
-Where $K_{LQR}$ is found by solving this minimization problem:
+            \section{Pole Placement}
+
+            \subsection{Controller Design}
+
+            \subsection{Observers Comparison}
+
+            \subsection{Validation}
+
+                \subsubsection{Step Response}
+
+                \subsubsection{Frequency Validation}
 
 
-$$ \min _{u(\cdot)} \int_0^{t_1}\left(x^T Q x+u^T R u\right) d t $$ 
-subject to $\dot{x}=A x+B u$ 
+        \section{Linear Quadratic Regulator}
 
-Where Q and R are matrices which represent respectively the weight on the state and on the inputs.
+            The LQ regulator is an optimal full state feedback control scheme which has as control law:
 
-\subsection{Controller Design}
+            \begin{equation*}
+                u = -K_{LQR}x
+            \end{equation*}
 
-The control scheme is the following:
+            Where $K_{LQR}$ is found by solving this minimization problem:
 
-\image{./images/Chapter 4/LQR/Scheme.png}
 
-In order to design the LQ controller we choose the matrices Q and R to be diagonal and tweaked their values in order to weight more the state $\alpha$, to make the tip aligned with the base as fast as possible, and the state $\theta$ to grant set point tracking.
+            $$ \min _{u(\cdot)} \int_0^{t_1}\left(x^T Q x+u^T R u\right) d t $$ 
+            subject to $\dot{x}=A x+B u$ 
 
-\begin{equation*}
-Q = 
-    \begin{bmatrix}
-    Q(1,1) & 0 & 0 & 0 \\
-    0 & 1 & 0 & 0 \\
-    0 & 0 & Q(3,3) & 0 \\
-    0 & 0 & 0 & 1 
-\end{bmatrix} \,
-\text{and} \, R = 1
-\end{equation*} 
+            Where Q and R are matrices which represent respectively the weight on the state and on the inputs.
 
-We tried different values for Q and R and compared the main characteristics of a step response.
-A summary can be seen in the table below:
+            \subsection{Controller Design}
 
-\begin{table}[h!]
-    \centering
-    \hspace*{-3em}
-    \begin{tabular}{||c c c c c c||} 
-    \hline
-    Q(1,1)  & Q(3,3) & Max overshoot (°) & Settling time (s)& Rising time (s) & Total input (Vs)\\ 
-    \hline\hline
-    1000 & 100 & 14.06 & 0.427 & 0.096 & 3.021 \\ 
-    \hline
-    100 & 1000 & -0.967 & 1.024 & 0.238 & 3.433 \\
-    \hline
-    200 & 1000 & 1.494 & 0.853 & 0.174 & 2.411 \\
-    \hline
-    100 & 2000 & -0.615 & 1.280 & 0.274 & 2.957 \\
-    \hline
-    1000 & 1000 & 9.316 & 0.466 & 0.108 & 3.383 \\ [1ex] 
-    \hline
-    \end{tabular}
-\end{table}
+                The control scheme is the following:
 
-%TODO explain chosen parameters
+                \image{./images/Chapter 4/LQR/Scheme.png}
 
-\subsection{Observers comparison}
+                In order to design the LQ controller we choose the matrices Q and R to be diagonal and tweaked their values in order to weight more the state $\alpha$, to make the tip aligned with the base as fast as possible, and the state $\theta$ to grant set point tracking.
 
-\subsection{Validation}
+                \begin{equation*}
+                Q = 
+                    \begin{bmatrix}
+                    Q(1,1) & 0 & 0 & 0 \\
+                    0 & 1 & 0 & 0 \\
+                    0 & 0 & Q(3,3) & 0 \\
+                    0 & 0 & 0 & 1 
+                \end{bmatrix} \,
+                \text{and} \, R = 1
+                \end{equation*} 
 
-\subsubsection{Step Response}
+                We tried different values for Q and R and compared the main characteristics of a step response.
+                A summary can be seen in the table below:
 
-\subsubsection{Frequency Validation}
+                \begin{table}[h!]
+                    \centering
+                    \hspace*{-3em}
+                    \begin{tabular}{||c c c c c c||} 
+                    \hline
+                    Q(1,1)  & Q(3,3) & Max overshoot (°) & Settling time (s)& Rising time (s) & Total input (Vs)\\ 
+                    \hline\hline
+                    1000 & 100 & 14.06 & 0.427 & 0.096 & 3.021 \\ 
+                    \hline
+                    100 & 1000 & -0.967 & 1.024 & 0.238 & 3.433 \\
+                    \hline
+                    200 & 1000 & 1.494 & 0.853 & 0.174 & 2.411 \\
+                    \hline
+                    100 & 2000 & -0.615 & 1.280 & 0.274 & 2.957 \\
+                    \hline
+                    1000 & 1000 & 9.316 & 0.466 & 0.108 & 3.383 \\ [1ex] 
+                    \hline
+                    \end{tabular}
+                \end{table}
+
+                %TODO explain chosen parameters
+
+            \subsection{Observers comparison}
+
+            \subsection{Validation}
+
+                \subsubsection{Step Response}
+                \subsubsection{Frequency Validation}
