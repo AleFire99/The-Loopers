@@ -3,7 +3,7 @@ function [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, omega_c)
 Q_lqr = diag([1000 1 100 1 1]);     %initial values
 R_lqr = eye(1);
 
-A_tilde = [sysest_ct_tip.A,zeros(4,1);
+A_tilde = [sysest_ct_tip.A,zeros(4,1);      %Enlarged system with Integrators Connected only to the first output
            -sysest_ct_tip.C(1, :), 0];
          
 B_tilde = [sysest_ct_tip.B;

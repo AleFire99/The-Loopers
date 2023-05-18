@@ -52,9 +52,7 @@ sysest_ct.C = [1 0 0 0; 0 0 1 0];
 
 %% Uncertian System Smaller JL (faster system with higer resonance)
 
-alpha1 = 0.1;
-
-JL = alpha1* JL;
+JL = 0.1* JL;
 
 TaoCons = ng*nm*Kt*Kg/Rm;
 sysest_ct_uncertanties_JLL.A = [0 1 0 0;
@@ -65,13 +63,10 @@ sysest_ct_uncertanties_JLL.A = [0 1 0 0;
 sysest_ct_uncertanties_JLL.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
 sysest_ct_uncertanties_JLL.C = [1 0 0 0; 0 0 1 0];
 
-JL =  JL/alpha1;  % Back to original Value
 
 %% Uncertian System Smaller JL (slower system system with lower resonance)
 
-alpha2 = 10;
-
-JL = alpha2* JL;
+JL = 10* JL;
 
 TaoCons = ng*nm*Kt*Kg/Rm;
 sysest_ct_uncertanties_JLH.A = [0 1 0 0;
@@ -81,9 +76,6 @@ sysest_ct_uncertanties_JLH.A = [0 1 0 0;
  
 sysest_ct_uncertanties_JLH.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
 sysest_ct_uncertanties_JLH.C = [1 0 0 0; 0 0 1 0];
-
-
-JL = JL/ alpha2;  % Back to original Value
 
 %% To create the long reference's signal for the simulation
 %Longsim_Signal;                 %All possible references
@@ -104,8 +96,8 @@ zeros_tip = zero(G_tip_ct);
 
 T_CL = G_tip_ct/(1+G_tip_ct);
 
-L_poles = pole(T_CL)
-L_zeros = zero(T_CL)
+L_poles = pole(T_CL);
+L_zeros = zero(T_CL);
 
 
 % Faster Uncertain Model
@@ -118,8 +110,8 @@ zeros_tip_uncertanties_JLL = zero(G_tip_ct_uncertanties_JLL);
 
 T_CL_uncertanties_JLL = G_tip_ct_uncertanties_JLL/(1+G_tip_ct_uncertanties_JLL);
 
-L_poles_uncertanties_JLL = pole(T_CL_uncertanties_JLL)
-L_zeros_uncertanties_JLL = zero(T_CL_uncertanties_JLL)
+L_poles_uncertanties_JLL = pole(T_CL_uncertanties_JLL);
+L_zeros_uncertanties_JLL = zero(T_CL_uncertanties_JLL);
 
 % Slower Uncertain Model
 
@@ -131,8 +123,8 @@ zeros_tip_uncertanties_JLH = zero(G_tip_ct_uncertanties_JLH);
 
 T_CL_uncertanties_JLH = G_tip_ct_uncertanties_JLH/(1+G_tip_ct_uncertanties_JLH);
 
-L_poles_uncertanties_JLH = pole(T_CL_uncertanties_JLH)
-L_zeros_uncertanties_JLH = zero(T_CL_uncertanties_JLH)
+L_poles_uncertanties_JLH = pole(T_CL_uncertanties_JLH);
+L_zeros_uncertanties_JLH = zero(T_CL_uncertanties_JLH);
  
 %% State space control
 % Model Parameters coming from resonance measurements
@@ -147,7 +139,7 @@ v_a_max = 15;
 
 %tau = 15;           % Maximum value related to the satuaration of the control variable limit
 
-tau = 0.5;            %reduction of the aggression responce
+tau = 5;            %reduction of the aggression responce
 
 [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau);
 
@@ -235,16 +227,3 @@ figure;
 margin(sys_controlled_unc_JLL(1));
 figure;
 margin(sys_controlled_unc_JLH(1));
-
-
-L_poles_sys_controlled = pole(sys_controlled(1))
-L_zeros_sys_controlled = zero(sys_controlled(1))
- 
-L_poles_sys_controlled_unc_JLL = pole(sys_controlled_unc_JLL(1))
-L_zeros_sys_controlled_unc_JLL = zero(sys_controlled_unc_JLL(1))
- 
-L_poles_sys_controlled_unc_JLH = pole(sys_controlled_unc_JLH(1))
-L_zeros_sys_controlled_unc_JLH = zero(sys_controlled_unc_JLH(1))
- 
-
-
