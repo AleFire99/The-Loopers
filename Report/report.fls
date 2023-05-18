@@ -1090,6 +1090,17 @@ INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/titlesec/titlesec.sty
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/titlesec/titlesec.sty
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/titlesec/titlesec.sty
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/titlesec/titlesec.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmr.fd
@@ -1180,10 +1191,11 @@ INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
-INPUT ./images/logo_poli_bianco.pdf
-INPUT images/logo_poli_bianco.pdf
-INPUT ./images/logo_poli_bianco.pdf
-INPUT ./images/logo_poli_bianco.pdf
+INPUT ./images/Template/logo_poli_bianco.pdf
+INPUT ./images/Template/logo_poli_bianco.pdf
+INPUT images/Template/logo_poli_bianco.pdf
+INPUT ./images/Template/logo_poli_bianco.pdf
+INPUT ./images/Template/logo_poli_bianco.pdf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr10.tfm
@@ -1224,73 +1236,118 @@ INPUT ./chapters/001_problem_description.tex
 INPUT chapters/001_problem_description.tex
 INPUT ./chapters/001_problem_description.tex
 INPUT chapters/001_problem_description.tex
-INPUT ./images/system.png
-INPUT ./images/system.png
-INPUT ./images/system.png
-INPUT ./images/system.png
-INPUT ./images/system.png
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
+INPUT ./images/Chapter 1/system.png
+INPUT ./images/Chapter 1/system.png
+INPUT ./images/Chapter 1/system.png
+INPUT ./images/Chapter 1/system.png
+INPUT ./images/Chapter 1/system.png
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ts1-lmr12.tfm
+INPUT ./images/Chapter 1/Motor data.png
+INPUT ./images/Chapter 1/Motor data.png
+INPUT ./images/Chapter 1/Motor data.png
+INPUT ./images/Chapter 1/Motor data.png
+INPUT ./images/Chapter 1/Motor data.png
+INPUT ./images/Chapter 1/Flexible joint data.png
+INPUT ./images/Chapter 1/Flexible joint data.png
+INPUT ./images/Chapter 1/Flexible joint data.png
+INPUT ./images/Chapter 1/Flexible joint data.png
+INPUT ./images/Chapter 1/Flexible joint data.png
 INPUT ./chapters/002_model_identification.tex
 INPUT chapters/002_model_identification.tex
 INPUT ./chapters/002_model_identification.tex
 INPUT chapters/002_model_identification.tex
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
-INPUT ./images/scheme.png
-INPUT ./images/scheme.png
-INPUT ./images/scheme.png
-INPUT ./images/scheme.png
-INPUT ./images/scheme.png
+INPUT ./images/Chapter 2/scheme.png
+INPUT ./images/Chapter 2/scheme.png
+INPUT ./images/Chapter 2/scheme.png
+INPUT ./images/Chapter 2/scheme.png
+INPUT ./images/Chapter 2/scheme.png
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
-INPUT ./images/beam_scheme_model.png
-INPUT ./images/beam_scheme_model.png
-INPUT ./images/beam_scheme_model.png
-INPUT ./images/beam_scheme_model.png
-INPUT ./images/beam_scheme_model.png
-INPUT ./images/non_linear_spring.jpg
-INPUT ./images/non_linear_spring.jpg
-INPUT ./images/non_linear_spring.jpg
-INPUT ./images/non_linear_spring.jpg
-INPUT ./images/non_linear_spring.jpg
-INPUT ./images/K_s_linvs_k_s_NL.png
-INPUT ./images/K_s_linvs_k_s_NL.png
-INPUT ./images/K_s_linvs_k_s_NL.png
-INPUT ./images/K_s_linvs_k_s_NL.png
-INPUT ./images/K_s_linvs_k_s_NL.png
-INPUT ./images/K_s_linvs_k_s_NL_err.png
-INPUT ./images/K_s_linvs_k_s_NL_err.png
-INPUT ./images/K_s_linvs_k_s_NL_err.png
-INPUT ./images/K_s_linvs_k_s_NL_err.png
-INPUT ./images/K_s_linvs_k_s_NL_err.png
+INPUT ./images/Chapter 2/beam_scheme_model.png
+INPUT ./images/Chapter 2/beam_scheme_model.png
+INPUT ./images/Chapter 2/beam_scheme_model.png
+INPUT ./images/Chapter 2/beam_scheme_model.png
+INPUT ./images/Chapter 2/beam_scheme_model.png
+INPUT ./images/Chapter 2/non_linear_spring.jpg
+INPUT ./images/Chapter 2/non_linear_spring.jpg
+INPUT ./images/Chapter 2/non_linear_spring.jpg
+INPUT ./images/Chapter 2/non_linear_spring.jpg
+INPUT ./images/Chapter 2/non_linear_spring.jpg
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL_err.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL_err.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL_err.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL_err.png
+INPUT ./images/Chapter 2/K_s_linvs_k_s_NL_err.png
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
-INPUT ./images/data_train.png
-INPUT ./images/data_train.png
-INPUT ./images/data_train.png
-INPUT ./images/data_train.png
-INPUT ./images/data_train.png
+INPUT ./images/Chapter 2/fourier_stiff_analysis.png
+INPUT ./images/Chapter 2/fourier_stiff_analysis.png
+INPUT ./images/Chapter 2/fourier_stiff_analysis.png
+INPUT ./images/Chapter 2/fourier_stiff_analysis.png
+INPUT ./images/Chapter 2/fourier_stiff_analysis.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
 INPUT ./images/inertia_computation.png
-INPUT ./images/fourier_stiff_analysis.png
-INPUT ./images/fourier_stiff_analysis.png
-INPUT ./images/fourier_stiff_analysis.png
-INPUT ./images/fourier_stiff_analysis.png
-INPUT ./images/fourier_stiff_analysis.png
 INPUT ./chapters/003_position_control_base.tex
 INPUT chapters/003_position_control_base.tex
 INPUT ./chapters/003_position_control_base.tex
 INPUT chapters/003_position_control_base.tex
+INPUT ./images/Chapter 3/Bode OL uncontrolled.png
+INPUT ./images/Chapter 3/Bode OL uncontrolled.png
+INPUT ./images/Chapter 3/Bode OL uncontrolled.png
+INPUT ./images/Chapter 3/Bode OL uncontrolled.png
+INPUT ./images/Chapter 3/Bode OL uncontrolled.png
+INPUT ./images/Chapter 3/pzmap uncontrolled.png
+INPUT ./images/Chapter 3/pzmap uncontrolled.png
+INPUT ./images/Chapter 3/pzmap uncontrolled.png
+INPUT ./images/Chapter 3/pzmap uncontrolled.png
+INPUT ./images/Chapter 3/pzmap uncontrolled.png
+INPUT ./images/Chapter 3/Bode OL controlled.png
+INPUT ./images/Chapter 3/Bode OL controlled.png
+INPUT ./images/Chapter 3/Bode OL controlled.png
+INPUT ./images/Chapter 3/Bode OL controlled.png
+INPUT ./images/Chapter 3/Bode OL controlled.png
+INPUT ./images/Chapter 3/pzmap controlled.png
+INPUT ./images/Chapter 3/pzmap controlled.png
+INPUT ./images/Chapter 3/pzmap controlled.png
+INPUT ./images/Chapter 3/pzmap controlled.png
+INPUT ./images/Chapter 3/pzmap controlled.png
+INPUT ./images/Chapter 3/Control scheme.png
+INPUT ./images/Chapter 3/Control scheme.png
+INPUT ./images/Chapter 3/Control scheme.png
+INPUT ./images/Chapter 3/Control scheme.png
+INPUT ./images/Chapter 3/Control scheme.png
+INPUT ./images/Chapter 3/Bode CL.png
+INPUT ./images/Chapter 3/Bode CL.png
+INPUT ./images/Chapter 3/Bode CL.png
+INPUT ./images/Chapter 3/Bode CL.png
+INPUT ./images/Chapter 3/Bode CL.png
 INPUT ./chapters/004_position_control_tip.tex
 INPUT chapters/004_position_control_tip.tex
 INPUT ./chapters/004_position_control_tip.tex
 INPUT chapters/004_position_control_tip.tex
+INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/LQR/Scheme.png
+INPUT ./images/Chapter 4/LQR/Scheme.png
+INPUT ./images/Chapter 4/LQR/Scheme.png
+INPUT ./images/Chapter 4/LQR/Scheme.png
+INPUT ./images/Chapter 4/LQR/Scheme.png
 INPUT ./chapters/005_position_control_tip_uncertanties.tex
 INPUT chapters/005_position_control_tip_uncertanties.tex
 INPUT ./chapters/005_position_control_tip_uncertanties.tex
@@ -1309,8 +1366,8 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb

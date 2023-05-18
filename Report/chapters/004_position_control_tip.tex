@@ -1,140 +1,135 @@
-\chapter{Position Control of The Tip}
+\chapter{Position Control of the Tip}
 \label{cha:position_tip}
 
-% \section{Research of the machine parameters}
-% \label{sec:reserche_machine_parameters}
-% The DTC method needs only a few parameters due to the fact that the current saturation is already handled in the computation of the maximum torque and most of the control variables are tuned empirically.
-% In fact the 3 needed parameters are:
-% \begin{itemize}
-%     \item rated speed: 
-%             \begin{equation}
-%                 \omega_{m_{rated}} = \frac{2\pi f}{n_p} = 104.72 rad/s
-%                 \label{eq:omega_m_rated}
-%             \end{equation}
+In order to control the position of the tip we tried two different approaches: a frequency based one, like we did for the control of the position of the base, and a full state feedback control scheme.
 
-%     \item maximum torque:
-%             \begin{equation}
-%                 me_{max} = \frac{V_{rated}^2}{((\frac{3}{2} (2 \pi f)^2 L_s ((\frac{L_s L_r}{L_m^2})-1)))} = 203.99 Nm
-%                 \label{eq:me_max}
-%             \end{equation}
+\section{Frequency Based Approach}
 
-%     \item reference stator flux(to use the ferromagnetic material at its maximum):
-%             \begin{equation}
-%                 \psi_{s_{ref}} = \frac{V_{rated} \sqrt{3}}{2 \pi f} = 2.095 Wb
-%                 \label{eq:psi_s_ref}
-%             \end{equation}
+Our goal is once again to track a set point for the position of the tip granting a phase margin $\approx$ 60° for robustness. This time we have a trade-off between speed of the controlled system and overshoot of the $\alpha$ angle and we decided to focus more on the latter option.
 
-% \end{itemize}
-% \newpage
+\subsection{Controller Design}
 
-% \section{Development of the Machine Model}
-% \label{sec:machine_model}
-% The following scheme in figure \ref*{fig: machine_model} represents the machine model.
-% The block scheme uses blocks of Simulink to describe the entire behavior of the motor using differential equations.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{machine_model.png}
-%     \caption{Model of the machine in Simulink}
-%     \label{fig: machine_model}
-% \end{figure}
+%TODO Insert here Bode of OL uncontrolled scheme, pz map and bode of OL controlled with pz map and explain design
 
-% The next ones are all the components used to control the control variables, the 3-phase voltage $V_s$ indeed, and estimate all the control references using the 3-phase vector of the stator current $i_s$.
-% Inside the model there are some Complex Integrator that allow to integrete the real part and the imaginary parts of the state vectors separatly and after recompose the originally space vectors.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{complex_integrator.png}
-%     \caption{Scheme of a Complex integrator}
-%     \label{fig: complex_integrator}
-% \end{figure}
-% \newpage
+\subsection{Step Response}
 
-% \section{Development of the Control Unit}
-% \label{sec: control_unit}
-% The following scheme repreesents the implementation of the controller with the DTC method. This method is based on the dynamic approximation $V_s = \Delta\psi$ that can applies only for high power machine keeping negligible the voltage dissipated on the $R_s$. 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{DTC_hexagon.png}
-%     \caption{Scheme of the stator phase control}
-%     \label{fig: DTC_hexagon}
-% \end{figure}
-% The idea is to keep bounded the magnitude of the $\psi_s$ continuosly switching between different configuation, depending on the sector in which the $\psi_s$ is, (according to $\varphi$) of the 3-phase $V_s$ accorting with the switching table in figure \ref*{fig: switching_table} to keep in rotation the the flux.
-% In order to control instead the speed (unless the motor will rotate at the maximum speed) you control the torque, which is controlled by appling null configuaration of the $V_s$ (according to $\tau$) accorting with the switching table in figure \ref*{fig: switching_table}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{switchin_table.png}
-%     \caption{Switching table used in DTC}
-%     \label{fig: switching_table}
-% \end{figure}
-% \\
-% The implementation is made by sending to a block that manages the switchin table the two signal $\varphi$ and $\tau$ computed using 2 hysteresis controllers as represented in figure \ref*{fig: hysteresis_controllers}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{hysteresis_controllers.png}
-%     \caption{The hysteresis controllers}
-%     \label{fig: hysteresis_controllers}
-% \end{figure}
-% \\
-% In the Simulink implementation is similar to the block scheme, the only differences are:
-% \begin{itemize}
-%     \item The two side hysteresis for the torque is made with two hysteresis blocks;
-%     \item The sector recognition is done evaluating the phase shift of the $\psi_s$;
-%     \item The magnitude of the stator flux is evalated comparing the estimated magnitude with a reference value.
-% \end{itemize}
-% The outputs from these comparisons are the input of a block that implements the switching table as reported in figure \ref*{fig: DTC_controller}.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{DTC_control_scheme.png}
-%     \caption{The DTC control scheme created in Simulink}
-%     \label{fig: DTC_controller}
-% \end{figure}
-% \\
-% The inputs of this controller is $m_{e_{err}}$ that is the error of a closed loop control for the torque, where the reference torque is the output of a PI controller that implements a closed loop control for the $\omega_m$, this PI is represented in figure \ref*{fig: speed_controller}. The PI has an anti-windup strategy to avoid saturation's issues with related to the maximum torque.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=0.75\textwidth]{speed_controller.png}
-%     \caption{The speed controller}
-%     \label{fig: speed_controller}
-% \end{figure}
-% \\
-% Another important component is the VI-Estimator that given the the stator current and voltage estimates the stator flux and the torque.
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{VI_estimator.png}
-%     \caption{The VI-Estimator}
-%     \label{fig: VI_estimator}
-% \end{figure}
-% The conversion of the Space Vectors into 3-phase components and vice versa are made with the Clark transform and anti-transform.
-% \begin{figure}
-%     \centering
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{clark_transform.png}
-%         \caption{Clark transform}
-%         \label{fig:clark_transform}
-%     \end{subfigure}
-%     \qquad
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{anti_clark_transform.png}
-%         \caption{Clark anti-transform}
-%         \label{fig:anti_clark_transform}
-%     \end{subfigure}
-% \end{figure}
+%TODO Insert here step response and explain features
+
+\subsection{Frequency Validation}
+
+%TODO Insert here Bode of CL controlled scheme
+
+\section{State Estimators}
+
+In order to apply a full state feedback control scheme we must be able to know or to estimate the state of our system knowing only its outputs and inputs.
+
+\subsection{State Extractor}
+
+As our output is the array 
+$\begin{bmatrix}
+    \theta \\
+    \alpha
+\end{bmatrix}$
+and the full state is 
+$\begin{bmatrix}
+    \theta \\
+    \dot\theta \\
+    \alpha \\
+    \dot\alpha 
+\end{bmatrix}$,
+we could just apply a derivative to the output to get the full state, as expressed in the simulink scheme below.
+
+\image{./images/Chapter 4/Observers/SE.png}
+
+The benefits of such observer is that the estimation of the state is instantaneous and there is no dynamics for the error between the real and the estimated state.
+
+The main drawback is that the derivative is done numerically, so high frequency noises in the measurements could lead to wrong state estimations.
+Luckily the sensors where precise enough so that the noise was not an issue, otherwise we would have introduced a low pass filter to mitigate it.
 
 
+\subsection{Luenberger Observer}
 
-% % \begin{table}[htbp!]
-% % \caption{Prima tabella}
-% % \label{tab:prima_tabella}
-% % \centering
-% % \begin{tabular}{cccc}
-% % \toprule
-% % Prima Variabile	& Seconda Variabile	& Terza Variabile	& Quarta Variabile	\\
-% % \midrule
-% % XXX				& XXX				& XXX				& XXX				\\
-% % \bottomrule	
-% % \end{tabular}
-% %\end{table}
+    In order to provide an estimation for the states of the 
 
-% % \section{Terza Sezione}
-% % \label{sec:terza_sezione_2}
+\subsection{Kalman Filter}
+
+\section{Pole Placement}
+
+\subsection{Controller Design}
+
+\subsection{Observers Comparison}
+
+\subsection{Validation}
+
+\subsubsection{Step Response}
+
+\subsubsection{Frequency Validation}
+
+
+\section{Linear Quadratic Regulator}
+
+The LQ regulator is an optimal full state feedback control scheme which has as control law:
+
+\begin{equation*}
+    u = -K_{LQR}x
+\end{equation*}
+
+Where $K_{LQR}$ is found by solving this minimization problem:
+
+
+$$ \min _{u(\cdot)} \int_0^{t_1}\left(x^T Q x+u^T R u\right) d t $$ 
+subject to $\dot{x}=A x+B u$ 
+
+Where Q and R are matrices which represent respectively the weight on the state and on the inputs.
+
+\subsection{Controller Design}
+
+The control scheme is the following:
+
+\image{./images/Chapter 4/LQR/Scheme.png}
+
+In order to design the LQ controller we choose the matrices Q and R to be diagonal and tweaked their values in order to weight more the state $\alpha$, to make the tip aligned with the base as fast as possible, and the state $\theta$ to grant set point tracking.
+
+\begin{equation*}
+Q = 
+    \begin{bmatrix}
+    Q(1,1) & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & Q(3,3) & 0 \\
+    0 & 0 & 0 & 1 
+\end{bmatrix} \,
+\text{and} \, R = 1
+\end{equation*} 
+
+We tried different values for Q and R and compared the main characteristics of a step response.
+A summary can be seen in the table below:
+
+\begin{table}[h!]
+    \centering
+    \hspace*{-3em}
+    \begin{tabular}{||c c c c c c||} 
+    \hline
+    Q(1,1)  & Q(3,3) & Max overshoot (°) & Settling time (s)& Rising time (s) & Total input (Vs)\\ 
+    \hline\hline
+    1000 & 100 & 14.06 & 0.427 & 0.096 & 3.021 \\ 
+    \hline
+    100 & 1000 & -0.967 & 1.024 & 0.238 & 3.433 \\
+    \hline
+    200 & 1000 & 1.494 & 0.853 & 0.174 & 2.411 \\
+    \hline
+    100 & 2000 & -0.615 & 1.280 & 0.274 & 2.957 \\
+    \hline
+    1000 & 1000 & 9.316 & 0.466 & 0.108 & 3.383 \\ [1ex] 
+    \hline
+    \end{tabular}
+\end{table}
+
+%TODO explain chosen parameters
+
+\subsection{Observers comparison}
+
+\subsection{Validation}
+
+\subsubsection{Step Response}
+
+\subsubsection{Frequency Validation}

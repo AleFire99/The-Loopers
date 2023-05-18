@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.30)  19 APR 2023 11:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.30)  18 MAY 2023 15:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -216,7 +216,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip58
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 16.
+Package hyperref Info: Option `colorlinks' set `true' on input line 14.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2022/03/14 v3.0d Micro-typographical refinements (RS)
  (/usr/local/texlive/2022/texmf-dist/tex/latex/etoolbox/etoolbox.sty
@@ -711,31 +711,36 @@ Package: titlesec 2021/07/05 v2.14 Sectioning titles
 \titlewidth=\dimen327
 \titlewidthlast=\dimen328
 \titlewidthfirst=\dimen329
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks48
+\verbatim@line=\toks49
+\verbatim@in@stream=\read4
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 76.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 75.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -772,7 +777,7 @@ LaTeX Font Info:    ... okay on input line 76.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 76.
+Package hyperref Info: Link coloring ON on input line 75.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/local/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -782,25 +787,25 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count348
 )
-LaTeX Info: Redefining \ref on input line 76.
-LaTeX Info: Redefining \pageref on input line 76.
-LaTeX Info: Redefining \nameref on input line 76.
+LaTeX Info: Redefining \ref on input line 75.
+LaTeX Info: Redefining \pageref on input line 75.
+LaTeX Info: Redefining \nameref on input line 75.
  (./report.out) (./report.out)
 \@outlinefile=\write4
 \openout4 = `report.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 76.
-Package microtype Info: Applying patch `item' on input line 76.
-Package microtype Info: Applying patch `toc' on input line 76.
-Package microtype Info: Applying patch `eqnum' on input line 76.
-Package microtype Info: Applying patch `footnote' on input line 76.
+LaTeX Info: Redefining \microtypecontext on input line 75.
+Package microtype Info: Applying patch `item' on input line 75.
+Package microtype Info: Applying patch `toc' on input line 75.
+Package microtype Info: Applying patch `eqnum' on input line 75.
+Package microtype Info: Applying patch `footnote' on input line 75.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 76.
+LaTeX Info: Redefining \showhyphens on input line 75.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -809,7 +814,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 76.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 75.
  (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count349
@@ -817,12 +822,12 @@ Package translations Info: loading dictionary `translations-basic-dictionary' fo
 \scratchbox=\box81
 \nofMPsegments=\count350
 \nofMParguments=\count351
-\everyMPshowfont=\toks48
+\everyMPshowfont=\toks50
 \MPscratchCnt=\count352
 \MPscratchDim=\dimen331
 \MPnumerator=\count353
 \makeMPintoPDFobject=\count354
-\everyMPtoPDFconversion=\toks49
+\everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -833,15 +838,15 @@ Package pgfplots notification 'compat/show suggested version=true': you might be
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<images/logo_poli_bianco.pdf, id=59, 56.09688pt x 56.08853pt>
-File: images/logo_poli_bianco.pdf Graphic file (type pdf)
-<use images/logo_poli_bianco.pdf>
-Package pdftex.def Info: images/logo_poli_bianco.pdf  used on input line 92.
+<images/Template/logo_poli_bianco.pdf, id=151, 56.09688pt x 56.08853pt>
+File: images/Template/logo_poli_bianco.pdf Graphic file (type pdf)
+<use images/Template/logo_poli_bianco.pdf>
+Package pdftex.def Info: images/Template/logo_poli_bianco.pdf  used on input line 91.
 (pdftex.def)             Requested size: 203.7692pt x 203.70207pt.
 [1
 
 
-{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/logo_poli_bianco.pdf>] (./report.toc
+{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/Template/logo_poli_bianco.pdf>] (./report.toc
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -864,115 +869,170 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 4.
-)
-\tf@toc=\write5
-\openout5 = `report.toc'.
 
- (./chapters/001_problem_description.tex
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {Problem Description} [1
+l.43 ... the Tip with Uncertanties}{20}{chapter.5}
+                                                  % [1
 
 
-]
+])
+\tf@toc=\write5
+\openout5 = `report.toc'.
+
+ (./chapters/001_problem_description.tex [2]
 Chapter 1.
-<./images/system.png, id=106, 841.1425pt x 576.1525pt>
-File: ./images/system.png Graphic file (type png)
-<use ./images/system.png>
-Package pdftex.def Info: ./images/system.png  used on input line 7.
+<./images/Chapter 1/system.png, id=227, 841.1425pt x 576.1525pt>
+File: ./images/Chapter 1/system.png Graphic file (type png)
+<use ./images/Chapter 1/system.png>
+Package pdftex.def Info: ./images/Chapter 1/system.png  used on input line 10.
 (pdftex.def)             Requested size: 324.36143pt x 222.17545pt.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 10.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 13.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [2
+)
+<./images/Chapter 1/Motor data.png, id=229, 661.72218pt x 543.53062pt>
+File: ./images/Chapter 1/Motor data.png Graphic file (type png)
+<use ./images/Chapter 1/Motor data.png>
+Package pdftex.def Info: ./images/Chapter 1/Motor data.png  used on input line 22.
+(pdftex.def)             Requested size: 324.36143pt x 266.42355pt.
+ [3
 
- <./images/system.png>]) (./chapters/002_model_identification.tex [3]
+ <./images/Chapter 1/system.png>]
+<./images/Chapter 1/Flexible joint data.png, id=237, 675.27281pt x 330.48468pt>
+File: ./images/Chapter 1/Flexible joint data.png Graphic file (type png)
+<use ./images/Chapter 1/Flexible joint data.png>
+Package pdftex.def Info: ./images/Chapter 1/Flexible joint data.png  used on input line 24.
+(pdftex.def)             Requested size: 324.36143pt x 158.74683pt.
+) (./chapters/002_model_identification.tex [4 <./images/Chapter 1/Motor data.png> <./images/Chapter 1/Flexible joint data.png>]
 Chapter 2.
-<./images/scheme.png, id=123, 488.82625pt x 96.36pt>
-File: ./images/scheme.png Graphic file (type png)
-<use ./images/scheme.png>
-Package pdftex.def Info: ./images/scheme.png  used on input line 6.
+<./images/Chapter 2/scheme.png, id=249, 488.82625pt x 96.36pt>
+File: ./images/Chapter 2/scheme.png Graphic file (type png)
+<use ./images/Chapter 2/scheme.png>
+Package pdftex.def Info: ./images/Chapter 2/scheme.png  used on input line 6.
 (pdftex.def)             Requested size: 324.36143pt x 63.94037pt.
-<./images/beam_scheme_model.png, id=124, 634.37pt x 533.995pt>
-File: ./images/beam_scheme_model.png Graphic file (type png)
-<use ./images/beam_scheme_model.png>
-Package pdftex.def Info: ./images/beam_scheme_model.png  used on input line 41.
+<./images/Chapter 2/beam_scheme_model.png, id=250, 634.37pt x 533.995pt>
+File: ./images/Chapter 2/beam_scheme_model.png Graphic file (type png)
+<use ./images/Chapter 2/beam_scheme_model.png>
+Package pdftex.def Info: ./images/Chapter 2/beam_scheme_model.png  used on input line 43.
 (pdftex.def)             Requested size: 324.36143pt x 273.04272pt.
-[4
+[5
 
- <./images/scheme.png>] [5 <./images/beam_scheme_model.png>]
-<./images/non_linear_spring.jpg, id=143, 1371.1225pt x 705.63625pt>
-File: ./images/non_linear_spring.jpg Graphic file (type jpg)
-<use ./images/non_linear_spring.jpg>
-Package pdftex.def Info: ./images/non_linear_spring.jpg  used on input line 86.
+ <./images/Chapter 2/scheme.png>] [6 <./images/Chapter 2/beam_scheme_model.png>]
+<./images/Chapter 2/non_linear_spring.jpg, id=270, 1371.1225pt x 705.63625pt>
+File: ./images/Chapter 2/non_linear_spring.jpg Graphic file (type jpg)
+<use ./images/Chapter 2/non_linear_spring.jpg>
+Package pdftex.def Info: ./images/Chapter 2/non_linear_spring.jpg  used on input line 102.
 (pdftex.def)             Requested size: 324.36143pt x 166.92278pt.
-<./images/K_s_linvs_k_s_NL.png, id=144, 475.7775pt x 377.41pt>
-File: ./images/K_s_linvs_k_s_NL.png Graphic file (type png)
-<use ./images/K_s_linvs_k_s_NL.png>
-Package pdftex.def Info: ./images/K_s_linvs_k_s_NL.png  used on input line 106.
+<./images/Chapter 2/K_s_linvs_k_s_NL.png, id=271, 475.7775pt x 377.41pt>
+File: ./images/Chapter 2/K_s_linvs_k_s_NL.png Graphic file (type png)
+<use ./images/Chapter 2/K_s_linvs_k_s_NL.png>
+Package pdftex.def Info: ./images/Chapter 2/K_s_linvs_k_s_NL.png  used on input line 124.
 (pdftex.def)             Requested size: 324.36143pt x 257.30917pt.
- [6 <./images/non_linear_spring.jpg>]
-<./images/K_s_linvs_k_s_NL_err.png, id=153, 485.815pt x 381.425pt>
-File: ./images/K_s_linvs_k_s_NL_err.png Graphic file (type png)
-<use ./images/K_s_linvs_k_s_NL_err.png>
-Package pdftex.def Info: ./images/K_s_linvs_k_s_NL_err.png  used on input line 108.
+ [7 <./images/Chapter 2/non_linear_spring.jpg>]
+<./images/Chapter 2/K_s_linvs_k_s_NL_err.png, id=279, 485.815pt x 381.425pt>
+File: ./images/Chapter 2/K_s_linvs_k_s_NL_err.png Graphic file (type png)
+<use ./images/Chapter 2/K_s_linvs_k_s_NL_err.png>
+Package pdftex.def Info: ./images/Chapter 2/K_s_linvs_k_s_NL_err.png  used on input line 129.
 (pdftex.def)             Requested size: 324.36143pt x 254.66295pt.
- [7 <./images/K_s_linvs_k_s_NL.png> <./images/K_s_linvs_k_s_NL_err.png>] [8]
-<./images/data_train.png, id=167, 493.845pt x 399.4925pt>
-File: ./images/data_train.png Graphic file (type png)
-<use ./images/data_train.png>
-Package pdftex.def Info: ./images/data_train.png  used on input line 205.
-(pdftex.def)             Requested size: 324.36143pt x 262.38574pt.
- [9]
-<./images/inertia_computation.png, id=173, 498.86375pt x 308.15125pt>
+ [8 <./images/Chapter 2/K_s_linvs_k_s_NL.png> <./images/Chapter 2/K_s_linvs_k_s_NL_err.png>] [9]
+<./images/Chapter 2/fourier_stiff_analysis.png, id=295, 525.965pt x 493.845pt>
+File: ./images/Chapter 2/fourier_stiff_analysis.png Graphic file (type png)
+<use ./images/Chapter 2/fourier_stiff_analysis.png>
+Package pdftex.def Info: ./images/Chapter 2/fourier_stiff_analysis.png  used on input line 246.
+(pdftex.def)             Requested size: 216.24095pt x 203.03537pt.
+ [10]
+<./images/inertia_computation.png, id=300, 498.86375pt x 308.15125pt>
 File: ./images/inertia_computation.png Graphic file (type png)
 <use ./images/inertia_computation.png>
-Package pdftex.def Info: ./images/inertia_computation.png  used on input line 227.
+Package pdftex.def Info: ./images/inertia_computation.png  used on input line 253.
 (pdftex.def)             Requested size: 302.73602pt x 187.00806pt.
- [10 <./images/data_train.png>]
-<./images/fourier_stiff_analysis.png, id=180, 525.965pt x 493.845pt>
-File: ./images/fourier_stiff_analysis.png Graphic file (type png)
-<use ./images/fourier_stiff_analysis.png>
-Package pdftex.def Info: ./images/fourier_stiff_analysis.png  used on input line 234.
-(pdftex.def)             Requested size: 216.24095pt x 203.03537pt.
-) (./chapters/003_position_control_base.tex [11 <./images/inertia_computation.png> <./images/fourier_stiff_analysis.png>]
+ [11 <./images/Chapter 2/fourier_stiff_analysis.png> <./images/inertia_computation.png>]) (./chapters/003_position_control_base.tex [12]
 Chapter 3.
-) (./chapters/004_position_control_tip.tex [12
+<./images/Chapter 3/Bode OL uncontrolled.png, id=314, 421.575pt x 316.18124pt>
+File: ./images/Chapter 3/Bode OL uncontrolled.png Graphic file (type png)
+<use ./images/Chapter 3/Bode OL uncontrolled.png>
+Package pdftex.def Info: ./images/Chapter 3/Bode OL uncontrolled.png  used on input line 10.
+(pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
+<./images/Chapter 3/pzmap uncontrolled.png, id=315, 421.575pt x 316.18124pt>
+File: ./images/Chapter 3/pzmap uncontrolled.png Graphic file (type png)
+<use ./images/Chapter 3/pzmap uncontrolled.png>
+Package pdftex.def Info: ./images/Chapter 3/pzmap uncontrolled.png  used on input line 14.
+(pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
+[13
 
-]
+ <./images/Chapter 3/Bode OL uncontrolled.png (PNG copy)>]
+<./images/Chapter 3/Bode OL controlled.png, id=321, 421.575pt x 316.18124pt>
+File: ./images/Chapter 3/Bode OL controlled.png Graphic file (type png)
+<use ./images/Chapter 3/Bode OL controlled.png>
+Package pdftex.def Info: ./images/Chapter 3/Bode OL controlled.png  used on input line 29.
+(pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
+ [14 <./images/Chapter 3/pzmap uncontrolled.png (PNG copy)>]
+<./images/Chapter 3/pzmap controlled.png, id=329, 421.575pt x 316.18124pt>
+File: ./images/Chapter 3/pzmap controlled.png Graphic file (type png)
+<use ./images/Chapter 3/pzmap controlled.png>
+Package pdftex.def Info: ./images/Chapter 3/pzmap controlled.png  used on input line 31.
+(pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
+<./images/Chapter 3/Control scheme.png, id=330, 650.43pt x 213.04594pt>
+File: ./images/Chapter 3/Control scheme.png Graphic file (type png)
+<use ./images/Chapter 3/Control scheme.png>
+Package pdftex.def Info: ./images/Chapter 3/Control scheme.png  used on input line 35.
+(pdftex.def)             Requested size: 324.36143pt x 106.24638pt.
+ [15 <./images/Chapter 3/Bode OL controlled.png (PNG copy)> <./images/Chapter 3/pzmap controlled.png (PNG copy)> <./images/Chapter 3/Control scheme.png>]
+<./images/Chapter 3/Bode CL.png, id=339, 421.575pt x 316.18124pt>
+File: ./images/Chapter 3/Bode CL.png Graphic file (type png)
+<use ./images/Chapter 3/Bode CL.png>
+Package pdftex.def Info: ./images/Chapter 3/Bode CL.png  used on input line 48.
+(pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
+) (./chapters/004_position_control_tip.tex [16 <./images/Chapter 3/Bode CL.png (PNG copy)>]
 Chapter 4.
-) (./chapters/005_position_control_tip_uncertanties.tex [13
+<./images/Chapter 4/Observers/SE.png, id=345, 435.87843pt x 216.81pt>
+File: ./images/Chapter 4/Observers/SE.png Graphic file (type png)
+<use ./images/Chapter 4/Observers/SE.png>
+Package pdftex.def Info: ./images/Chapter 4/Observers/SE.png  used on input line 42.
+(pdftex.def)             Requested size: 324.36143pt x 161.34003pt.
+[17
 
-]
+] [18 <./images/Chapter 4/Observers/SE.png>]
+<./images/Chapter 4/LQR/Scheme.png, id=357, 684.30656pt x 208.52907pt>
+File: ./images/Chapter 4/LQR/Scheme.png Graphic file (type png)
+<use ./images/Chapter 4/LQR/Scheme.png>
+Package pdftex.def Info: ./images/Chapter 4/LQR/Scheme.png  used on input line 89.
+(pdftex.def)             Requested size: 324.36143pt x 98.8455pt.
+
+Overfull \hbox (17.19057pt too wide) in paragraph at lines 109--125
+ []|  [] 
+ []
+
+) (./chapters/005_position_control_tip_uncertanties.tex [19 <./images/Chapter 4/LQR/Scheme.png>]
 Chapter 5.
-) (./chapters/conclusions.tex [14
+) (./chapters/conclusions.tex [20
 
 ])
 
-Package caption Warning: Unused \captionsetup[sub] on input line 37.
+Package caption Warning: Unused \captionsetup[sub] on input line 35.
 See the caption package documentation for explanation.
 
-[15
+[21
 
 ] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 21EB6E7A8F685FA89C628E56EC158F2A;2497.
+(rerunfilecheck)             Checksum: 9A8926F1C55018A0D8F50C77BFA282DE;5568.
  ) 
 Here is how much of TeX's memory you used:
- 40750 strings out of 478268
- 960178 string characters out of 5846347
- 1361469 words of memory out of 5000000
- 58159 multiletter control sequences out of 15000+600000
- 525488 words of font info for 106 fonts, out of 8000000 for 9000
+ 40945 strings out of 478268
+ 965485 string characters out of 5846347
+ 1363193 words of memory out of 5000000
+ 58277 multiletter control sequences out of 15000+600000
+ 526339 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 114i,12n,117p,1042b,861s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on report.pdf (16 pages, 1513785 bytes).
+ 114i,12n,117p,1042b,988s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
+Output written on report.pdf (22 pages, 1861631 bytes).
 PDF statistics:
- 281 PDF objects out of 1000 (max. 8388607)
- 210 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
- 34983 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 455 PDF objects out of 1000 (max. 8388607)
+ 364 compressed objects within 4 object streams
+ 84 named destinations out of 1000 (max. 500000)
+ 35212 words of extra memory for PDF output out of 35830 (max. 10000000)
 
