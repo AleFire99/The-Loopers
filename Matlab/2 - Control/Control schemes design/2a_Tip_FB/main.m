@@ -3,8 +3,7 @@ clear all
 clc
 
 addpath("./Implementations/")
-addpath("./Simulation_Signals/")
-addpath("./Validation/")
+addpath("./Arco's Longsim/Simulation_Signals")
 
 sysest = load("sysest09c_trick.mat").sysest;
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
