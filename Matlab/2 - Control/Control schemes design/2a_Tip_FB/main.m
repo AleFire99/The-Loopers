@@ -46,7 +46,7 @@ v_a_max = 15;
 
 %% Alp Design
 
-%[controller,K_comp] = Alps_design(sysest_ct, zeta, wn);
+[controller,K_comp] = Alps_design(sysest_ct, zeta, wn);
 
 %% Comparison Part
 
