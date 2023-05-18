@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.30)  18 MAY 2023 15:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.30)  18 MAY 2023 23:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -838,7 +838,7 @@ Package pgfplots notification 'compat/show suggested version=true': you might be
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<images/Template/logo_poli_bianco.pdf, id=151, 56.09688pt x 56.08853pt>
+<images/Template/logo_poli_bianco.pdf, id=119, 56.09688pt x 56.08853pt>
 File: images/Template/logo_poli_bianco.pdf Graphic file (type pdf)
 <use images/Template/logo_poli_bianco.pdf>
 Package pdftex.def Info: images/Template/logo_poli_bianco.pdf  used on input line 91.
@@ -869,21 +869,21 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 4.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.43 ... the Tip with Uncertanties}{20}{chapter.5}
-                                                  % [1
-
-
-])
+)
 \tf@toc=\write5
 \openout5 = `report.toc'.
 
- (./chapters/001_problem_description.tex [2]
+ (./chapters/001_problem_description.tex
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1 \chapter
+            {Problem Description} [1
+
+
+]
 Chapter 1.
-<./images/Chapter 1/system.png, id=227, 841.1425pt x 576.1525pt>
+<./images/Chapter 1/system.png, id=182, 841.1425pt x 576.1525pt>
 File: ./images/Chapter 1/system.png Graphic file (type png)
 <use ./images/Chapter 1/system.png>
 Package pdftex.def Info: ./images/Chapter 1/system.png  used on input line 10.
@@ -892,147 +892,165 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 13
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<./images/Chapter 1/Motor data.png, id=229, 661.72218pt x 543.53062pt>
+<./images/Chapter 1/Motor data.png, id=184, 661.72218pt x 543.53062pt>
 File: ./images/Chapter 1/Motor data.png Graphic file (type png)
 <use ./images/Chapter 1/Motor data.png>
 Package pdftex.def Info: ./images/Chapter 1/Motor data.png  used on input line 22.
 (pdftex.def)             Requested size: 324.36143pt x 266.42355pt.
- [3
+ [2
 
  <./images/Chapter 1/system.png>]
-<./images/Chapter 1/Flexible joint data.png, id=237, 675.27281pt x 330.48468pt>
+<./images/Chapter 1/Flexible joint data.png, id=192, 675.27281pt x 330.48468pt>
 File: ./images/Chapter 1/Flexible joint data.png Graphic file (type png)
 <use ./images/Chapter 1/Flexible joint data.png>
 Package pdftex.def Info: ./images/Chapter 1/Flexible joint data.png  used on input line 24.
 (pdftex.def)             Requested size: 324.36143pt x 158.74683pt.
-) (./chapters/002_model_identification.tex [4 <./images/Chapter 1/Motor data.png> <./images/Chapter 1/Flexible joint data.png>]
+) (./chapters/002_model_identification.tex [3 <./images/Chapter 1/Motor data.png> <./images/Chapter 1/Flexible joint data.png>]
 Chapter 2.
-<./images/Chapter 2/scheme.png, id=249, 488.82625pt x 96.36pt>
+<./images/Chapter 2/scheme.png, id=205, 488.82625pt x 96.36pt>
 File: ./images/Chapter 2/scheme.png Graphic file (type png)
 <use ./images/Chapter 2/scheme.png>
 Package pdftex.def Info: ./images/Chapter 2/scheme.png  used on input line 6.
 (pdftex.def)             Requested size: 324.36143pt x 63.94037pt.
-<./images/Chapter 2/beam_scheme_model.png, id=250, 634.37pt x 533.995pt>
+<./images/Chapter 2/beam_scheme_model.png, id=206, 634.37pt x 533.995pt>
 File: ./images/Chapter 2/beam_scheme_model.png Graphic file (type png)
 <use ./images/Chapter 2/beam_scheme_model.png>
 Package pdftex.def Info: ./images/Chapter 2/beam_scheme_model.png  used on input line 43.
 (pdftex.def)             Requested size: 324.36143pt x 273.04272pt.
-[5
+[4
 
- <./images/Chapter 2/scheme.png>] [6 <./images/Chapter 2/beam_scheme_model.png>]
-<./images/Chapter 2/non_linear_spring.jpg, id=270, 1371.1225pt x 705.63625pt>
+ <./images/Chapter 2/scheme.png>] [5 <./images/Chapter 2/beam_scheme_model.png>]
+<./images/Chapter 2/non_linear_spring.jpg, id=225, 1371.1225pt x 705.63625pt>
 File: ./images/Chapter 2/non_linear_spring.jpg Graphic file (type jpg)
 <use ./images/Chapter 2/non_linear_spring.jpg>
 Package pdftex.def Info: ./images/Chapter 2/non_linear_spring.jpg  used on input line 102.
 (pdftex.def)             Requested size: 324.36143pt x 166.92278pt.
-<./images/Chapter 2/K_s_linvs_k_s_NL.png, id=271, 475.7775pt x 377.41pt>
+<./images/Chapter 2/K_s_linvs_k_s_NL.png, id=226, 508.90125pt x 403.5075pt>
 File: ./images/Chapter 2/K_s_linvs_k_s_NL.png Graphic file (type png)
 <use ./images/Chapter 2/K_s_linvs_k_s_NL.png>
 Package pdftex.def Info: ./images/Chapter 2/K_s_linvs_k_s_NL.png  used on input line 124.
-(pdftex.def)             Requested size: 324.36143pt x 257.30917pt.
- [7 <./images/Chapter 2/non_linear_spring.jpg>]
-<./images/Chapter 2/K_s_linvs_k_s_NL_err.png, id=279, 485.815pt x 381.425pt>
+(pdftex.def)             Requested size: 324.36143pt x 257.19722pt.
+ [6 <./images/Chapter 2/non_linear_spring.jpg>]
+<./images/Chapter 2/K_s_linvs_k_s_NL_err.png, id=235, 508.90125pt x 403.5075pt>
 File: ./images/Chapter 2/K_s_linvs_k_s_NL_err.png Graphic file (type png)
 <use ./images/Chapter 2/K_s_linvs_k_s_NL_err.png>
 Package pdftex.def Info: ./images/Chapter 2/K_s_linvs_k_s_NL_err.png  used on input line 129.
-(pdftex.def)             Requested size: 324.36143pt x 254.66295pt.
- [8 <./images/Chapter 2/K_s_linvs_k_s_NL.png> <./images/Chapter 2/K_s_linvs_k_s_NL_err.png>] [9]
-<./images/Chapter 2/fourier_stiff_analysis.png, id=295, 525.965pt x 493.845pt>
+(pdftex.def)             Requested size: 324.36143pt x 257.19722pt.
+ [7 <./images/Chapter 2/K_s_linvs_k_s_NL.png> <./images/Chapter 2/K_s_linvs_k_s_NL_err.png>] [8]
+<./images/Chapter 2/fourier_stiff_analysis.png, id=251, 525.965pt x 493.845pt>
 File: ./images/Chapter 2/fourier_stiff_analysis.png Graphic file (type png)
 <use ./images/Chapter 2/fourier_stiff_analysis.png>
 Package pdftex.def Info: ./images/Chapter 2/fourier_stiff_analysis.png  used on input line 247.
 (pdftex.def)             Requested size: 216.24095pt x 203.03537pt.
- [10]
-<./images/inertia_computation.png, id=300, 498.86375pt x 308.15125pt>
+ [9]
+<./images/inertia_computation.png, id=256, 498.86375pt x 308.15125pt>
 File: ./images/inertia_computation.png Graphic file (type png)
 <use ./images/inertia_computation.png>
 Package pdftex.def Info: ./images/inertia_computation.png  used on input line 254.
 (pdftex.def)             Requested size: 302.73602pt x 187.00806pt.
- [11 <./images/Chapter 2/fourier_stiff_analysis.png> <./images/inertia_computation.png>]) (./chapters/003_position_control_base.tex [12]
+ [10 <./images/Chapter 2/fourier_stiff_analysis.png> <./images/inertia_computation.png>]) (./chapters/003_position_control_base.tex [11]
 Chapter 3.
-<./images/Chapter 3/Bode OL uncontrolled.png, id=314, 421.575pt x 316.18124pt>
+<./images/Chapter 3/Bode OL uncontrolled.png, id=269, 421.575pt x 316.18124pt>
 File: ./images/Chapter 3/Bode OL uncontrolled.png Graphic file (type png)
 <use ./images/Chapter 3/Bode OL uncontrolled.png>
 Package pdftex.def Info: ./images/Chapter 3/Bode OL uncontrolled.png  used on input line 10.
 (pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
-<./images/Chapter 3/pzmap uncontrolled.png, id=315, 421.575pt x 316.18124pt>
+<./images/Chapter 3/pzmap uncontrolled.png, id=270, 421.575pt x 316.18124pt>
 File: ./images/Chapter 3/pzmap uncontrolled.png Graphic file (type png)
 <use ./images/Chapter 3/pzmap uncontrolled.png>
 Package pdftex.def Info: ./images/Chapter 3/pzmap uncontrolled.png  used on input line 14.
 (pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
-[13
+[12
 
  <./images/Chapter 3/Bode OL uncontrolled.png (PNG copy)>]
-<./images/Chapter 3/Bode OL controlled.png, id=321, 421.575pt x 316.18124pt>
+<./images/Chapter 3/Bode OL controlled.png, id=277, 421.575pt x 316.18124pt>
 File: ./images/Chapter 3/Bode OL controlled.png Graphic file (type png)
 <use ./images/Chapter 3/Bode OL controlled.png>
 Package pdftex.def Info: ./images/Chapter 3/Bode OL controlled.png  used on input line 29.
 (pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
- [14 <./images/Chapter 3/pzmap uncontrolled.png (PNG copy)>]
-<./images/Chapter 3/pzmap controlled.png, id=329, 421.575pt x 316.18124pt>
+ [13 <./images/Chapter 3/pzmap uncontrolled.png (PNG copy)>]
+<./images/Chapter 3/pzmap controlled.png, id=284, 421.575pt x 316.18124pt>
 File: ./images/Chapter 3/pzmap controlled.png Graphic file (type png)
 <use ./images/Chapter 3/pzmap controlled.png>
 Package pdftex.def Info: ./images/Chapter 3/pzmap controlled.png  used on input line 31.
 (pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
-<./images/Chapter 3/Control scheme.png, id=330, 650.43pt x 213.04594pt>
+<./images/Chapter 3/Control scheme.png, id=285, 650.43pt x 213.04594pt>
 File: ./images/Chapter 3/Control scheme.png Graphic file (type png)
 <use ./images/Chapter 3/Control scheme.png>
 Package pdftex.def Info: ./images/Chapter 3/Control scheme.png  used on input line 35.
 (pdftex.def)             Requested size: 324.36143pt x 106.24638pt.
- [15 <./images/Chapter 3/Bode OL controlled.png (PNG copy)> <./images/Chapter 3/pzmap controlled.png (PNG copy)> <./images/Chapter 3/Control scheme.png>]
-<./images/Chapter 3/Bode CL.png, id=339, 421.575pt x 316.18124pt>
+ [14 <./images/Chapter 3/Bode OL controlled.png (PNG copy)> <./images/Chapter 3/pzmap controlled.png (PNG copy)> <./images/Chapter 3/Control scheme.png>]
+<./images/Chapter 3/Bode CL.png, id=294, 421.575pt x 316.18124pt>
 File: ./images/Chapter 3/Bode CL.png Graphic file (type png)
 <use ./images/Chapter 3/Bode CL.png>
 Package pdftex.def Info: ./images/Chapter 3/Bode CL.png  used on input line 48.
 (pdftex.def)             Requested size: 324.36143pt x 243.27696pt.
-) (./chapters/004_position_control_tip.tex [16 <./images/Chapter 3/Bode CL.png (PNG copy)>]
+) (./chapters/004_position_control_tip.tex [15 <./images/Chapter 3/Bode CL.png (PNG copy)>]
 Chapter 4.
-<./images/Chapter 4/Observers/SE.png, id=345, 435.87843pt x 216.81pt>
+<./images/Chapter 4/Observers/SE.png, id=300, 435.87843pt x 216.81pt>
 File: ./images/Chapter 4/Observers/SE.png Graphic file (type png)
 <use ./images/Chapter 4/Observers/SE.png>
-Package pdftex.def Info: ./images/Chapter 4/Observers/SE.png  used on input line 42.
+Package pdftex.def Info: ./images/Chapter 4/Observers/SE.png  used on input line 45.
 (pdftex.def)             Requested size: 324.36143pt x 161.34003pt.
-[17
+[16
 
-] [18 <./images/Chapter 4/Observers/SE.png>]
-<./images/Chapter 4/LQR/Scheme.png, id=357, 684.30656pt x 208.52907pt>
+]
+<./images/Chapter 4/Observers/StateObserver.png, id=305, 945.5325pt x 420.57124pt>
+File: ./images/Chapter 4/Observers/StateObserver.png Graphic file (type png)
+<use ./images/Chapter 4/Observers/StateObserver.png>
+Package pdftex.def Info: ./images/Chapter 4/Observers/StateObserver.png  used on input line 61.
+(pdftex.def)             Requested size: 324.36143pt x 144.2758pt.
+ [17 <./images/Chapter 4/Observers/SE.png> <./images/Chapter 4/Observers/StateObserver.png>]
+<./images/Chapter 4/Observers/KalmanFilter.png, id=315, 865.2325pt x 425.59pt>
+File: ./images/Chapter 4/Observers/KalmanFilter.png Graphic file (type png)
+<use ./images/Chapter 4/Observers/KalmanFilter.png>
+Package pdftex.def Info: ./images/Chapter 4/Observers/KalmanFilter.png  used on input line 88.
+(pdftex.def)             Requested size: 324.36143pt x 159.5439pt.
+ [18 <./images/Chapter 4/Observers/KalmanFilter.png>]
+<./images/Chapter 4/LQR/Scheme.png, id=323, 684.30656pt x 208.52907pt>
 File: ./images/Chapter 4/LQR/Scheme.png Graphic file (type png)
 <use ./images/Chapter 4/LQR/Scheme.png>
-Package pdftex.def Info: ./images/Chapter 4/LQR/Scheme.png  used on input line 89.
+Package pdftex.def Info: ./images/Chapter 4/LQR/Scheme.png  used on input line 125.
 (pdftex.def)             Requested size: 324.36143pt x 98.8455pt.
 
-Overfull \hbox (17.19057pt too wide) in paragraph at lines 109--125
+Overfull \hbox (17.19057pt too wide) in paragraph at lines 145--161
  []|  [] 
  []
 
-) (./chapters/005_position_control_tip_uncertanties.tex [19 <./images/Chapter 4/LQR/Scheme.png>]
+[19 <./images/Chapter 4/LQR/Scheme.png>]
+<./images/Chapter 4/LQR/LQGR.png, id=331, 588.1975pt x 270.00874pt>
+File: ./images/Chapter 4/LQR/LQGR.png Graphic file (type png)
+<use ./images/Chapter 4/LQR/LQGR.png>
+Package pdftex.def Info: ./images/Chapter 4/LQR/LQGR.png  used on input line 175.
+(pdftex.def)             Requested size: 324.36143pt x 148.89665pt.
+) (./chapters/005_position_control_tip_uncertanties.tex [20 <./images/Chapter 4/LQR/LQGR.png>]
 Chapter 5.
-) (./chapters/conclusions.tex [20
+) (./chapters/conclusions.tex [21
 
 ])
 
 Package caption Warning: Unused \captionsetup[sub] on input line 35.
 See the caption package documentation for explanation.
 
-[21
+[22
 
 ] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 9A8926F1C55018A0D8F50C77BFA282DE;5568.
+(rerunfilecheck)             Checksum: CF6C91A92B0A3C4BC402155C0A940173;4492.
  ) 
 Here is how much of TeX's memory you used:
- 40945 strings out of 478268
- 965485 string characters out of 5846347
+ 40963 strings out of 478268
+ 966457 string characters out of 5846347
  1363193 words of memory out of 5000000
- 58277 multiletter control sequences out of 15000+600000
+ 58295 multiletter control sequences out of 15000+600000
  526339 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 114i,12n,117p,1042b,988s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on report.pdf (22 pages, 1861631 bytes).
+ 114i,12n,117p,1042b,861s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
+Output written on report.pdf (23 pages, 2039559 bytes).
 PDF statistics:
- 455 PDF objects out of 1000 (max. 8388607)
- 364 compressed objects within 4 object streams
- 84 named destinations out of 1000 (max. 500000)
- 35212 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 428 PDF objects out of 1000 (max. 8388607)
+ 330 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 35163 words of extra memory for PDF output out of 35830 (max. 10000000)
 

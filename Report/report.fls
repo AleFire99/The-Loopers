@@ -1236,7 +1236,6 @@ INPUT ./chapters/001_problem_description.tex
 INPUT chapters/001_problem_description.tex
 INPUT ./chapters/001_problem_description.tex
 INPUT chapters/001_problem_description.tex
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
 INPUT ./images/Chapter 1/system.png
 INPUT ./images/Chapter 1/system.png
 INPUT ./images/Chapter 1/system.png
@@ -1261,6 +1260,7 @@ INPUT ./chapters/002_model_identification.tex
 INPUT chapters/002_model_identification.tex
 INPUT ./chapters/002_model_identification.tex
 INPUT chapters/002_model_identification.tex
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
 INPUT ./images/Chapter 2/scheme.png
 INPUT ./images/Chapter 2/scheme.png
 INPUT ./images/Chapter 2/scheme.png
@@ -1343,11 +1343,25 @@ INPUT ./images/Chapter 4/Observers/SE.png
 INPUT ./images/Chapter 4/Observers/SE.png
 INPUT ./images/Chapter 4/Observers/SE.png
 INPUT ./images/Chapter 4/Observers/SE.png
+INPUT ./images/Chapter 4/Observers/StateObserver.png
+INPUT ./images/Chapter 4/Observers/StateObserver.png
+INPUT ./images/Chapter 4/Observers/StateObserver.png
+INPUT ./images/Chapter 4/Observers/StateObserver.png
+INPUT ./images/Chapter 4/Observers/StateObserver.png
+INPUT ./images/Chapter 4/Observers/KalmanFilter.png
+INPUT ./images/Chapter 4/Observers/KalmanFilter.png
+INPUT ./images/Chapter 4/Observers/KalmanFilter.png
+INPUT ./images/Chapter 4/Observers/KalmanFilter.png
 INPUT ./images/Chapter 4/LQR/Scheme.png
 INPUT ./images/Chapter 4/LQR/Scheme.png
 INPUT ./images/Chapter 4/LQR/Scheme.png
 INPUT ./images/Chapter 4/LQR/Scheme.png
 INPUT ./images/Chapter 4/LQR/Scheme.png
+INPUT ./images/Chapter 4/LQR/LQGR.png
+INPUT ./images/Chapter 4/LQR/LQGR.png
+INPUT ./images/Chapter 4/LQR/LQGR.png
+INPUT ./images/Chapter 4/LQR/LQGR.png
+INPUT ./images/Chapter 4/LQR/LQGR.png
 INPUT ./chapters/005_position_control_tip_uncertanties.tex
 INPUT chapters/005_position_control_tip_uncertanties.tex
 INPUT ./chapters/005_position_control_tip_uncertanties.tex
@@ -1366,8 +1380,8 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb
