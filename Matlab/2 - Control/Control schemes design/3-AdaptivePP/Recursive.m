@@ -11,7 +11,7 @@ sysest_ct = sysest_cont;
 f=3.846;
 wn = 2*pi*f;
 zeta= 0.7;
-v_a_max = 10;
+v_a_max = 5;
 
 % Pole placement param
 

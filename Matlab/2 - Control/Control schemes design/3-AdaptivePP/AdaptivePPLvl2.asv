@@ -138,13 +138,10 @@ wn = damp(new_sysc);
 if wn(3)>25.6
     wn(3) = 25.6;
 end
-omega= wn(3)*zeta;
 if zeta == 1
-    new_pole = [-omega;-(omega+1);-(omega+2);-(omega+3)];
+    new_pole = [-wn(3)*zeta;-(wn(3)*zeta+1);-(wn(3)*zeta+2);-(wn(3)*zeta+3)];
 else
-    j = sqrt(-1);
-    wd = wn(3)*sqrt(1-zeta*zeta);
-    new_pole = [-omega+wd*j;-omega-wd*j;-(omega+2);-(omega+3)];
+    new_pole = [-wn(3)*zeta;-(wn(3)*zeta+1);-(wn(3)*zeta+2);-(wn(3)*zeta+3)];
 end
 K_pp = place(A, B, new_pole);
 sys_controlled_pp = ss(A - B * K_pp,B,C,D);
