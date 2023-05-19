@@ -51,7 +51,7 @@ sysest_ct.C = [1 0 0 0; 0 0 1 0];
 
 %% Uncertian System Smaller JL (faster system with higer resonance)
 
-alpha1 = 0.1;
+alpha1 = 10;
 
 JL = alpha1* JL;
 
@@ -84,7 +84,7 @@ sysest_ct_uncertanties_JLH.C = [1 0 0 0; 0 0 1 0];
 
 JL = JL/ alpha2;  % Back to original Value
 
-%% To create the long reference's signal for the simulation
+%% To create the long reference"s signal for the simulation
 %Longsim_Signal;                 %All possible references
  Longsim_Signal_Step_Ramp;       %Only ramp and step references
 %Longsim_Signal_Sinewaves;       %Only sinewaves references
@@ -142,11 +142,11 @@ zeta= 0.7;
 
 v_a_max = 15;
 
-%% Arco's LQR
+%% Arco"s LQR
 
-tau = 15;           % Maximum value related to the satuaration of the control variable limit
+%tau = 15;           % Maximum value related to the satuaration of the control variable limit
 
-%tau = 0.5;            %reduction of the aggression responce
+tau = 1;            %reduction of the aggression responce
 
 [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau);
 
@@ -166,7 +166,7 @@ L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
 
 figure;
 bode(G_tip_ct,G_tip_ct_uncertanties_JLL,G_tip_ct_uncertanties_JLH,{10e-2,10e6});
-legend('Estimated Open Loop', 'Uncertain Open Loop JL = 0.1*JL', 'Uncertain Open Loop JL = 10*JL');
+legend("Estimated Open Loop", "Uncertain Open Loop JL = " + alpha1 + "*JL", "Uncertain Open Loop JL = " + alpha2 + "*JL");
 grid;
 
 
@@ -175,13 +175,13 @@ hold on;
 step(T_CL);
 step(T_CL_uncertanties_JLL);
 step(T_CL_uncertanties_JLH);
-legend('Estimated Closed Loop', 'Uncertain Closed Loop JL = 0.1*JL', 'Uncertain Closed Loop JL = 10*JL');
+legend("Estimated Closed Loop", "Uncertain Closed Loop JL = " + alpha1 + "*JL", "Uncertain Closed Loop JL = " + alpha2 + "*JL");
 grid;
 hold off;
 
 figure;
 bode(T_CL,T_CL_uncertanties_JLL,T_CL_uncertanties_JLH,{10e-2,10e6});
-legend('Estimated Closed Loop', 'Uncertain Closed Loop JL = 0.1*JL', 'Uncertain Closed Loop JL = 10*JL');
+legend("Estimated Closed Loop", "Uncertain Closed Loop JL = " + alpha1 + "*JL", "Uncertain Closed Loop JL = " + alpha2 + "*JL");
 grid;
 
 
@@ -228,7 +228,7 @@ sys_controlled_unc_JLH = ss(A_tilde_unc_JLH, B_tilde_unc_JLH, C_tilde_unc_JLH,D_
 
 figure;
 bode(sysest_ct_tip(1),sys_controlled(1), sys_controlled_unc_JLL(1), sys_controlled_unc_JLH(1),{10e-2,10e6});
-legend('Uncontrolled Estimated Closed Loop','Enlarged Estimated Closed Loop', 'Enlarged Uncertain Closed Loop JL = 0.1*JL', 'Enlarged Uncertain Closed Loop JL = 10*JL');
+legend("Uncontrolled Estimated Closed Loop","Enlarged Estimated Closed Loop", "Enlarged Uncertain Closed Loop JL = " + alpha1 + "*JL", "Enlarged Uncertain Closed Loop JL = " + alpha2 + "*JL");
 grid;
 
 figure;
@@ -239,12 +239,12 @@ figure;
 margin(sys_controlled_unc_JLH(1));
 
 figure;
-pzmap(sys_controlled(1),'g',sys_controlled_unc_JLL(1),'r',sys_controlled_unc_JLH(1),'b');
-grid; legend('Enlarged Estimated Closed Loop', 'Enlarged Uncertain Closed Loop JL = 0.1*JL', 'Enlarged Uncertain Closed Loop JL = 10*JL');
+pzmap(sys_controlled(1),"g",sys_controlled_unc_JLL(1),"r",sys_controlled_unc_JLH(1),"b");
+grid; legend("Enlarged Estimated Closed Loop", "Enlarged Uncertain Closed Loop JL = " + alpha1 + "*JL", "Enlarged Uncertain Closed Loop JL = " + alpha2 + "*JL");
 
 figure;
-nyqplot(sys_controlled(1),'g',sys_controlled_unc_JLL(1),'r',sys_controlled_unc_JLH(1),'b');
-grid; legend('Enlarged Estimated Closed Loop', 'Enlarged Uncertain Closed Loop JL = 0.1*JL', 'Enlarged Uncertain Closed Loop JL = 10*JL');
+nyqplot(sys_controlled(1),"g",sys_controlled_unc_JLL(1),"r",sys_controlled_unc_JLH(1),"b");
+grid; legend("Enlarged Estimated Closed Loop", "Enlarged Uncertain Closed Loop JL = " + alpha1 + "*JL", "Enlarged Uncertain Closed Loop JL = " + alpha2 + "*JL");
 
 
 L_poles_sys_controlled = pole(sys_controlled(1))
