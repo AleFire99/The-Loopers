@@ -54,11 +54,17 @@ zeta= 0.7;
 
 v_a_max = 15;
 
+%% Observer
+
+obs_poles = [-23 -25 -27 -29]*10;  
+
+L_obs = place(sysest_ct_tip.A',sysest_ct_tip.C', obs_poles)'; 
+
+
 %% Control with Pole Placement in Continous Time
 %Definition of the new poles
-
-%pp_poles = [-23 -25 -27 -29];                  %Arco                         
-pp_poles = [-23 -25 -27 -29];                  %JC   
+                     
+pp_poles = [-23 -25 -27 -29];                  %JC/Arco
 
 [sys_controlled_pp, K_pp,K_p] = JC_PolePlacement(sysest_ct,pp_poles);
 
@@ -78,7 +84,15 @@ pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new
 
 [K_lqr] = Fire_LQRegulator(sysest_ct);
 
+%% Fire's LQR with integrator and FeedForward
+
+tau = 10;    %Rate of convergence, real part of CL eigs smaller than tau
+
+[K_lqrFF_x, K_lqrFF_eta] = Fire_LQRFF(sysest_ct, tau);
+
 %% Arco's LQR
+
+omega_c = 15;
 
 [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, omega_c);
 

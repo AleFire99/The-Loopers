@@ -1,18 +1,21 @@
+sysest = load("sysest09c_trick.mat").sysest;
+
+sysest_ct = d2c(sysest);
+
+v_a_max = 10;
+
 
 %% Observer implementation  
 
-%obs_poles = 10*pp_poles;            %Arco
-obs_poles = 2*pp_poles;            %Jc
+obs_poles = 10*pp_poles;            %Arco
 
-L_obs = StateObserver(sysest_ct,obs_poles);
+L_obs = place(sysest_ct_tip.A',sysest_ct_tip.C', obs_poles)'; 
 
 %% Kalman Filter
 
-Q_KF = eye(4);     %Arco
-R_KF = eye(1);
+Q_KF = diag([0.0015, 0.0653, 0.0002, 0.192]);     %Alp/Arco
 
-%Q_KF = eye(4);     %Alp
-%R_KF = eye(1)*10;
+R_KF = eye(1)*1e-8;
 
 
 L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
