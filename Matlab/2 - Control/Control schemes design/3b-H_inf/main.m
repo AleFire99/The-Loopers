@@ -1,30 +1,32 @@
 % H infinity control (mu-control) for robustness
 
-clear all
+clear
 close all
 clc
 
 %% System model
 % Model parameters
 load('sysest09c_trick.mat')   
+sysfake = load("sysfake.mat").sysfake;
 
 sysest_ct = d2c(sysest);
+sysfake_ct = d2c(sysfake);
 
 v_a_max = 10;       %Maximum voltage                
 Ts  = 0.002;        %Sampling time
-% System matrices:
-[A,B,C,D]       =   ssdata(c2d((d2c(sysest)*1),Ts));                  % Model matrices
 
 %% No weights design
 
-A_p = A;
-B_p = [B B];
-C_p = [C; C];
-D_p = zeros(4,2); D_p(1,1) = -1;
+P = sysest_ct;
+P.u = "u";
+P.y = ["theta","alpha"];
 
-P = ss(A_p,B_p,C_p,D_p);
+sum_2 = sumblk("f = theta + alpha");
+sum_1 = sumblk("e = r - f");
+
+P_aug = connect(P, sum_1, sum_2, ["r","u"], ["e", "theta","alpha"]);
 
 nmeas = 2;      %Number of y
 ncont = 1;      %Number of u
 
-[K, CL, gamma] = hinfsyn(P,nmeas,ncont);
+[K, CL, gamma] = hinfsyn(P_aug,nmeas,ncont);

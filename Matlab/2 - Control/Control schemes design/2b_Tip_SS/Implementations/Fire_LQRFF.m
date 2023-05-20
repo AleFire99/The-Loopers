@@ -1,6 +1,6 @@
 function [K_lqrFF_x, K_lqrFF_eta] = Fire_LQRFF(sysest_ct, tau)
 
-Q_lqr = diag([10 1 1000 1 1000]);     %initial values
+Q_lqr = diag([1000 1 100 1 10]);     %initial values
 R_lqr = 1;
 
 A_tilde = [sysest_ct.A,zeros(4,1);

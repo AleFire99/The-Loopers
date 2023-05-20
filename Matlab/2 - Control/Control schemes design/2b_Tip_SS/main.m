@@ -86,7 +86,7 @@ pp_pole_en = [-23 -25 -27 -29 -31];                       %Definition of the new
 
 %% Fire's LQR with integrator and FeedForward
 
-tau = 10;    %Rate of convergence, real part of CL eigs smaller than tau
+tau = 5;    %Rate of convergence, real part of CL eigs smaller than tau
 
 [K_lqrFF_x, K_lqrFF_eta] = Fire_LQRFF(sysest_ct, tau);
 
