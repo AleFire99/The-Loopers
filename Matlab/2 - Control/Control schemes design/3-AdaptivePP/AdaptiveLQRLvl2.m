@@ -30,8 +30,8 @@ function setup(block)
 
 
 % Register number of ports
-block.NumInputPorts  = 4;
-block.NumOutputPorts = 2;
+block.NumInputPorts  = 3;
+block.NumOutputPorts = 1;
 
 % Setup port properties to be inherited or dynamic
 block.SetPreCompInpPortInfoToDynamic;
@@ -41,7 +41,7 @@ block.SetPreCompOutPortInfoToDynamic;
 block.InputPort(1).Dimensions        = [4 4]; %Trans
 block.InputPort(2).Dimensions        = [1 7]; %Par1
 block.InputPort(3).Dimensions        = [1 5]; %Par2
-block.InputPort(4).Dimensions        = 1; %damping
+
 
 % block.InputPort(1).DatatypeID  = 'auto';  % double
 % block.InputPort(1).Complexity  = 'auto';
@@ -50,7 +50,7 @@ block.InputPort(4).Dimensions        = 1; %damping
 % % Override output port properties
 % %u
 block.OutputPort(1).Dimensions       = [1, 4]; %Kpp
-block.OutputPort(2).Dimensions       = 1; %K gain ref
+
 % block.OutputPort(1).DatatypeID  = 0; % double
 % block.OutputPort(1).Complexity  = 'Real';
 % %zt
@@ -112,7 +112,7 @@ function Outputs(block)
 Trans = block.InputPort(1).Data;
 Parameters1 = block.InputPort(2).Data;
 Parameters2 = block.InputPort(3).Data;
-zeta = block.InputPort(4).Data;
+
 
 Ts = 0.002;
 
@@ -134,21 +134,15 @@ B = round(new_sysc.B,5);
 C = round(new_sysc.C,5);
 D = round(new_sysc.D,5);
 new_sysc = ss(A,B,C,D);
-wn = damp(new_sysc);
-if wn(3)>25.6
-    wn(3) = 25.6;
-end
-if zeta == 1
-    new_pole = [-wn(3)*zeta;-(wn(3)*zeta+1);-(wn(3)*zeta+2);-(wn(3)*zeta+3)];
-else
-    new_pole = [-wn(3)*zeta;-(wn(3)*zeta+1);-(wn(3)*zeta+2);-(wn(3)*zeta+3)];
-end
-K_pp = place(A, B, new_pole);
-sys_controlled_pp = ss(A - B * K_pp,B,C,D);
-K_dc = dcgain(sys_controlled_pp);
-K_p = 1/K_dc(1);
-block.OutputPort(1).Data  = K_pp;
-block.OutputPort(2).Data  = K_p;
+
+
+Q = diag([100 1 1000 1]);     %initial values
+R = [1];
+K_lqr = lqr(new_sysc,Q,R);
+
+
+
+block.OutputPort(1).Data  = K_lqr;
 
 
 %end Outputs

@@ -37,9 +37,10 @@ K_lqr = lqr(sysest_cont,Q,R);
 %% Recursive part
 % before run simulink
 disc=tf(sysest);
+cont=tf(sysest_ct);
 param = [disc(1).Numerator{:}(3:end) -disc(1).Denominator{:}(2:end)];
 param2 = [disc(2).Numerator{:}(3:end) -disc(2).Denominator{:}(2:end)];
-
+param3 = [cont(1).Numerator{:}(2:end) -cont(2).Denominator{:}(2:end)];
 %% after run simulink
 tic
 obtained = out.Parameters.Data(end,:);
