@@ -32,13 +32,23 @@ pzmap(Gp);
 
 controller  = (s-poles(2))*(s-poles(3))*(s+6)^2/(s*(s+200)^3);      %Compensator scheme
 
-k = 7500;
+
+%% Find gain
+L_1 = Gp*controller;
+
+controller = controller/dcgain(s^2*L_1);
+
+L_2 = Gp*controller;
+
+dcgain(s^2*L_2);
+
+k = 32;
+
+%% Overall controller
 
 controller = controller*k
 
 L = Gp*controller;
-
-gain = dcgain(s^2*L)
 
 figure(3)
 margin(L);
