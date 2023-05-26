@@ -38,6 +38,8 @@ controller = controller*k
 
 L = Gp*controller;
 
+gain = dcgain(s^2*L)
+
 figure(3)
 margin(L);
 
