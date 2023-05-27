@@ -1,6 +1,6 @@
-function [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau)
+function [K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau, Q_lqr)
 
-Q_lqr = diag([1 1 1000 1 100]);     %initial values
+%Q_lqr = diag([1 1 1000 1 100]);     %initial values
 R_lqr = diag([1000]);
 
 A_tilde = [sysest_ct_tip.A,zeros(4,1);

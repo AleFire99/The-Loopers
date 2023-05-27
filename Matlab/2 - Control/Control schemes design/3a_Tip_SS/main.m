@@ -51,7 +51,7 @@ sysest_ct.C = [1 0 0 0; 0 0 1 0];
 
 %% Uncertian System Smaller JL (faster system with higer resonance)
 
-alpha1 = 0.1;
+alpha1 = 0.5;
 
 JL = alpha1* JL;
 
@@ -68,7 +68,7 @@ JL =  JL/alpha1;  % Back to original Value
 
 %% Uncertian System Smaller JL (slower system system with lower resonance)
 
-alpha2 = 10;
+alpha2 = 2;
 
 JL = alpha2* JL;
 
@@ -140,15 +140,24 @@ f=3.846;
 wn = 2*pi*f;
 zeta= 0.7;
 
-v_a_max = 15;
+v_a_max = 13;
 
 %% Arco's LQR
 
-tau = 15;           % Maximum value related to the satuaration of the control variable limit
+tau = 10;
 
-%tau = 0.5;            %reduction of the aggression responce
+Q_lqr = diag([1 1 1 1 1]);     %initial values
 
-[K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau);
+[K_lqr_x, K_lqr_eta] = Arco_LQRegulator(sysest_ct_tip, tau, Q_lqr);
+
+%% Observer implementation  
+
+pp_poles = [-23 -25 -27 -29];                  %JC/Arco
+
+obs_poles = 10*pp_poles;            %Arco
+%obs_poles = 2*pp_poles;            %Jc
+
+L_obs = StateObserver(sysest_ct,obs_poles);
 
 %% Kalman Filter
 
