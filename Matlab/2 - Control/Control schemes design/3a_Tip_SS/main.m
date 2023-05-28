@@ -39,14 +39,16 @@ Ks = JL*wn*wn; %invented
 
 %% Estimated System
 
-TaoCons = ng*nm*Kt*Kg/Rm;
-sysest_ct.A = [0 1 0 0;
-                            0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
-                            0 0 0 1;
-                            0 (TaoCons*Km*Kg+Beq)/Jeq -Ks*((Jeq+JL)/(JL*Jeq)) -BL*((Jeq+JL)/(JL*Jeq))];
- 
-sysest_ct.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
-sysest_ct.C = [1 0 0 0; 0 0 1 0];
+% Overwrite of the sys matrix for tests
+
+% TaoCons = ng*nm*Kt*Kg/Rm;
+% sysest_ct.A = [0 1 0 0;
+%                             0 -(TaoCons*Km*Kg+Beq)/Jeq Ks/Jeq BL/Jeq;
+%                             0 0 0 1;
+%                             0 (TaoCons*Km*Kg+Beq)/Jeq -Ks*((Jeq+JL)/(JL*Jeq)) -BL*((Jeq+JL)/(JL*Jeq))];
+%  
+% sysest_ct.B = [0; TaoCons/Jeq; 0; -TaoCons/Jeq];
+% sysest_ct.C = [1 0 0 0; 0 0 1 0];
 
 
 %% Uncertian System Smaller JL (faster system with higer resonance)
@@ -144,7 +146,7 @@ v_a_max = 13;
 
 %% Arco's LQR
 
-tau = 10;
+tau = 10;                       % Value to have a lighter control action
 
 Q_lqr = diag([1 1 1 1 1]);     %initial values
 
