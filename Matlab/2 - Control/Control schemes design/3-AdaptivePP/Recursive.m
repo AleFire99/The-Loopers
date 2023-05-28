@@ -27,7 +27,7 @@ Kr = 1/Kdc(1);
 
 %Observer implementation  
 
-L_obs = place(sysest_cont.A',sysest_cont.C',1.5*new_pole)'; 
+L_obs = place(sysest_cont.A',sysest_cont.C',2*new_pole)'; 
 
 % LQR
 Q = diag([1000 1 100 1]);     %initial values

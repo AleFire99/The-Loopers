@@ -51,4 +51,68 @@ Z=[Ac -G
 [U,S]=ordschur(U1,S1,'lhp');
 X=U(n+1:end,1:n)*U(1:n,1:n)^-1;
 inv(R)*Bc'*X
+%%
+A = sysest_cont.A;
+B = sysest_cont.B;
+C = sysest_cont.C;
+Lobs = [0 0 0 0; 0 0 0 0]';
 
+
+A = A';
+Ctemp = C';
+pp_poles = 2*new_pole*-1;
+
+a1 = pp_poles(1);
+a2 = pp_poles(2);
+a3 = pp_poles(3);
+a4 = pp_poles(4);
+
+p0 = a1*a2*a3*a4;
+p1 = a1*a2*a3+  a1*a2*a4+   a1*a3*a4+   a2*a3*a4;
+p2 = a1*a2+ a1*a3+ a1*a4+ a2*a3+ a2*a4+ a3*a4;
+p3 = a1+a2+a3+a4;
+p4 = 1;
+
+%poly(pp_poles)
+
+PA = p4*A^4+p3*A^3+ p2*A^2+ p1*A+ p0*eye(4);
+
+C = Ctemp(:,1);
+Mr2 = [C, A*C, A*A*C, A*A*A*C];
+Lobs(:,1) = ([0 0 0 1]*inv(Mr2)*PA)';
+
+C = [0;0;1;0]; 
+Mr3 = [C, A*C, A*A*C, A*A*A*C];
+Lobs(:,2) = ([0 0 0 1]*inv(Mr3)*PA)';
+
+MR = [Ctemp, A*Ctemp,A*A*Ctemp, A*A*A*Ctemp];
+
+L_together = ([0 0 0 0 0 0 1 0 ; 0 0 0 0 0 0 0 1]*(MR'*inv(MR*MR'))*PA)'
+L_seperated = Lobs
+Anew = A;
+[Bu,Bs,Bv] = svd(Ctemp);
+L2 = Bv(:,1:2) * L_together'
+
+place(A,Ctemp,pp_poles*-1)
+
+%%
+n = size(A, 1);
+m = size(B, 2);
+B=Ctemp;
+p_desired =2*new_pole;
+% Calculate the controllability matrix
+
+% Calculate the transformation matrix T
+[T, ~] = eig(A);
+
+% Transform the system to controller canonical form
+Ac = T * A * inv(T);
+Bc = T * B;
+
+
+
+% Calculate the feedback gain matrix
+Kc = place(Ac, Bc, p_desired);
+
+% Transform the feedback gain matrix back to the original coordinates
+K = abs(Kc * T)
