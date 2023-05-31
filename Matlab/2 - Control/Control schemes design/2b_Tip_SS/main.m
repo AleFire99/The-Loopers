@@ -105,7 +105,7 @@ L_obs = StateObserver(sysest_ct,obs_poles);
 
 %% Kalman Filter
 
-Q_KF = eye(4)*10e-5;     %Arco
+Q_KF = eye(4)*10e-5;     %Alp
 R_KF = eye(1)*10e-8;
 
 %Q_KF = eye(4);     %Alp
