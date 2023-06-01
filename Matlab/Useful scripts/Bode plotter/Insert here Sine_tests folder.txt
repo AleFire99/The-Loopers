@@ -1,2 +1,0 @@
-Run main script to get Bode plot from experimental data.
-Have in te same folder the model of the system (here sysest09c_trick) and the folder "Sine_tests".
