@@ -1,13 +1,45 @@
 close all
 clear all
 clc
-%%% NOTE: run this code first and then the main from State estimators
-%%% folder
-addpath("./Implementations/")
-addpath("./Arco's Longsim/Simulation_Signals")
 
-sysest = load("sysest09c_trick.mat").sysest;
+addpath("./Implementations/")
+addpath("./Simulation_Signals")
+
+%% Creation of the Estimated system in State Space
+
+A_sysest_dt = [     1,      0.002,      0,          0;
+                    0,      0.928,      1.162,      0.0017;
+                    0,      0,          1,          0.002;
+                    0,      0.0716,     -1.930,     0.9971];
+                
+B_sysest_dt = [     0;
+                    0.10661;
+                    0;
+                    -0.1066];
+                
+C_sysest_dt = [     1,      0,          0,          0;
+                    0,      0,          1,          0];
+                
+D_sysest_dt = [     0;
+                    0];
+                
+Ts = 0.002;
+
+sysest = ss(A_sysest_dt, B_sysest_dt, C_sysest_dt, D_sysest_dt, Ts);
+
+%% Extraction of Matrices  in continuos time
+
 sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
+
+%% Modification of the C matrix to have the tip position
+
+sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
+
+G_tip_cont = tf(sysest_ct_tip(1));
+
+%% Model Parameters coming from resonance measurements
+
+v_a_max = 13;
 
 %% Creation of Model with Uncertanties
 
@@ -88,7 +120,7 @@ JL = JL/ alpha2;  % Back to original Value
 
 %% To create the long reference's signal for the simulation
 %Longsim_Signal;                 %All possible references
- Longsim_Signal_Step_Ramp;       %Only ramp and step references
+%Longsim_Signal_Step_Ramp;       %Only ramp and step references
 %Longsim_Signal_Sinewaves;       %Only sinewaves references
 
 %% To get a comparison
@@ -135,15 +167,6 @@ T_CL_uncertanties_JLH = G_tip_ct_uncertanties_JLH/(1+G_tip_ct_uncertanties_JLH);
 L_poles_uncertanties_JLH = pole(T_CL_uncertanties_JLH)
 L_zeros_uncertanties_JLH = zero(T_CL_uncertanties_JLH)
  
-%% State space control
-% Model Parameters coming from resonance measurements
-
-f=3.846;
-wn = 2*pi*f;
-zeta= 0.7;
-
-v_a_max = 13;
-
 %% Arco's LQR
 
 tau = 10;                       % Value to have a lighter control action
@@ -165,9 +188,6 @@ L_obs = StateObserver(sysest_ct,obs_poles);
 
 Q_KF = eye(4)*10e-5;     %Arco
 R_KF = eye(1)*10e-8;
-
-%Q_KF = eye(4);     %Alp
-%R_KF = eye(1)*10;
 
 L_KF = KalmanFilter(sysest_ct, Q_KF, R_KF);
 
