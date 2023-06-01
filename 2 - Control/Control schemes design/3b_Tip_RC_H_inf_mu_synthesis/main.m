@@ -4,17 +4,46 @@ clear
 close all
 clc
 
+%% Creation of the Estimated system in State Space
+
+A_sysest_dt = [     1,      0.002,      0,          0;
+                    0,      0.928,      1.162,      0.0017;
+                    0,      0,          1,          0.002;
+                    0,      0.0716,     -1.930,     0.9971];
+                
+B_sysest_dt = [     0;
+                    0.10661;
+                    0;
+                    -0.1066];
+                
+C_sysest_dt = [     1,      0,          0,          0;
+                    0,      0,          1,          0];
+                
+D_sysest_dt = [     0;
+                    0];
+                
+Ts = 0.002;
+
+sysest = ss(A_sysest_dt, B_sysest_dt, C_sysest_dt, D_sysest_dt, Ts);
+
+%% Extraction of Matrices  in continuos time
+
+sysest_ct = d2c(sysest);              % Implementation provided in Continuous time
+
+%% Modification of the C matrix to have the tip position
+
+sysest_ct_tip = ss(sysest_ct.A,sysest_ct.B,[1 0 1 0; 0 0 1 0],sysest_ct.D);
+
+G_tip_cont = tf(sysest_ct_tip(1));
+
+%% Model Parameters coming from resonance measurements
+
+v_a_max = 13;
+
 %% System model
 % Model parameters
-load('sysest09c_trick.mat')   
-sysest_ct = d2c(sysest);
+
 [A,B,C,D] = ssdata(sysest_ct);
-
-sysfake = load("sysfake.mat").sysfake;
-sysfake_ct = d2c(sysfake);
-
-v_a_max = 13;       %Maximum voltage                
-Ts  = 0.002;        %Sampling time
 
 %% H infinity control
 
