@@ -16,9 +16,13 @@ time = data(1,:);
 reference = data(2,:);
 theta = data(3,:);
 alpha = data(4,:);
-tip = data(5,:);
+tip =   theta + alpha;           %data(5,:);
 control_signal = data(5,:);
 integral_control_signal = data(6,:);
+
+
+
+
 
 %% Plot of the Signals
 
@@ -75,3 +79,33 @@ dead_time = time(start_of_output)-time(start_of_ref)
 %% Finding maximum control signal and total control signal 
 max_control = max(control_signal)
 total_control = integral_control_signal(end)        % continuos because in simulink
+
+time_1 = data_1(1,:);
+theta_1 = data_1(3,:);
+alpha_1 = data_1(4,:);
+tip_1 = data_1(5,:);
+
+%% plot
+
+if length(time) > length(time_1)
+   time = time_1;
+   max_sig = length(time_1);
+else
+    time_1 = time;
+    max_sig = length(time);
+end
+
+figure(2);
+plot(time,reference(1:max_sig),time,tip(1:max_sig),time,tip_1(1:max_sig));
+legend("Reference", "Nominal Inertia","Inertia pos 1",'Location','southeast');
+% legend("Reference", "System");
+xlabel("Time (s)");
+ylabel("Tip position (°)");
+grid;
+
+figure(3);
+plot(time,alpha(1:max_sig),time,alpha_1(1:max_sig),time,alpha_2(1:max_sig),time,alpha_3(1:max_sig),time,alpha_4(1:max_sig),time,alpha_5(1:max_sig));
+legend( "Nominal Inertia","Inertia pos 1",'Location','southeast');
+xlabel("Time (s)");
+ylabel("Alpha (°)");
+grid;

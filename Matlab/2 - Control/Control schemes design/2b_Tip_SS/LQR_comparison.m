@@ -56,14 +56,14 @@ v_a_max = 13;
 
 %% Arco's LQR 1
 
-tau_1 = 20;
+tau_1 = 15;
 
 Q_lqr_1 = diag([1 1 1 1 1]);     %initial values
 
 [K_lqr_x_1, K_lqr_eta_1] = Arco_LQRegulator(sysest_ct_tip, tau_1, Q_lqr_1);
 %% Arco's LQR 2
 
-tau_2 = 20;
+tau_2 = 17;
 
 Q_lqr_2 = diag([1 1 1 1 1]);     %initial values
 
