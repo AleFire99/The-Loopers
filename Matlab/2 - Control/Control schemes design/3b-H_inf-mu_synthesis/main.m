@@ -35,13 +35,13 @@ ncont = 1;      %Number of u
 
 %% Mu synthesis
 
-unc_1 = ureal("unc_1",sysest_ct(1,1).A(3,3),"percentage",7);      %defining uncertainties in parameters
+unc_1 = ureal("unc_1",sysest_ct(1,1).A(3,3),"percentage",8);      %defining uncertainties in parameters
 %get(unc_1)
 
-unc_2 = ureal("unc_2",sysest_ct(1,1).A(4,3),"percentage",7);
+unc_2 = ureal("unc_2",sysest_ct(1,1).A(4,3),"percentage",8);
 %get(unc_2)
 
-unc_3 = ureal("unc_3",sysest_ct(1,1).A(4,4),"percentage",7);
+unc_3 = ureal("unc_3",sysest_ct(1,1).A(4,4),"percentage",8);
 %get(unc_3)
 
 A_unc = umat(A);        %creating uncertain matrix
