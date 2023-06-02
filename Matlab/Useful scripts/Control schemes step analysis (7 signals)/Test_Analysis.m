@@ -12,13 +12,13 @@
 clc
 
 
-time = data(:,1);
-reference = data(:,2);
-theta = data(:,3);
-alpha = data(:,4);
-tip = data(:,5);
-control_signal = data(:,6);
-integral_control_signal = data(:,7);
+time = data(1,:);
+reference = data(2,:);
+theta = data(3,:);
+alpha = data(4,:);
+tip = theta+alpha;
+control_signal = data(5,:);
+integral_control_signal = data(6,:);
 
 %% Plot of the Signals
 
@@ -53,7 +53,7 @@ steady_state = reference(end);
 base_overshoot = max(abs(theta-steady_state))
 alpha_overshoot = max(abs(alpha))
 hit_time = find(tip == steady_state,1)
-total_overshoot = max(abs(tip(hit_time:end)-steady_state(hit_time:end)))
+total_overshoot = max(abs(tip(hit_time:end)-steady_state))
 
 %% Finding settling time
 
