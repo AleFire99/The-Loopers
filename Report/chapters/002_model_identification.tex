@@ -1,0 +1,377 @@
+\chapter{Model Identification}
+\label{cha:model_identification}
+
+    The system could be schematized as:
+
+    \image{./images/Chapter 2/scheme.png}
+
+    The DC motor is powered by a voltage $V_{dc}$ and provides torque $u$ to the flexible joint. Finally two encoders read the angular positions $y$ of both the base and the tip and send the measured values $\hat{y}$ to the ADC converter.
+
+    \section{Mathematical Model}
+
+        \subsection{DC motor equations}
+
+            Before starting to model the DC motor we can get the time constant of its dynamics from the values in the datasheet:
+
+            \[
+                \frac{R}{L} = \frac{2.6 \, \Omega}{0.18 \, mH} \approx  15 \, KHz
+            \]
+                
+            As this is clearly above the frequency range of the mechanical system, we can neglect its dynamics and model only its static contribution.
+            
+            The physical equations of the DC Motor then become:
+            
+            \begin{equation*}
+                \begin{cases}
+                    V_a = R_a I_a + E \\
+                    E = k_m \dot\theta \\
+                    \tau = k_t I_a
+                \end{cases}
+            \end{equation*}
+
+            After several mathematical steps and considering the gearbox ratio $K_g$ and the conversion efficiencies we get:
+
+            \[
+                \tau = \frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} 
+            \]
+            
+            Where $\tau$ is the torque applied to the system and $\theta$ is the angular position of the base.
+
+        \subsection{Flexible joint equations}
+
+            We can represent our system as follows:
+            \image{./images/Chapter 2/beam_scheme_model.png}
+            Here we have a 2-dofs mechanical system that can be modelled using a Lagrangian approach.
+
+            \bigbreak
+
+            The 2 \dofs are:
+            \begin{itemize}
+                \item $\theta$: the absolute angular position of the base;
+                \item $\alpha$: the relative angular position of the arm \wrt the base.
+            \end{itemize}
+
+            \bigbreak
+
+            The kinetic energy:
+            \[
+                T = \half J_{eq} \dot{\theta} ^2 + \half J_{L} (\dot{\theta} + \dot{\alpha}) ^2 
+            \]
+
+            where $J_{eq}$ refers to the equivalent inertia of the motor + gearbox, and $J_{L}$ refers to the inertia of the arm.
+
+            \bigbreak 
+
+            The potential energy:
+            \[
+                V = \half K_s \dot{\alpha}^2
+            \]
+
+            where $K_s$ refers to the linearized stiffness of the equivalent torsional spring.
+            
+            \bigbreak
+
+            The dissipative function:
+            \[
+                D = \half B_{eq} \dot{\theta}^2 + \half B_{L} \dot{\alpha}^2\]
+            where $B_{eq}$ and $B_L$ refer respectively to the equivalent friction of the motor + gearbox and the equivalent friction of the arm.
+
+            The virtual work:
+            \[
+                \delta W = \tau \cdot \delta \theta
+            \]
+            
+            The dynamics of the system can be found applying the Euler-Lagrange equations for each \dof:
+            \begin{equation*}
+                \frac{d}{dt} \left(\frac{\partial T}{\partial \dot{x}}\right)-\left(\frac{\partial T}{\partial x}\right)+\left(\frac{\partial D}{\partial \dot{x}}\right)+\left(\frac{\partial V}{\partial x}\right) = \left(\frac{\delta W}{\delta x}\right)\
+            \end{equation*}
+            Finally we get the following system of equation:
+            \begin{equation*}
+                \begin{cases*}
+                    J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\tau \\
+                    J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_s\alpha=0
+                \end{cases*}
+            \end{equation*}
+
+            \subsubsection{Non-linear model of the springs}
+
+                Until now we have considered the two linear springs as an equivalent torsional one in order to reduce the complexity of the model.
+
+                To prove the validity of this assumption we can consider Hooke's law:
+                    \[
+                        F = - K_s (x_k - x_0)
+                    \]
+
+                Thanks to the symmetry of the system, studying the behaviour of a single spring is enough to model both of them.
+
+                \image{./images/Chapter 2/non_linear_spring.jpg}
+
+                In the left figure the equilibrium position is $x_k = x_0$, where:
+                \[
+                    \varphi_0 = atan\left(\frac{P_{1_y}}{P_{0_x}}\right)\]
+                \[
+                    F_\perp = F \cdot cos(\varphi_0)\]
+                \[
+                    x_0 = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2}\]
+
+                When we perturb the system we get:
+                \[
+                    x_k = \sqrt{(P_{1_x} - P_{0_x})^2+(P_{1_y} - P_{0_y})^2} \rightarrow \Delta x_k = x_k - x_0\]
+                \[
+                    P_1^{NEXT} = \left\lbrack \begin{array}{c}
+                        l \cdot sin(\alpha) \\
+                        l \cdot (1-cos(\alpha))
+                        \end{array}\right\rbrack
+                        \rightarrow F_\perp  = F \cdot cos(\varphi + \alpha)\]
+
+
+                \image{./images/Chapter 2/Linearized vs Real model of springs.png}
+
+                The plot above represents the value of the $F_\perp$ as function of the angle $\alpha$ and its linear approximation at the origin.
+
+                The error between the two curves is expressed by the curve below:
+                \image{./images/Chapter 2/Error between real and linearized model.png}
+
+                As we can see, while $\alpha$ is below 20° the error between the two models is less than 10$\%$. As the tip's angle always remained below 10° in our measurements, the linear model introduced before is precise enough to represent our system.
+
+        \subsection{State space representation}
+            \subsubsection{Continuous time}
+
+                Starting from the aforementioned equations:
+                \begin{equation*}
+                    \begin{cases}
+                        J_{eq}\ddot\theta+J_{L}(\ddot\theta+\ddot\alpha) + B_{eq}\dot\theta=\frac{\eta_m\eta_g k_t K_g(V - K_g k_m\dot\theta)}{R_m} \\
+                        J_{L}(\ddot\theta+\ddot\alpha)+B_L\dot\alpha +K_{S}\alpha=0
+                    \end{cases}
+                \end{equation*}
+                we develop the state space system in continuous time, having as state the following array:
+                \[
+                    \left\lbrack \begin{array}{c}
+                        \theta \\
+                        \dot{\theta} \\
+                        \alpha \\
+                        \dot{\alpha} 
+                        \end{array}\right\rbrack\]
+                the A matrix:
+                \begin{equation*}
+                    \left\lbrack \begin{array}{cccc}
+                        0 & 1 & 0 & 0\\
+                        0 & -\frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & \frac{K_s }{J_{\mathrm{eq}} } & \frac{B_L }{J_{\mathrm{eq}} }\\
+                        0 & 0 & 0 & 1\\
+                        0 & \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & -K_S \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right) & -B_L \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right)
+                        \end{array}\right\rbrack 
+                \end{equation*}
+                and the B matrix:
+                \begin{equation*}
+                    \left\lbrack \begin{array}{c}
+                        0\\
+                        \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }\\
+                        0\\
+                        -\frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }
+                        \end{array}\right\rbrack
+                \end{equation*}
+
+                And having the angular positions $\theta$ and $\alpha$ as the outputs of the system.
+
+            \subsubsection{Discrete time}
+
+                In order to apply optimization techniques on our data to find the parameters of the system, we need a state space representation in discrete time. To do so we apply the forward Euler method considering a sampling time $\Delta$.
+
+                Our discrete time A matrix becomes then:
+
+                \begin{equation*}
+                    \left\lbrack \begin{array}{cccc}
+                        1 & \Delta  & 0 & 0\\
+                        0 & 1-\Delta \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{eq}R_m}{J_{eq}R_m} & \Delta \frac{K_s}{J_{eq}} & \Delta\frac{B_L}{J_{eq}}\\
+                        0 & 0 & 1 & \Delta \\
+                        0 & \Delta \frac{\eta_m \eta_g k_t k_m K_g^2 +B_{\mathrm{eq}} R_m }{J_{\mathrm{eq}} R_m } & -{\Delta K}_S \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right) & 1-{\Delta B}_L \left(\frac{J_{\mathrm{eq}} +J_{L} }{J_{\mathrm{eq}} J_{L} }\right)
+                    \end{array}\right\rbrack 
+                    \label{mat:discrete_system}
+                \end{equation*}
+                whereas the B matrix becomes:       
+                \begin{equation*}
+                    \left\lbrack\begin{array}{c}
+                        0\\
+                        \Delta \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }\\
+                        0\\
+                        -\Delta \frac{\eta_m \eta_g k_t K_g }{R_m J_{\mathrm{eq}} }
+                    \end{array}\right\rbrack
+                \end{equation*}
+                while the outputs are still $\theta$ and $\alpha$.
+
+                %TODO remove deprecated methods, fix cvx part
+    \section{Identification Techniques}
+
+        \subsection{The CVX package}
+Constrained numerical optimization is a technique used in system identification to estimate the parameters of a mathematical model while considering specific constraints on the parameter values. In system identification, these constraints can be imposed to ensure physical realizability, stability, or other desired properties of the identified model.
+
+Optimization programs require solvers to provide a solution. In our case, we choose to use the CVX package, because CVX is useful for solving convex optimization problems with convex objective functions and convex constraints. 
+
+To use CVX for system identification and state-space representation, we need to formulate an optimization problem that captures our specific modeling objectives. The problem formulation typically involves defining an objective function and system constraints that must be physically satisfied. In this case, the objective function is to minimize the error between the estimated states and real ones, while the constraints are based on the physical equations in the state space matrix. Adding prior knowledge about the physical relationship between the elements in the matrices leads to more realistic and meaningful models.
+
+
+        \subsection{Training dataset}
+
+We used two different datasets to train our model. One for the identification at lower frequencies, a square wave voltage input,  and one for higher frequencies, a chirp signal from 0.1 Hz to 30 Hz. Doing so, we ended up having two state space models that we merged by simply taking the average of the two state space matrices. One other possible approach would have been feeding the two datasets together and optimizing for both at the same time.
+
+
+\subsection{The obtained model}
+    Here are the numerical values for the state space matrices estimated from the optimization. This state space model is in discrete time where $\Delta = 0.002$ seconds.\\
+   \[
+   A = 
+   \begin{bmatrix}
+    1 & 0.002 & 0 & 0\\
+    0 & 0.9283 & 1.162 & 0.0017\\
+    0 & 0 & 1 & 0.002\\
+    0 & 0.07169 & -1.931 & 0.9972\\
+     \end{bmatrix}
+        \]
+   \[
+           B = 
+   \begin{bmatrix}
+    0 \\
+    0.1066 \\
+    0 \\
+    -0.1066 \\
+     \end{bmatrix}
+        \]
+   \[
+    C = 
+   \begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0\\
+     \end{bmatrix}
+        \]
+    \[
+            D = 
+   \begin{bmatrix}
+     0  \\
+     0 \\
+     \end{bmatrix}
+        \]
+
+        
+\begin{algorithm}[ht]
+\caption{Optimization Program}
+\label{alp_optimization}
+\begin{algorithmic}[1]
+\STATE load $\theta$, $\alpha$  from real model 
+\STATE Estimate $\dot\theta$ and $\dot\alpha$ by Euler and smooth by gaussian filter 
+\STATE Define regressor with prediction error method as:\\
+    \[
+    z(k) =
+       \begin{bmatrix}
+        \theta & \dot\theta & \alpha & \dot\alpha
+       \end{bmatrix}
+       \]
+   \[
+   \phi = 
+   \begin{bmatrix}
+     z(k) & 0..0 & 0..0 &0..0 & u(k) & 0 & 0 & 0\\
+     0..0 & z(k) & 0..0 &0..0 & 0& u(k) & 0 & 0\\
+     0..0 & 0..0 & z(k) & 0...0 & 0 & 0 & u(k) & 0\\
+     0..0 & 0..0 & 0..0 & z(k) & 0 &0 & 0 &  u(k)\\
+    \end{bmatrix}
+        \]
+        \[
+       Y(k) =   z(k+1) 
+ \]
+\STATE optimization variables are created as follows:
+
+$\hat\theta$ = 
+    [a11  a12  a13  a14  a21  a22  a23 a24  a31  a32 ...\\
+$ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $a33  a34 a41 a42 a43 a44 b1 b2 b3 b4]\\
+
+\STATE Set constraints according to known state space model\\
+\begin{multicols}{2}
+
+a11 = 1\\
+a12 = 0.002\\
+a13 = 0\\
+a14 = 0\\
+a21 = 1\\
+a22 = 1-a42\\
+a23 = -(a23)*constant1\\
+a24 = -(a44-1)*constant1\\
+a31 = 0\\
+a32 = 0\\
+a33 = 1\\
+a34 = 0.002\\
+a41 = 0\\
+a42 related with a22\\
+a43 related with a23\\
+a44 = is free\\
+b1 = 0\\
+b2 = -b4\\
+b3 = 0\\
+b4 is related to b2\\
+\end{multicols}
+constant1 = 1/((Jeq+JL)/(JL*Jeq))/Jeq
+
+\STATE minimize (Y-$\phi*\hat\theta$) with given constraints
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Validation}
+
+The estimated system from the previous part needs to be validated in the frequency domain, in this way the overall behavior of the system can be validated. On top of the estimated model, the non-linear model is also included for comparison. Also, the resonance frequency can be observed from the measurements. 
+ 
+\image{./images/Chapter 2/Base Frequency Response.png}
+\image{./images/Chapter 2/Tip Frequency Response.png}
+        
+        \subsection{Parameters estimation}
+        \label{sec: param est}
+
+            Knowing that, the shape of the matrix is the one expressed in section \ref{mat:discrete_system} and knowing the following relationships for the natural frequency and the damping coefficient of the system:
+
+            \begin{equation*}
+                \begin{cases}
+                    \omega_n^2 = \frac{K_s}{J_{eq}} \\
+                    2\zeta\omega_n = \frac{B_L}{J_{eq}}
+                \end{cases}
+            \end{equation*}
+
+            We obtain:
+
+            \begin{equation*}
+                \begin{cases}
+                    \omega_n = 24.1 \, \frac{rad}{s} \\
+                    \zeta = 0.0176
+                \end{cases}
+            \end{equation*}
+
+            To validate our results we probed the system with a chirp signal with frequency varying from 1 Hz to 10 Hz and we extracted the Fourier transform of the tip position.
+
+            \image[0.5]{./images/Chapter 2/fourier_stiff_analysis2.png}
+
+            In the plot above we can see a peak in the amplitude at the resonance frequency $f_n = 3.846 \, Hz$ which gives us $\omega_n = 24.27 \frac{rad}{s}$, almost the same we got with the optimization. This means that our model is able to describe the resonance of the actual system.
+
+            For the parameters of the arm we can compute the values of the inertia, by knowing its geometry: 
+                    \[J_L = m_1 \cdot \frac{L_1^2}{3} + m_2 \cdot \frac{L_2^2}{12} + m_2 \cdot d^2 = 0.0032 Kg m^2\]
+            \image[0.7]{./images/inertia_computation.png}
+
+            Knowing the inertia of the arm and using the experimental value of the resonance frequency we can find the equivalent torsional stiffness as follows:
+            \[
+                    K_s = J_L \cdot \omega_n^2 = 1.8426 \, Nm\]
+
+            The value of the friction coefficient is supposed to be negligible:
+                \[
+                    B_L = 0\]
+
+    \subsection{Control limits}  
+    \label{sec: control limits}
+        By applying a control scheme to our system we can make it track a set point and also increase its performances in terms of speed. The speed we can achieve is limited by the maximum voltage we can provide to the motor, which in our case is $v_{max} = 15 \, V$.
+        Just to be on the safe side and provide margin for control purposes, we assume the maximum effective voltage to be $v_{crit} = 13 \, V$.
+
+        By letting the system run freely at $v_{crit}$ we can see how long the tip takes to reach 45°, which is the test case that will be used throughout the controller design processes.
+
+        \image[0.7]{./images/Chapter 2/Free_dynamics_13V.png}
+
+        As we can see from the plot above, the tip reaches 45° in less than 0.15 s, if we provide the system a constant value of $v_{crit}$ voltage.
+        Knowing this, we can find that the critical frequency of the system is:
+        \[
+            \omega_{crit} = \frac{2\pi}{0.15} \, \frac{rad}{s} = 41.9 \, \frac{rad}{s} 
+        \]
+
+        For this reason $\omega_{crit}$ will be the upper bound of the achievable bandwidth in our control schemes.

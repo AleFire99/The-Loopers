@@ -1,0 +1,120 @@
+\chapter*{Conclusions}
+\label{cha:conclusioni}
+\markboth{Conclusions}{}
+\addcontentsline{toc}{chapter}{Conclusions}
+
+%Different modeling approaches
+\begin{comment}     
+        Knowing the state space model of our system we tried 3 different approaches in order to find our system's physical parameters:
+        
+        \subsection{Deprecated Methods}
+            \subsubsection{Stiffness identification}
+                    
+                The first method sticks too much on the reliability of the parameters from the data sheet: we tried to identify just the value of the stiffness of the spring using a step signal and analyzing the frequency of the peak of resonance:
+                \[
+                    K_s = J_L \cdot \omega_n^2\]
+                As result our model didn't fit a lot the real system and the results was so bad that encourage us to proceed in a complete different direction.
+
+            \subsubsection{Identification Toolbox}
+
+                Due to high number of possible uncertainties we look for a different approach that could work around the small number of possible types of experiments and the direct inaccessibility of some parameters. An interesting example of this last consideration is the impossible measurement of the current inside the armature to get a measurement of the resistance $R_m$.
+
+                For these reasons we choose to look for an optimization method that can provide the values of the state space matrices. The first attempt consisted in the usage of the model identification toolbox that, given the order of the system, provides a transfer function representation of the system. 
+                
+                I will not go in deep with this method became as first step in that direction we didn't put too much effort. In fact, we let Matlab works on its own to get the model however the results weren't good enough and in this way we lost the physical meaning of the provided quantities.
+    \end{comment}
+
+    
+\begin{comment}
+\section{Adaptive control}
+
+\subsection{Recursive Least Squares}
+Recursive least squares (RLS) estimation is a method used in statistical and signal processing to estimate the parameters of a model using a recursive algorithm. It is particularly useful when dealing with time-varying systems where the data arrives sequentially and needs to be processed in real-time.
+
+The RLS algorithm works by iteratively updating the estimated parameters of the model as new data becomes available. It combines the current estimate of the parameters with the new data to obtain an updated estimate that takes into account both past and present information.
+
+%TODO add reference
+
+Considering the A(4,3) and its multiplication with $\dot\alpha$ is roughly 100 times greater than the A(4,4) and $\alpha$. So we decided to estimate the A(4,3) to simplify the estimation process.
+
+state space equation is :
+\[ 
+x(k+1) = Ax(k) + Bu(k)\\
+\]
+\[ 
+x(k+1,4)= A(4,1)x(k,1) + A(4,2)x(k,2)+A(4,3)x(k,3) + A(4,4)x(k,4) + B(4)u(k)
+\]
+\[ 
+x(k+1,4)-A(4,1)x(k,1)-A(4,2)x(k,2)-A(4,4)x(k,4)-B(4)u(k) = A(4,3)x(k,3)
+\]
+\[ 
+y_{rls}(k+1) = x(k+1,4)-A(4,1)x(k,1)-A(4,2)x(k,2) - A(4,4)x(k,4) - B(4)u(k)
+\]
+The identification block can be represented as follows. 
+\[ 
+\hat{\theta}_{rls}(0) = A_{4,3} 
+\]
+\[ 
+u_{rls}(k) = x(k,3)
+\]
+\[ 
+y_{rls}(k) = \hat{\theta}x(k,3)
+\]
+\[ 
+\phi(k) = x(k,3)
+\]
+\[ 
+\hat{\theta}_{rls}(k) =  \hat{\theta}_{rls}(k-1) + V(k)\phi(k)(y_{rls}(k)-\phi(k)'\hat{\theta}(k-1))
+\]
+\[ 
+V(k) = V(k-1) -\frac{V(k-1)\phi(k)\phi(k)'V(k-1)}{1+\phi(k)'V(k-1)\phi(k)}
+\]
+
+where $\hat{\theta}_{rls}(k)$ is estimations over time. $u_{rls}(k)$ is input of arx model. $y_{rls}(k) $ is output of arx model. $\phi(k) $ is the regressor. $V(k)$ is the information matrix.
+\image{./images/Chapter 5/AdaptivePP/RLSsimulink.png}   
+
+\subsection{Pole Placement with Ackermann}
+In simulink the place function is not compiling with quanser. For this reason we implemented Ackermann formula to set the poles for the system every 5 seconds.
+\image{./images/Chapter 5/AdaptivePP/AdaptivePP.png}   %TODO: image of pole placement
+ We can update the gain to achieve the desired poles in an uncertain change using Ackerman's formula. 
+ Firstly, we need to define the characteristic polynomial of the poles. The desired poles are the same as those used previously in  the Pole Placement controller, resulting in the characteristic polynomial:
+ \[ 
+\Lambda_{desired}(s) = s^4 + 104s^3 + 4046s^2 + 69784s + 450225 
+\]
+ %insert characteristic polynomial (s)
+ Consequently, by substituting the matrix A:
+  \[ 
+\Lambda_{desired}(A) = A^4 + 104A^3 + 4046A^2 + 69784A + 450225I 
+\]
+ %insert characteristic polynomial with A
+ Then, it is necessary to calculate the controllability matrix using the new matrix A:
+ \[ 
+M_{c} = [B, AB, A^2B, A^3B]
+\]
+ %insert controllability matrix
+ Finally, from Ackerman's fomula we obtain the  updated $K_{pp}$:
+ \[ 
+K_{pp} = [0, 0, 0, 1]  M_{c}^{-1}  \Lambda_{desired}(A)
+\]
+ %Kpp = [0 0 0 1] * inv(R) * {PA}
+\subsection{Luenberger Observer}
+ The situation in Luenberger observer is different. Here are two outputs used to set the poles. This limits the use of Ackermann. For this reasons we did the pole placement calculations offline on a Matlab script. 
+ Since the inertia change depends on the distance of the metal tip, a sweep of different distances are used to calculate the new inertias for the tip. Then using these new inertias new model is created. Then for each model poles are placed and gains are calculated. 
+ 
+ \image{./images/Chapter 5/AdaptivePP/luenberger offline.png}   
+
+Here only changing element in Luenberger gain is L(2,4).
+On top of that, L(2,4) and A(4,3) has a R-squared value of 1 stating that these two variables have linear relation. 
+In  Simulink block, for estimation of A(4,3) gain is calculated by this linear relation. 
+
+ \image{./images/Chapter 5/AdaptivePP/AdaptiveLO.png}   %TODO: image of observer
+Here is the observer block in the Simulink. A martix is updated every 5 second from the output of the RLS block. The gain of observer L(4,2) is retrieved by using updated A(4,2).  
+
+\subsection{Results of Adaptive}
+Recursive least squares adaptation requires time to converge so we wanted to see the the convergence on controller. Since settling times are roughly less than 5 seconds controller and Luenberger observer are updated every 5 seconds. Manually we set the covariance matrix in the RLS formulation to 1. This way adaptation is slow enough for us to observed. 
+
+ \image{./images/Chapter 5/AdaptivePP/rlsppsteps.png} 
+ 
+ In this plot overshoots after each update of controller and observer is shown. The starting overshoot was 8.98 percent and then it reduced to 0.78percent at the end. 
+ \image{./images/Chapter 5/AdaptivePP/osRLS.png} 
+ \end{comment}
